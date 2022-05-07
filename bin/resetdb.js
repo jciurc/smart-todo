@@ -4,9 +4,7 @@ require("dotenv").config();
 // other dependencies
 const fs = require("fs");
 const chalk = require("chalk");
-const { Client } = require("pg");
-const dbParams = require("../lib/db.js");
-const db = new Client(dbParams);
+const db = require("../lib/db");
 
 // PG connection setup
 // const connectionString = process.env.DATABASE_URL ||
@@ -38,10 +36,6 @@ const runSeedFiles = async () => {
 
 const runResetDB = async () => {
   try {
-    dbParams.host &&
-      console.log(`-> Connecting to PG on ${dbParams.host} as ${dbParams.user}...`);
-    dbParams.connectionString &&
-      console.log(`-> Connecting to PG with ${dbParams.connectionString}...`);
     await db.connect();
     await runSchemaFiles();
     await runSeedFiles();

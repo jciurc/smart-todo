@@ -9,16 +9,35 @@
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
+
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/client.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-  <nav>
-    <span class="logo">Smart todo</span>
+  <nav class="bg-slate-800"><ul class="flex">
+    <li class="mr-6">
+      <a class="text-blue-500 hover:text-blue-800" href="#">Active</a>
+    </li>
+    <li class="mr-6">
+      <a class="text-blue-500 hover:text-blue-800" href="#">Link</a>
+    </li>
+    <li class="mr-6">
+      <a class="text-blue-500 hover:text-blue-800" href="#">Link</a>
+    </li>
+    <li class="mr-6">
+      <a class="text-gray-400 cursor-not-allowed" href="#">Disabled</a>
+    </li>
+  </ul></nav>
 
-  </nav>
-  <h1>Have fun! 🥔</h1>
+  <h1 class="text-4xl">Good Morning</h1>
+
+  <form method = "POST" action = "/todos/new">
+    <input class="m-10" type="text" id="new-todo" name="" placeholder = "add new todo"><br>
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+  </form>
 </body>
 
 </html>
+
