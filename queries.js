@@ -16,7 +16,8 @@ const getUserByName = (name) => {
 // == todos ==
 const getAllTodos = (id) => {
   const queryParams = [`
-  SELECT * FROM todos
+  SELECT todos.*, name FROM todos
+  JOIN categories ON categories.id = category_id
   ${id ? 'WHERE user_id = $1' : ''}
   `];
   if (id) queryParams.push([id]);

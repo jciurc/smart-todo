@@ -8,7 +8,6 @@ $(document).ready(() => {
 
 
 
-
 const safeHtml = (text) => {
   const safe = document.createElement("div");
   safe.appendChild(document.createTextNode(text));
@@ -18,20 +17,15 @@ const safeHtml = (text) => {
 
 const buildTodoCard = (todo) => {
   const htmlString =  `
-    <div style="background-color: #f33ee;">${safeHtml(todo.description)}</div>
-    <div>${todo.category}</div>
+    <div class="rounded" style="background-color: #f33aee;">${safeHtml(todo.description)}</div>
     `
     return htmlString;
 }
 
 const renderTodos = (todos) => {
-  console.log('respooonse', todos);
-  console.log('container', $('.px-6 py-4'));
-  const $container = $('.px-6 py-4');
-  // const $container = $('#todo-container');
+  const $container = $('#todo-container');
   for (const todo of todos) {
-
-    $container.find(`.${todo.category}`).prepend(buildTodoCard(todo));
+    $container.find(`#${todo.name}-container`).prepend(buildTodoCard(todo));
   }
 }
 
@@ -41,8 +35,6 @@ loadTodos = () => {
   .then(renderTodos)
 };
 
-
-
   // == events ==
   const newTodo = (event) => {
     event.preventDefault();
@@ -51,8 +43,6 @@ loadTodos = () => {
   }
 
   const deleteTodo = () => {
-
-    console.log('');
     const $todo = $(this).closest('article');
     const id = $todo.id;
 

@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
   const user = 1;
   getAllTodos(user || null)
     .then((todos) => {
-      res.send({todos});
+      res.json(todos);
     })
     .catch((err) => {
       res
