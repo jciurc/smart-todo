@@ -1,4 +1,4 @@
--- Drop and recreate Users table 
+-- Drop and recreate Users table
 
 DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE users (
