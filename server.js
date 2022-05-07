@@ -40,8 +40,8 @@ const todosRoutes = require("./routes/todos");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/todos", todosRoutes(db));
+app.use("/users", usersRoutes(db));
+app.use("/todos", todosRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -52,6 +52,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("*", (req, res) => {
+  res.status(404);
+});
+
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Example app listening on port ${PORT} 🐢`);
 });
