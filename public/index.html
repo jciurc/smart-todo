@@ -15,50 +15,51 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-gray-900	text-slate-300">
   <nav class="bg-slate-800"><ul class="flex justify-end items-center">
 
     <li class="mr-6">
-      <input class="m-10" type="text" id="new-todo" name="" placeholder = "add new todo"><br>
+      <input class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5" type="text" id="user_id" name="" placeholder = "username"><br>
     </li>
-    <li class="mr-6">
-      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+    <li class="mr-10">
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
     </li>
 
 
   </ul></nav>
 
-  <h1 class="text-4xl">Good Morning</h1>
-
+  <h1 class="text-4xl font-semibold">Hello, user!</h1>
   <form method = "POST" action = "/todos/new">
-    <input class="m-10" type="text" id="new-todo" name="" placeholder = "add new todo"><br>
+    <input class="form-control px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-10 mb-5" type="text" id="new-todo" name="" placeholder = "add new todo"><br>
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
   </form>
 
-
-  <div class="max-w-sm rounded overflow-hidden shadow-lg">
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">Movies</div>
-      <p class="text-gray-700 text-base">
-        Movie One
-      </p>
-      <p class="text-gray-700 text-base">
-        Movie Two
-      </p>
-    </div>
+<div class="flex justify-center mt-20 h-68">
+  <div class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">Movies</div>
+    <p class="text-base">
+      Movie One
+    </p>
+    <p class="text-base">
+      Movie Two
+    </p>
   </div>
+</div>
 
-  <div class="max-w-sm rounded overflow-hidden shadow-lg">
-    <div class="px-6 py-4">
-      <div class="font-bold text-xl mb-2">Music</div>
-      <p class="text-gray-700 text-base">
-        Album One
-      </p>
-      <p class="text-gray-700 text-base">
-        Album Two
-      </p>
-    </div>
+<div class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">Music</div>
+    <p class="text-base">
+      Album One
+    </p>
+    <p class="text-base">
+      Album Two
+    </p>
   </div>
+</div>
+</div>
+
 
 
 
