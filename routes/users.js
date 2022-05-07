@@ -23,3 +23,20 @@ module.exports = (db) => {
   });
   return router;
 };
+
+// .get('/') {
+//   db.getAllTodos()
+//   app.then((todos) => {
+//     renderTodos(todos)
+//   })
+// }
+
+// .delete('/:id') {
+//   db.deleteTodos(req.params.id)
+// }
+// .get('/') {
+//   db.getAllTodos()
+// }
+// .get('/') {
+//   db.getAllTodos()
+// }
