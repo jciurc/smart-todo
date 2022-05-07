@@ -7,6 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const { getuserById } = require('../database');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -16,9 +17,7 @@ module.exports = (db) => {
         res.json({ users });
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
   return router;
