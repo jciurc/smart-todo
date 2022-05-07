@@ -7,15 +7,16 @@
 
 const express = require('express');
 const router  = express.Router();
+const { getAllTodos, getUsersTodos: getUserTodos, deleteTodo } = require('../database');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM widgets`;
+    let query = `SELECT * FROM todos`;
     console.log(query);
     db.query(query)
       .then(data => {
-        const widgets = data.rows;
-        res.json({ widgets });
+        const todos = data.rows;
+        res.json({ todos });
       })
       .catch(err => {
         res
@@ -25,3 +26,21 @@ module.exports = (db) => {
   });
   return router;
 };
+
+
+// .get('/') {
+//   db.getAllTodos()
+//   app.then((todos) => {
+//     renderTodos(todos)
+//   })
+// }
+
+// .delete('/:id') {
+//   db.deleteTodos(req.params.id)
+// }
+// .get('/') {
+//   db.getAllTodos()
+// }
+// .get('/') {
+//   db.getAllTodos()
+// }
