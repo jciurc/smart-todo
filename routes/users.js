@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const { getuserById } = require('../database');
+const { getuserById } = require('../queries');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {

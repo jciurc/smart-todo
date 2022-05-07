@@ -5,13 +5,13 @@ const db = require('./lib/db');
 
 // == todos ==
 const getAllTodos = () => {
-  db.query('GET * FROM todos;')
-  .then((data) => {
-    return data.rows;
-  })
-  .catch((err) => {
-    console.log('Error getting all todos:', id, "\nMessage:", err?.message || err);
-  })
+  db.query("GET * FROM todos;")
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
 const getUserTodos = (id) => {
@@ -22,12 +22,12 @@ const getUserTodos = (id) => {
   `;
 
   db.query(queryString, values)
-  .then((data) => {
-    return data.rows;
-  })
-  .catch((err) => {
-    console.log('Error getting user todos:', id, "\nMessage:", err?.message || err);
-  })
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
 
@@ -40,13 +40,13 @@ const deleteTodo = (id) => {
   `;
 
   db.query(queryString, values)
-  .then((data) => {
-    console.log('data from delete', data); // for testing
-    return true;
-  })
-  .catch((err) => {
-    console.log('Error deleting todo:', id, "\nMessage:", err?.message || err);
-  })
+    .then((data) => {
+      console.log("data from delete", data); // for testing
+      return true;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
 // stretch getUserTodosByCategory(id, category)
