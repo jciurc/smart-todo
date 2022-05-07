@@ -10,9 +10,10 @@ const router  = express.Router();
 const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
 
 router.get("/", (req, res) => {
-  getAllTodos()
+  const user = 1;
+  getAllTodos(user || null)
     .then((todos) => {
-      res.json({todos});
+      res.send({todos});
     })
     .catch((err) => {
       res

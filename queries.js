@@ -14,32 +14,23 @@ const getUserByName = (name) => {
 };
 
 // == todos ==
-const getAllTodos = () => {
-  return db.query(`SELECT * FROM todos;`)
-  .then((data) => {
-    return data.rows;
-  })
-  .catch((err) => {
-    console.error(err);
-  })
-};
-
-const getUserTodos = (id) => {
-  const values = [id]
-  const queryString = `
+const getAllTodos = (id) => {
+  const queryParams = [`
   SELECT * FROM todos
-  WHERE user_id = $1
-  `;
+  ${id ? 'WHERE user_id = $1' : ''}
+  `];
+  if (id) queryParams.push([id]);
 
-  return db.query(queryString, values)
+
+  return db.query(...queryParams)
   .then((data) => {
+    console.log('query results', data.rows);
     return data.rows;
   })
   .catch((err) => {
     console.error(err);
   })
 };
-
 
 // == alters ==
 const deleteTodo = (id) => {
@@ -61,7 +52,7 @@ const deleteTodo = (id) => {
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getUserByName, getAllTodos, getUserTodos, deleteTodo };
+module.exports = { getUserByName, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
 
 
 // -boilerplate code-
