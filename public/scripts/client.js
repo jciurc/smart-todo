@@ -28,13 +28,13 @@ renderTodos = (todos) => {
   buildTodoCard(todos[0])
 }
 
-  router.get('/properties', (req, res) => {
-    db.getAllTodos(req.cookies.user)
-    .then(renderTodos)
-    .catch(e => {
-      console.error(e);
-      res.send(e)
-    });
+router.get('/properties', (req, res) => {
+  db.getAllTodos(req.cookies.user)
+  .then(renderTodos)
+  .catch(e => {
+    console.error(e);
+    res.send(e)
   });
+});
 
-  module.exports = { router, database }
+module.exports = { renderTodos };

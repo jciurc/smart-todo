@@ -7,6 +7,8 @@
 
 const express = require('express');
 const router  = express.Router();
+const { renderTodos } = require('../public/scripts/client');
+const { getAllTodos, getUsersTodos: getUserTodos, deleteTodo } = require('../public/scripts/database');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -25,3 +27,21 @@ module.exports = (db) => {
   });
   return router;
 };
+
+
+// .get('/') {
+//   db.getAllTodos()
+//   app.then((todos) => {
+//     renderTodos(todos)
+//   })
+// }
+
+// .delete('/:id') {
+//   db.deleteTodos(req.params.id)
+// }
+// .get('/') {
+//   db.getAllTodos()
+// }
+// .get('/') {
+//   db.getAllTodos()
+// }
