@@ -36,10 +36,6 @@ const runSeedFiles = async () => {
 
 const runResetDB = async () => {
   try {
-    dbParams.host &&
-      console.log(`-> Connecting to PG on ${dbParams.host} as ${dbParams.user}...`);
-    dbParams.connectionString &&
-      console.log(`-> Connecting to PG with ${dbParams.connectionString}...`);
     await db.connect();
     await runSchemaFiles();
     await runSeedFiles();

@@ -2,18 +2,20 @@ const db = require("./lib/db");
 
 /// == users ==
 const getUserByName = (name) => {
-  db.query(`SELECT * FROM users WHERE name = $1;`, [name])
+  console.log('running query', name);
+  return db.query(`SELECT * FROM users WHERE name = $1;`, [name])
   .then((data) => {
+    console.log('returned data', data.rows[0]);
     return data.rows[0];
   })
   .catch((err) => {
     console.error(err);
   })
-}
+};
 
 // == todos ==
 const getAllTodos = () => {
-  db.query(`SELECT * FROM todos;`)
+  return db.query(`SELECT * FROM todos;`)
   .then((data) => {
     return data.rows;
   })
@@ -29,7 +31,7 @@ const getUserTodos = (id) => {
   WHERE user_id = $1
   `;
 
-  db.query(queryString, values)
+  return db.query(queryString, values)
   .then((data) => {
     return data.rows;
   })
@@ -47,7 +49,7 @@ const deleteTodo = (id) => {
   WHERE id = $1
   `;
 
-  db.query(queryString, values)
+  return db.query(queryString, values)
   .then((data) => {
     console.log('data from delete', data); // for testing
     return true;
