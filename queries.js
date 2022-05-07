@@ -1,8 +1,8 @@
-const db = require('./lib/db');
+const db = require("./lib/db");
 
 /// == users ==
 const getUserByName = (name) => {
-  db.query('GET * FROM users WHERE name = $1;', [name])
+  db.query(`SELECT * FROM users WHERE name = $1;`, [name])
   .then((data) => {
     return data.rows[0];
   })
@@ -13,7 +13,7 @@ const getUserByName = (name) => {
 
 // == todos ==
 const getAllTodos = () => {
-  db.query('GET * FROM todos;')
+  db.query(`SELECT * FROM todos;`)
   .then((data) => {
     return data.rows;
   })
@@ -25,7 +25,7 @@ const getAllTodos = () => {
 const getUserTodos = (id) => {
   const values = [id]
   const queryString = `
-  GET * FROM todos
+  SELECT * FROM todos
   WHERE user_id = $1
   `;
 
@@ -59,7 +59,7 @@ const deleteTodo = (id) => {
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getUserByName, getAllTodos, getUsersTodos: getUserTodos, deleteTodo };
+module.exports = { getUserByName, getAllTodos, getUserTodos, deleteTodo };
 
 
 // -boilerplate code-

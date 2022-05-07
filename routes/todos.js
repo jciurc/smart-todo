@@ -11,10 +11,10 @@ const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
 
 router.get("/", (req, res) => {
   getAllTodos()
-    .then(todos => {
+    .then((todos) => {
       res.json({todos});
     })
-    .catch(err => {
+    .catch((err) => {
       res
         .status(500)
         .json({ error: err.message });

@@ -7,15 +7,15 @@
 
 const express = require('express');
 const router = express.Router();
-const { getuserByName } = require('../queries');
+const { getUserByName } = require('../queries');
 
 router.get("/", (req, res) => {
   getUserByName('Jordan')
-    .then(user => {
+    .then((user) => {
       res.cookie('user', user.id);
       res.json({ user });
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).json({ error: err.message });
     });
 });
