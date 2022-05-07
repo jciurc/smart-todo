@@ -7,8 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const { renderTodos } = require('../public/scripts/client');
-const { getAllTodos, getUsersTodos: getUserTodos, deleteTodo } = require('../public/scripts/database');
+const { getAllTodos, getUsersTodos: getUserTodos, deleteTodo } = require('../database');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {

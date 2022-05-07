@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const { getuserById } = require('../public/scripts/database');
+const { getuserById } = require('../database');
 
 module.exports = (db) => {
   router.get("/", (req, res) => {

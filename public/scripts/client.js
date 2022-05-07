@@ -36,5 +36,3 @@ router.get('/properties', (req, res) => {
     res.send(e)
   });
 });
-
-module.exports = { renderTodos };
