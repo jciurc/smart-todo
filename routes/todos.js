@@ -7,25 +7,22 @@
 
 const express = require('express');
 const router  = express.Router();
-const { getAllTodos, getUsersTodos: getUserTodos, deleteTodo } = require('../database');
+const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
 
-module.exports = (db) => {
-  router.get("/", (req, res) => {
-    let query = `SELECT * FROM todos`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const todos = data.rows;
-        res.json({ todos });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-  return router;
-};
+router.get("/", (req, res) => {
+  getAllTodos()
+    .then((todos) => {
+      res.json({todos});
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+});
+
+module.exports = router;
+
 
 
 // .get('/') {

@@ -1,32 +1,42 @@
-const db = require('./lib/db');
+const db = require("./lib/db");
 
 /// == users ==
-// getUserById(id)
+const getUserByName = (name) => {
+  console.log('running query', name);
+  return db.query(`SELECT * FROM users WHERE name = $1;`, [name])
+  .then((data) => {
+    console.log('returned data', data.rows[0]);
+    return data.rows[0];
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+};
 
 // == todos ==
 const getAllTodos = () => {
-  db.query('GET * FROM todos;')
+  return db.query(`SELECT * FROM todos;`)
   .then((data) => {
     return data.rows;
   })
   .catch((err) => {
-    console.log('Error getting all todos:', id, "\nMessage:", err?.message || err);
+    console.error(err);
   })
 };
 
 const getUserTodos = (id) => {
   const values = [id]
   const queryString = `
-  GET * FROM todos
+  SELECT * FROM todos
   WHERE user_id = $1
   `;
 
-  db.query(queryString, values)
+  return db.query(queryString, values)
   .then((data) => {
     return data.rows;
   })
   .catch((err) => {
-    console.log('Error getting user todos:', id, "\nMessage:", err?.message || err);
+    console.error(err);
   })
 };
 
@@ -39,19 +49,19 @@ const deleteTodo = (id) => {
   WHERE id = $1
   `;
 
-  db.query(queryString, values)
+  return db.query(queryString, values)
   .then((data) => {
     console.log('data from delete', data); // for testing
     return true;
   })
   .catch((err) => {
-    console.log('Error deleting todo:', id, "\nMessage:", err?.message || err);
+    console.error(err);
   })
 };
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getAllTodos, getUsersTodos: getUserTodos, deleteTodo };
+module.exports = { getUserByName, getAllTodos, getUserTodos, deleteTodo };
 
 
 // -boilerplate code-

@@ -38,6 +38,7 @@
 - ejs 2.x,
 - morgan 1.x
 - sass 1.x
+- cookie-parser 1.x
 
   ## Dev Dependencies
 - nodemon 2.x
