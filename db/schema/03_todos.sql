@@ -1,4 +1,4 @@
--- Drop and recreate Widgets table (Example)
+-- Drop and recreate totdos table 
 
 DROP TABLE IF EXISTS todos CASCADE;
 CREATE TABLE todos (
@@ -6,5 +6,5 @@ CREATE TABLE todos (
   user_id INTEGER REFERENCES users(id),
   category_id INTEGER REFERENCES categories(id),
   description VARCHAR(255) NOT NULL,
-  completed BOOLEAN NOT NULL DEFAULT TRUE
+  completed BOOLEAN NOT NULL DEFAULT FALSE
 );
