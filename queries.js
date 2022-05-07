@@ -1,6 +1,6 @@
 const db = require("./lib/db");
 
-/// == users ==
+// == users ==
 const getUserByName = (name) => {
   console.log('running query', name);
   return db.query(`SELECT * FROM users WHERE name = $1;`, [name])
