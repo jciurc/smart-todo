@@ -1,7 +1,15 @@
 const db = require('./lib/db');
 
 /// == users ==
-// getUserById(id)
+const getUserByName = (name) => {
+  db.query('GET * FROM users WHERE name = $1;', [name])
+  .then((data) => {
+    return data.rows[0];
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+}
 
 // == todos ==
 const getAllTodos = () => {
@@ -10,7 +18,7 @@ const getAllTodos = () => {
     return data.rows;
   })
   .catch((err) => {
-    console.log('Error getting all todos:', id, "\nMessage:", err?.message || err);
+    console.error(err);
   })
 };
 
@@ -26,7 +34,7 @@ const getUserTodos = (id) => {
     return data.rows;
   })
   .catch((err) => {
-    console.log('Error getting user todos:', id, "\nMessage:", err?.message || err);
+    console.error(err);
   })
 };
 
@@ -45,13 +53,13 @@ const deleteTodo = (id) => {
     return true;
   })
   .catch((err) => {
-    console.log('Error deleting todo:', id, "\nMessage:", err?.message || err);
+    console.error(err);
   })
 };
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getAllTodos, getUsersTodos: getUserTodos, deleteTodo };
+module.exports = { getUserByName, getAllTodos, getUsersTodos: getUserTodos, deleteTodo };
 
 
 // -boilerplate code-
