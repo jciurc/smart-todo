@@ -6,19 +6,18 @@
  */
 
 const express = require('express');
-const router  = express.Router();
-const { getuserById } = require('../queries');
+const router = express.Router();
+const { getUserByName } = require('../queries');
 
-module.exports = (db) => {
-  router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json({ users });
-      })
-      .catch(err => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-  return router;
-};
+router.get("/", (req, res) => {
+  getUserByName('Jordan')
+    .then((user) => {
+      res.cookie('user', user.id);
+      res.json({ user });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+});
+
+module.exports = router;
