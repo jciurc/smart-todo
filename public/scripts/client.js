@@ -6,8 +6,9 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article', editMode);
+    //$('.todo-container').on('click', 'article', editMode);  temportrary
     $('.todo-container').on('click', '.delete-button', deleteTodo);
+    $('.todo-container').on('click', '.confirm-edit', editTodo);
 
     // = initial page load =
     checkLogin();
