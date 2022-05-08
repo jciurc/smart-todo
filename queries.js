@@ -106,5 +106,6 @@ const deleteTodo = (id) => {
 };
 
 // stretch getUserTodosByCategory(id, category)
+// temporary extra lines
 
 module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
