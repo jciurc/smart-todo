@@ -1,10 +1,10 @@
 const axios = require('axios').default;
 
 // = api calls =
-const fetchMoviesForUser = function() {
+const fetchMoviesForUser = (text) => {
   const options = {
     url: "https://movie-database-alternative.p.rapidapi.com/",
-    params: { s: "Avengers Endgame", r: "json", page: "1" },
+    params: { s: text, r: "json", page: "1" },
     headers: {
       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.API_KEY,
@@ -42,7 +42,7 @@ const fetchMusicForUser = (text) => {
 const findCategory = (text) => {
   const apiList = [fetchMusicForUser, fetchMoviesForUser];
   // todo sanitize query text
-  // Promise.any(apiList)
+  Promise.any(apiList)
   return fetchMusicForUser(text)
     .then((category) => {
       return category || 'Unlabeled';

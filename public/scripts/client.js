@@ -112,6 +112,7 @@
       });
   };
 
+
   const checkLogin = () => {
     $.get('/users')
       .then((user) => {
@@ -120,6 +121,7 @@
   };
 
   const editTodo = function () {
+
 }
 
 

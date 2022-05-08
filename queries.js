@@ -80,6 +80,7 @@ const setCompleted = (id, isComplete) => {
     });
 };
 
+
 const getCategoryByName = (name) => {
   return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
     .then((data) => {
@@ -90,6 +91,7 @@ const getCategoryByName = (name) => {
       console.error(err);
     });
 }
+
 
 const insertNewTodo = (todo) => {
   const values = [todo.user_id, todo.description, todo.category_id];
@@ -108,6 +110,7 @@ const insertNewTodo = (todo) => {
       console.error(err);
     });
 };
+
 
 const deleteTodo = (id) => {
   const values = [id]
