@@ -2,10 +2,18 @@ const db = require("./lib/db");
 
 // == users ==
 const getUserByName = (name) => {
-  console.log('running query', name);
   return db.query(`SELECT * FROM users WHERE name = $1;`, [name])
   .then((data) => {
-    console.log('returned data', data.rows[0]);
+    return data.rows[0];
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+};
+
+const getUserById = (id) => {
+  return db.query(`SELECT * FROM id WHERE id = $1;`, [id])
+  .then((data) => {
     return data.rows[0];
   })
   .catch((err) => {
@@ -19,13 +27,11 @@ const getAllTodos = (id) => {
   SELECT todos.*, name FROM todos
   JOIN categories ON categories.id = category_id
   ${id ? 'WHERE user_id = $1' : ''}
-  `];
+`];
   if (id) queryParams.push([id]);
-
 
   return db.query(...queryParams)
   .then((data) => {
-    console.log('query results', data.rows);
     return data.rows;
   })
   .catch((err) => {
@@ -43,7 +49,7 @@ const deleteTodo = (id) => {
 
   return db.query(queryString, values)
   .then((data) => {
-    console.log('data from delete', data); // for testing
+    console.log('data from delete', data.rows); // for testing
     return true;
   })
   .catch((err) => {
@@ -53,18 +59,4 @@ const deleteTodo = (id) => {
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getUserByName, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
-
-
-// -boilerplate code-
-// db.query(`SELECT * FROM users;`)
-//       .then(data => {
-//         const users = data.rows;
-//         res.json({ users });
-//       })
-//       .catch(err => {
-//         res
-//           .status(500)
-//           .json({ error: err.message });
-//       });
-// -end boilerplate-
+module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
