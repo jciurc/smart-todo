@@ -86,6 +86,35 @@ const setCompleted = (id, isComplete) => {
     });
 };
 
+const getCategoryByName = (name) => {
+  return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
+    .then((data) => {
+      console.log('result category id', data.rows );
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+}
+
+const insertNewTodo = (todo) => {
+  const values = [todo.user_id, todo.description, todo.category_id];
+  const queryString = `
+  INSERT INTO todos (user_id, description, category_id)
+  VALUES ($1, $2, $3)
+  RETURNING *;
+`;
+
+  return db.query(queryString, values)
+    .then((data) => {
+      console.log('new todo inserted:', data.rows );
+      return data.rows[0];
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 const deleteTodo = (id) => {
   const values = [id]
   const queryString = `
@@ -105,7 +134,7 @@ const deleteTodo = (id) => {
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo, setCompleted };
+module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo, setCompleted, insertNewTodo, getCategoryByName };
 
 
 

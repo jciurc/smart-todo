@@ -31,6 +31,7 @@
 
 - Node 10.x or above
 - NPM 5.x or above
+- axios
 - express 4.x
 - pg 8.x
 - chalk 2.x,

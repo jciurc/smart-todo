@@ -11,6 +11,9 @@
     // = initial page load =
     checkLogin();
     loadTodos();
+
+
+    console.log('latest version???');
   });
 
   // == helpers ==
@@ -30,6 +33,7 @@
   };
 
   const renderTodos = (todos) => {
+    // need to empty containers first
     const $container = $('#categories-container');
     for (const todo of todos) {
       $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
@@ -55,9 +59,17 @@
   // == events ==
   const newTodo = function(event) {
     event.preventDefault();
-    // error handling. text field empty
 
-    $.post('/todos', $(this).serialize());
+    // error handling. text field empty
+    if (!$(this).find('input').val()) return; // set up alert
+
+    // sends todo text backend
+    $.post('/todos', $(this).serialize())
+
+    // get new todo object back
+    .this((todo) => {
+      if (todo) loadTodos();
+    });
   };
 
   const loginSubmit = function(event) {
