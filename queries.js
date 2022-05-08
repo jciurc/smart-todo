@@ -40,7 +40,6 @@ const getAllTodos = (id) => {
 };
 
 // == alters ==
-
 const editTodo = () => {
   const values = [];
   const queryString = `UPDATE todos`
@@ -55,31 +54,6 @@ const editTodo = () => {
   }
   `WHERE user_id = $${todos.user_id} RETURNING *;`;
   return db.query(queryString, values)
-    .then((data) => {
-      return data.rows;
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-};
-/*
-// const editCategory = () => {
-//   const queryString = `INSERT INTO catagories (name) VALUES ()`
-//   const values = [];
-//   return db.query(queryString, values)
-//     .then((data) => {
-//       return data.rows;
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
-
-const editcompleted = () => {
-  const queryString = `INSERT INTO todos (completed) VALUES ( true)`;
-  const values = [];
-  return db
-    .query(queryString, values)
     .then((data) => {
       return data.rows;
     })
@@ -105,7 +79,36 @@ const deleteTodo = (id) => {
   })
 };
 
+module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo };
+
+
+
+// const editCategory = () => {
+//   const queryString = `INSERT INTO catagories (name) VALUES ()`
+//   const values = [];
+//   return db.query(queryString, values)
+//     .then((data) => {
+//       return data.rows;
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     });
+// };
+//
+// const editcompleted = () => {
+//   const queryString = `INSERT INTO todos (completed) VALUES ( true)`;
+//   const values = [];
+//   return db
+//     .query(queryString, values)
+//     .then((data) => {
+//       return data.rows;
+//     })
+//     .catch((err) => {
+//       console.error(err);
+//     });
+// };
+//
+
+//
 // stretch getUserTodosByCategory(id, category)
 // temporary extra lines
-
-module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
