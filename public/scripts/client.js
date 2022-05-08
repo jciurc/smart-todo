@@ -18,7 +18,7 @@
   // == helpers ==
   const editMode = function() {
     const $todo = $(this);
-    //$todo.show('form');
+    $todo.show();
   };
 
   const safeHtml = (text) => {
@@ -32,7 +32,7 @@
     <article class="todo rounded" alt="${todo.id}">
       <p class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</p>
 
-<form>
+<form hidden>
 
         <textarea class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
