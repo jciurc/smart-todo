@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-  $('#new-tweet').on('apis', callApis);
+  $('#new-todo').on('apis', callApis);
 });
 
 const fetchMoviesForUser = function () {
@@ -10,10 +10,10 @@ const fetchMoviesForUser = function () {
     params: { s: "Avengers Endgame", r: "json", page: "1" },
     headers: {
       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-      "X-RapidAPI-Key": "API_KEY",
+      "X-RapidAPI-Key": "env",
     },
   };
-  return ajax.request(options)
+  return $.ajax(options)
     .then((response) => {
       if (response.data.search.title.length >= 1) return "Movies";
 
@@ -30,13 +30,14 @@ const fetchMusicForUser = (text) => {
     data: { term: text, locale: "en-US", offset: "0", limit: "5" },
     headers: {
       "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-      "X-RapidAPI-Key": "API_KEY",
+      "X-RapidAPI-Key": "env",
     }
   };
 
   return $.ajax(options)
     .then((res) => {
-      if (res.hits.tracks.length > 1) return "Music";
+      console.log('music response', res);
+      if (res.tracks.hits.length > 1) return "Music";
     })
     .catch((err) => {
       console.error(err);
@@ -46,7 +47,7 @@ const fetchMusicForUser = (text) => {
 const findCategory = (text) => {
   return Promise.any([
     fetchMusicForUser(text),
-    fetchMoviesForUser(text),
+    // fetchMoviesForUser(text),
   ])
   .then((category) => {
     return category || 'Unlabeled';
@@ -54,9 +55,10 @@ const findCategory = (text) => {
   .catch((err) => {
     console.error(err);
   });
-}
+};
 
 const callApis = function() {
+  console.log("this apis", $(this));
   const $form = $(this).closest('form');
   const $inputField = $form.find('input');
   const description = $inputField.val() || "Avengers Endgame";
@@ -64,8 +66,12 @@ const callApis = function() {
 
   findCategory(description)
     .then((category) => {
+      console.log(category || 'Unlabeled');
       const user_id = 1; // need to get user id
     $.post('/todos', {user_id, description, category})
     $.get('/todos');
+  })
+  .catch((err) => {
+    console.log('something went wrong', err?.message || err);
   });
 };

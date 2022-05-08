@@ -9,7 +9,7 @@ const express = require('express');
 const router = express.Router();
 const { getUserByName } = require('../queries');
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   getUserByName('Jordan')
     .then((user) => {
       res.cookie('user', user.id);

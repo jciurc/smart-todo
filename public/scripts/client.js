@@ -15,13 +15,9 @@ const safeHtml = (text) => {
 
 const buildTodoCard = (todo) => {
   const htmlString = `
-<div class="todo rounded" ">
   <article class="todo rounded flex" style="background-color: #225778;>
-    <p class="text-base">
-      ${safeHtml(todo.description)}
-    </p>
+    <p class="text-base">${safeHtml(todo.description)}</p>
   </article>
-</div>
 `;
     return htmlString;
 }
@@ -29,7 +25,7 @@ const buildTodoCard = (todo) => {
 const renderTodos = (todos) => {
   const $container = $('#categories-container');
   for (const todo of todos) {
-    $container.find(`#${todo.name}-container`).show().prepend(buildTodoCard(todo));
+    $container.find(`#${todo.name}`).show().find().prepend(buildTodoCard(todo));
   }
 }
 
@@ -39,7 +35,7 @@ loadTodos = () => {
 };
 
 // == events ==
-const newTodo = (event) => {
+const newTodo = function(event) {
   event.preventDefault();
   $(this).trigger('apis');
   // error handling. text field empty
