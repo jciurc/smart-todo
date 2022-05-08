@@ -1,7 +1,10 @@
 const express = require('express');
+//const methodOverride = require('method-override');
 const router  = express.Router();
 const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName } = require('../queries');
 const { findCategory } = require('../api');
+//app.use(methodOverride("'X-HTTP-Method-Override'"));
+//app.use(methodOverride('_method'));
 
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
@@ -50,6 +53,11 @@ router.post('/', (req, res) => {
 // })
 
 
+
+
+router.delete("/:id", (req, res) => {
+  //   db.deleteTodos(req.params.id)
+});
 module.exports = router;
 
 

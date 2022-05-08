@@ -39,12 +39,6 @@ const getAllTodos = (id) => {
   })
 };
 
-// ==Edit catagory==
-
-
-
-//Edit text
-
 // == alters ==
 const editTodo = (todo) => {
   const values = [];
@@ -135,32 +129,3 @@ const deleteTodo = (id) => {
 // stretch getUserTodosByCategory(id, category)
 
 module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo, setCompleted, insertNewTodo, getCategoryByName };
-
-
-
-// const editCategory = () => {
-//   const queryString = `INSERT INTO catagories (name) VALUES ()`
-//   const values = [];
-//   return db.query(queryString, values)
-//     .then((data) => {
-//       return data.rows;
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
-//
-// const editcompleted = () => {
-//   const queryString = `INSERT INTO todos (completed) VALUES ( true)`;
-//   const values = [];
-//   return db
-//     .query(queryString, values)
-//     .then((data) => {
-//       return data.rows;
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
-//
-//

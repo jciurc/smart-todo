@@ -7,7 +7,7 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require('cookie-parser');
-
+const methodOverride = require("method-override");
 const app = express();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -21,6 +21,7 @@ app.use("/styles", sassMiddleware({
 })
 );
 app.use(express.static("public"));
+
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
