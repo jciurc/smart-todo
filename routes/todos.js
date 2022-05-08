@@ -8,7 +8,7 @@ const { findCategory } = require('../api');
 
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
-  getAllTodos(userId || null)
+  getAllTodos(userId)
     .then((todos) => {
       res.json(todos);
     })
