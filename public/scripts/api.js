@@ -47,7 +47,7 @@ const fetchMusicForUser = function() {
 const findCategory = (text) => {
   return Promise.any([
     fetchMusicForUser(text),
-    fetchMoviesForUser(text)
+    fetchMoviesForUser(text),
   ])
   .then((category) => {
     return category || 'Unlabeled';
