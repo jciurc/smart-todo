@@ -1,7 +1,6 @@
 $(document).ready(() => {
 
-
-  $('#new-tweet').on('submit', newTodo);
+  $('#new-tweet').on('apis', callApis);
 });
 
 const fetchMoviesForUser = function () {
@@ -24,7 +23,7 @@ const fetchMoviesForUser = function () {
   })
 };
 
-const fetchMusicForUser = function(text) {
+const fetchMusicForUser = (text) => {
   const options = {
     method: 'get',
     url: 'https://shazam.p.rapidapi.com/search',
@@ -57,11 +56,11 @@ const findCategory = (text) => {
   });
 }
 
-const newTodo = (event) => {
-  event.preventDefault();
+const callApis = function() {
   const $form = $(this).closest('form');
   const $inputField = $form.find('input');
   const description = $inputField.val() || "Avengers Endgame";
+  $inputField.val('');
   // error handling. text field empty
 
   findCategory(description)
