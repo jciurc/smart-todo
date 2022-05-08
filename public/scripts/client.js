@@ -55,8 +55,9 @@
   // == events ==
   const newTodo = function(event) {
     event.preventDefault();
-    $(this).trigger('newSubmission');
     // error handling. text field empty
+
+    $.post('/todos', $(this).serialize());
   };
 
   const loginSubmit = function(event) {
