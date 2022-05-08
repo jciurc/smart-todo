@@ -1,6 +1,7 @@
 $(document).ready(() => {
 
-  $('#new-tweet').on('apis', callApis);
+  $('#new-todo').on('submit', callApis);
+  // $('#new-todo').on('apis', callApis);
 });
 
 const fetchMoviesForUser = function () {
@@ -13,7 +14,7 @@ const fetchMoviesForUser = function () {
       "X-RapidAPI-Key": "***REMOVED***",
     },
   };
-  return ajax.request(options)
+  return $.ajax(options)
     .then((response) => {
       if (response.data.search.title.length >= 1) return "Movies";
 
@@ -56,7 +57,8 @@ const findCategory = (text) => {
   });
 }
 
-const callApis = function() {
+const callApis = function(event) {
+  event.preventDefault();
   const $form = $(this).closest('form');
   const $inputField = $form.find('input');
   const description = $inputField.val() || "Avengers Endgame";

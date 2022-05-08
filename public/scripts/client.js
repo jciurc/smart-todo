@@ -1,6 +1,6 @@
 $(document).ready(() => {
-  $('#new-todo').on('submit', newTodo);
   $('.delete-button').on('click', deleteTodo);
+  // $('#new-todo').on('submit', newTodo);
 
   // = initial page load =
   loadTodos();
@@ -39,7 +39,7 @@ loadTodos = () => {
 };
 
 // == events ==
-const newTodo = (event) => {
+const newTodo = function(event) {
   event.preventDefault();
   $(this).trigger('apis');
   // error handling. text field empty

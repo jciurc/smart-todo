@@ -39,6 +39,12 @@ const getAllTodos = (id) => {
   })
 };
 
+// ==Edit catagory==
+
+
+
+//Edit text
+
 // == alters ==
 const deleteTodo = (id) => {
   const values = [id]
