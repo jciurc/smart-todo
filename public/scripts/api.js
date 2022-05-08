@@ -1,25 +1,8 @@
-// const axios = require("axios");
+$(document).ready(() => {
 
-// const fetchMusicForUser = function () {
-//   const musicOptions = {
-//     method: "GET",
-//     url: "https://shazam.p.rapidapi.com/search",
-//     params: { term: "kiss the rain", locale: "en-US", offset: "0", limit: "5" },
-//     headers: {
-//       "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-//       "X-RapidAPI-Key": "***REMOVED***",
-//     },
-//   };
-//   axios.request(musicOptions)
-//     .then((response) => {
-//       console.log("data", response.data);
 
-//     })
-//     .catch ((err) => {
-//       console.log("err", err)
-//   })
-// };
-
+  $('#new-tweet').on('submit', newTodo);
+});
 
 const fetchMoviesForUser = function () {
   const movieOptions = {
@@ -41,25 +24,46 @@ const fetchMoviesForUser = function () {
   })
 };
 
+const fetchMusicForUser = function() {
+  const options = {
+    method: 'get',
+    url: 'https://shazam.p.rapidapi.com/search',
+    data: { term: "kiss the rain", locale: "en-US", offset: "0", limit: "5" },
+    headers: {
+      "X-RapidAPI-Host": "shazam.p.rapidapi.com",
+      "X-RapidAPI-Key": "***REMOVED***",
+    }
+  };
 
-
-const fetchMusicForUser = function () {
-  $.get('https://shazam.p.rapidapi.com/search', {params: { term: "kiss the rain", locale: "en-US", offset: "0", limit: "5" },
-  headers: {
-    "X-RapidAPI-Host": "shazam.p.rapidapi.com",
-    "X-RapidAPI-Key": "***REMOVED***",
-  }})
+  return $.ajax(options)
+    .then((res) => {
+      if (res.hits.tracks.length > 1) return "Music";
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
 
+const findCategory = (text) => {
+  return Promise.any([
+    fetchMusicForUser(text),
+    fetchMoviesForUser(text)
+  ])
+  .then((category) => {
+    return category || 'Unlabeled';
+  });
+}
 
-fetchMusicForUser()
-.then((data) => {
-  console.log('shazam results', data.rows);
-})
-.catch((err) => {
-  console.error(err);
-})
+const newTodo = (event) => {
+  event.preventDefault();
+  const $form = $(this).closest('form');
+  const $inputField = $form.find('input');
+  const description = $inputField.val() || "Avengers Endgame";
+  // error handling. text field empty
 
-
-// fetchMoviesForUser()
-
+  findCategory(description)
+    .then((category) => {
+    $.post('/todos', {description, category});
+    $.get('/todos');
+  });
+};
