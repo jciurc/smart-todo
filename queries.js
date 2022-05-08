@@ -2,7 +2,7 @@ const db = require("./lib/db");
 
 // == users ==
 const getUserByName = (name) => {
-  return db.query(`SELECT * FROM users WHERE name = $1;`, [name])
+  return db.query(`SELECT * FROM users WHERE name = $1`, [name])
   .then((data) => {
     return data.rows[0];
   })
@@ -12,7 +12,7 @@ const getUserByName = (name) => {
 };
 
 const getUserById = (id) => {
-  return db.query(`SELECT * FROM id WHERE id = $1;`, [id])
+  return db.query(`SELECT * FROM users WHERE id = $1`, [id])
   .then((data) => {
     return data.rows[0];
   })

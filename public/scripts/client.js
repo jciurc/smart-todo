@@ -1,101 +1,107 @@
-$(document).ready(() => {
-  $('nav').find('form').on('submit', loginSubmit);
-  $('#new-todo').on('submit', newTodo);
-  $('.delete-button').on('click', deleteTodo);
-  $('#logout').on('click', loggedOut);
+(() => {
+  $(document).ready(() => {
+    // user routes
+    $('nav').find('form').on('submit', loginSubmit);
+    $('#logout').on('click', loggedOut);
 
-  // = initial page load =
-  checkLogin();
-  loadTodos();
-});
+    // todo routes
+    $('#new-todo').on('submit', newTodo);
+    $('.delete-button').on('click', deleteTodo);
 
-// == helpers ==
-const safeHtml = (text) => {
-  const safe = document.createElement("div");
-  safe.appendChild(document.createTextNode(text));
-  return safe.innerHTML;
-};
+    // = initial page load =
+    checkLogin();
+    loadTodos();
+  });
 
-const buildTodoCard = (todo) => {
-  const htmlString = `
-  <article class="todo rounded">
-    <p class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</p>
-  </article>
-`;
-  return htmlString;
-};
+  // == helpers ==
+  const safeHtml = (text) => {
+    const safe = document.createElement("div");
+    safe.appendChild(document.createTextNode(text));
+    return safe.innerHTML;
+  };
 
-const renderTodos = (todos) => {
-  const $container = $('#categories-container');
-  for (const todo of todos) {
-    $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
-  }
-};
+  const buildTodoCard = (todo) => {
+    const htmlString = `
+    <article class="todo rounded">
+      <p class="text-base rounded bg-slate-700 m-3 p-4" alt="${todo.id}">${safeHtml(todo.description)}</p>
+    </article>
+  `;
+    return htmlString;
+  };
 
-const loadTodos = () => {
-  $.get('/todos')
-    .then(renderTodos);
-};
+  const renderTodos = (todos) => {
+    const $container = $('#categories-container');
+    for (const todo of todos) {
+      $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
+    }
+  };
 
-const setNavbar = (name) => {
-  if (name) {
-    const htmlString =`<p class="align-text">${safeHtml(name)}</p>`;
-    $('#login').hide();
-    $('#logout').show().find('div').append(htmlString);
-    return;
-  }
-  $('#login').show();
-  $('#logout').hide().find('div').text('');
-};
+  const loadTodos = () => {
+    $.get('/todos')
+      .then(renderTodos);
+  };
 
-// == events ==
-const newTodo = function(event) {
-  event.preventDefault();
-  $(this).trigger('newSubmission');
-  // error handling. text field empty
-};
+  const setNavbar = (name) => {
+    if (name) {
+      const htmlString = `<p class="align-text">${safeHtml(name)}</p>`;
+      $('#login').hide();
+      $('#logout').show().find('div').append(htmlString);
+      return;
+    }
+    $('#login').show();
+    $('#logout').hide().find('div').text('');
+  };
 
-const loginSubmit = function(event) {
-  event.preventDefault();
-  const $form = $(this);
-  const $inputField = $form.find('input');
+  // == events ==
+  const newTodo = function(event) {
+    event.preventDefault();
+    $(this).trigger('newSubmission');
+    // error handling. text field empty
+  };
 
-  // error handling
-  if (!$inputField.val().trim()) return; // todo send alert
+  const loginSubmit = function(event) {
+    event.preventDefault();
+    const $form = $(this);
+    const $inputField = $form.find('input');
 
-  // login user
-  $.post('/users/login', $form.serialize())
-    .then((user) => {
-      $inputField.val('');
-      setNavbar(user.name);
-    });
-};
+    // error handling
+    if (!$inputField.val().trim()) return; // todo send alert
 
-const loggedOut = function() {
-  $.post('/users/logout')
-    .then((loggedOut) => {
-      if (loggedOut) {
-        setNavbar(false);
-        clearTodos();
-      }
-    });
-};
+    // login user
+    $.post('/users/login', $form.serialize())
+      .then((user) => {
+        $inputField.val('');
+        setNavbar(user.name);
+        loadTodos();
+      });
+  };
 
-const checkLogin = function() {
-  $.get('/users')
-    .then((user) => {
-      setNavbar(user.name);
-    });
-  $('#logout').hide();
-};
+  const loggedOut = () => {
+    $.post('/users/logout')
+      .then((loggedOut) => {
+        if (loggedOut) {
+          setNavbar(false);
+          clearTodos();
+        }
+      });
+  };
+
+  const checkLogin = () => {
+    $.get('/users')
+      .then((user) => {
+        setNavbar(user.name);
+      });
+  };
 
 
-const deleteTodo = () => {
-  const $todo = $(this).closest('article');
-  const id = $todo.id;
+  const deleteTodo = () => {
+    const $todo = $(this).closest('article');
+    const id = $todo.alt;
 
-  $.delete('/' + id)
-    .then(() => {
-      $todo.closest('section').removeElement($todo);
-    });
-};
+    $.delete('/' + id)
+      .then(() => {
+        $todo.closest('section').removeElement($todo);
+      });
+  };
+
+})();
