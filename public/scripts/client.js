@@ -49,16 +49,17 @@ const newTodo = function(event) {
 
   const loginSubmit = function(event)  {
    event.preventDefault();
-   const htmlString = `<p>logged in as </p>`;
+
   const $form = $(this);
    const inputText = $form.serialize();
 
   $.post('/users', inputText)
    .then((user) => {
+    const htmlString = `<p class="align-middle">logged in as ${user.name} </p>`;
      $form.find('input').val('');
      $('#login').hide();
-     $('#logout').show();
-     $('nav').append(htmlString);
+     $('#logout').show().find('div').append(htmlString);
+
   });
 
   }
