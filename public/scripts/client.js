@@ -1,6 +1,8 @@
 $(document).ready(() => {
   $('#new-todo').on('submit', newTodo);
   $('.delete-button').on('click', deleteTodo);
+  $('nav').find('form').on('submit', loginSubmit);
+  $('#logout').hide();
 
   // = initial page load =
   loadTodos();
@@ -14,11 +16,13 @@ const safeHtml = (text) => {
 };
 
 const buildTodoCard = (todo) => {
+
   const htmlString = `
   <article class="todo rounded flex" style="background-color: #225778;>
-    <p class="text-base">${safeHtml(todo.description)}</p>
+    <p class="text-base rounded text-base bg-slate-700 m-5 p-5">${safeHtml(todo.description)}</p>
   </article>
 `;
+
     return htmlString;
 }
 
@@ -40,6 +44,28 @@ const newTodo = function(event) {
   $(this).trigger('apis');
   // error handling. text field empty
 };
+
+
+
+  const loginSubmit = function(event)  {
+   event.preventDefault();
+   const htmlString = `<p>logged in as </p>`;
+  const $form = $(this);
+   const inputText = $form.serialize();
+
+  $.post('/users', inputText)
+   .then((user) => {
+     $form.find('input').val('');
+     $('#login').hide();
+     $('#logout').show();
+     $('nav').append(htmlString);
+  });
+
+  }
+
+
+
+
 
 const deleteTodo = () => {
   const $todo = $(this).closest('article');
