@@ -17,6 +17,7 @@
 
 <body class="bg-gray-900	text-slate-300">
   <nav class="bg-slate-800"><ul class="flex justify-end items-center">
+    <!-- <img src="./images/logo.svg" alt="Kiwi standing on oval"> -->
 
     <li class="mr-6">
       <input class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5" type="text" id="user_id" name="" placeholder = "username"><br>
@@ -34,26 +35,30 @@
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
   </form>
 
+
 <section id="todo-container" class="flex justify-center mt-20 h-68">
-  <div class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
+  <div class="w-1/4 rounded overflow-y-scroll h-80 shadow-lg mr-10 bg-slate-800">
   <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2" id="Movies-container">Movies</div>
-    <p class="text-base">
+    <div class="font-bold text-xl mb-2">Movies</div>
+    <div class="font-bold text-xl mb-2" id="Movies-container"></div>
+    <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
       Movie One
     </p>
-    <p class="text-base">
+    <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
       Movie Two
     </p>
   </div>
 </div>
 
-<div class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
+<div class="w-1/4 rounded overflow-y-scroll h-80 shadow-lg bg-slate-800">
   <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2" id="Music-container">Music</div>
-    <p class="text-base">
+
+    <div class="font-bold text-xl mb-2">Music</div>
+    <div class="font-bold text-xl mb-2" id="Music-container"></div>
+    <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
       Album One
     </p>
-    <p class="text-base">
+    <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
       Album Two
     </p>
   </div>

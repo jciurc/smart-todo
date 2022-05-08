@@ -17,7 +17,7 @@ const safeHtml = (text) => {
 
 const buildTodoCard = (todo) => {
   const htmlString =  `
-    <div class="rounded" style="background-color: #f33aee;">${safeHtml(todo.description)}</div>
+    <div class="rounded text-base bg-slate-700 m-5 p-5" >${safeHtml(todo.description)}</div>
     `
     return htmlString;
 }
@@ -28,6 +28,7 @@ const renderTodos = (todos) => {
     $container.find(`#${todo.name}-container`).prepend(buildTodoCard(todo));
   }
 }
+
 
 
 loadTodos = () => {
