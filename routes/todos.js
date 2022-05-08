@@ -23,7 +23,7 @@ router.get("/", (req, res) => {
 });
 
 //Edit todo
-router.()
+router.post('/:id')
 
 module.exports = router;
 
