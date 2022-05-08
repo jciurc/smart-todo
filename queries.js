@@ -40,6 +40,44 @@ const getAllTodos = (id) => {
 };
 
 // == alters ==
+
+const editTodo = () => {
+  const queryString = `UPDATE todos SET description = $1, catagory_id = $2 WHERE user_id = $3 RETURNING *;`;
+  const values = [todos.description, todos.category_id, todos.user_id];
+  return db.query(queryString, values)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+const editCategory = () => {
+  const queryString = `INSERT INTO catagories (name) VALUES ()`
+  const values = [];
+  return db.query(queryString, values)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+const editcompleted = () => {
+  const queryString = `INSERT INTO todos (completed) VALUES ( true)`;
+  const values = [];
+  return db
+    .query(queryString, values)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
 const deleteTodo = (id) => {
   const values = [id]
   const queryString = `
