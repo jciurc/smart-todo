@@ -6,8 +6,9 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article', editMode);
+    //$('.todo-container').on('click', 'article', editMode);  temportrary
     $('.todo-container').on('click', '.delete-button', deleteTodo);
+    $('.todo-container').on('click', '.confirm-edit', editTodo);
 
     // = initial page load =
     checkLogin();
@@ -31,7 +32,7 @@
     <article class="todo rounded" alt="${todo.id}">
       <p class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</p>
 
-<form hidden>
+<form>
 
         <textarea class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
@@ -119,7 +120,7 @@
   };
 
   const editTodo = function () {
-  
+
 }
 
 
