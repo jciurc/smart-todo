@@ -8,25 +8,6 @@
     $('#new-todo').on('submit', newTodo);
     $('.delete-button').on('click', deleteTodo);
 
-<<<<<<< HEAD
-// == helpers ==
-const safeHtml = (text) => {
-  const safe = document.createElement("div");
-  safe.appendChild(document.createTextNode(text));
-  return safe.innerHTML;
-};
-
-const buildTodoCard = (todo) => {
-  const htmlString = `
-<div class="todo rounded" ">
-  <article class="todo rounded flex" style="background-color: #225778;>
-    <p class="text-base">
-      ${safeHtml(todo.description)}
-    </p>
-  </article>
-</div>
-`;
-=======
     // = initial page load =
     checkLogin();
     loadTodos();
@@ -48,40 +29,9 @@ const buildTodoCard = (todo) => {
       <p class="text-base rounded bg-slate-700 m-3 p-4" alt="${todo.id}">${safeHtml(todo.description)}</p>
     </article>
   `;
->>>>>>> 58c5717c71bbde3002ae41dce4cbbd62dbe70d24
     return htmlString;
   };
 
-<<<<<<< HEAD
-const renderTodos = (todos) => {
-  const $container = $('#categories-container');
-  for (const todo of todos) {
-    $container.find(`#${todo.name}-container`).show().prepend(buildTodoCard(todo));
-  }
-}
-
-loadTodos = () => {
-  $.get('/todos')
-  .then(renderTodos)
-};
-
-// == events ==
-const newTodo = (event) => {
-  event.preventDefault();
-  $(this).trigger('apis');
-  // error handling. text field empty
-};
-
-const deleteTodo = () => {
-  const $todo = $(this).closest('article');
-  const id = $todo.id;
-
-  $.delete('/' + id)
-    .then(() => {
-      $todo.closest('section').removeElement($todo)
-    })
-};
-=======
   const renderTodos = (todos) => {
     // need to empty containers first
     const $container = $('#categories-container');
@@ -168,4 +118,3 @@ const deleteTodo = () => {
   };
 
 })();
->>>>>>> 58c5717c71bbde3002ae41dce4cbbd62dbe70d24
