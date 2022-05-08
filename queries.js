@@ -62,22 +62,11 @@ const editTodo = () => {
       console.error(err);
     });
 };
-/*
-// const editCategory = () => {
-//   const queryString = `INSERT INTO catagories (name) VALUES ()`
-//   const values = [];
-//   return db.query(queryString, values)
-//     .then((data) => {
-//       return data.rows;
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//     });
-// };
+
 
 const editcompleted = () => {
-  const queryString = `INSERT INTO todos (completed) VALUES ( true)`;
-  const values = [];
+  const queryString = `INSERT INTO todos (completed) VALUES (true)`;
+
   return db
     .query(queryString, values)
     .then((data) => {
@@ -106,6 +95,6 @@ const deleteTodo = (id) => {
 };
 
 // stretch getUserTodosByCategory(id, category)
-// temporary extra lines
+
 
 module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
