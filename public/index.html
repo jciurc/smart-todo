@@ -12,6 +12,7 @@
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/client.js"></script>
+  <script type="text/javascript" src="/scripts/api.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -26,18 +27,15 @@
     </li>
 
 
-  </ul></nav>
-
-  <h1 class="text-4xl font-semibold">Hello, user!</h1>
-  <form method = "POST" action = "/todos/new">
-    <input class="form-control px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-10 mb-5" type="text" id="new-todo" name="" placeholder = "add new todo"><br>
+  <form method = "POST" action = "/todos/new" id="new-todo">
+    <input class="m-10" type="text" name="text" placeholder = "add new todo"><br>
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
   </form>
 
 <section id="todo-container" class="flex justify-center mt-20 h-68">
-  <div class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
+  <article class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
   <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2" id="Movies-container">Movies</div>
+    <header class="font-bold text-xl mb-2" id="Movies-container">Movies</header>
     <p class="text-base">
       Movie One
     </p>
@@ -45,7 +43,7 @@
       Movie Two
     </p>
   </div>
-</div>
+</article>
 
 <div class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
   <div class="px-6 py-4">
