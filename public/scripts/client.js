@@ -33,7 +33,6 @@ const renderTodos = (todos) => {
   }
 }
 
-
 loadTodos = () => {
   $.get('/todos')
   .then(renderTodos)
@@ -43,6 +42,7 @@ loadTodos = () => {
 const newTodo = (event) => {
   event.preventDefault();
   $(this).trigger('apis');
+  // error handling. text field empty
 };
 
 const deleteTodo = () => {
