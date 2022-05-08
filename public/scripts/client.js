@@ -1,11 +1,12 @@
 $(document).ready(() => {
-  $('#new-todo').on('submit', callApis);
+  $('#new-todo').on('submit', newTodo);
   $('.delete-button').on('click', deleteTodo);
 
   // = initial page load =
   loadTodos();
 });
 
+// == helpers ==
 const safeHtml = (text) => {
   const safe = document.createElement("div");
   safe.appendChild(document.createTextNode(text));
