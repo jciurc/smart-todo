@@ -1,6 +1,8 @@
 $(document).ready(() => {
   $('#new-todo').on('submit', newTodo);
   $('.delete-button').on('click', deleteTodo);
+  $('nav').find('form').on('submit', loginSubmit);
+  $('#logout').hide();
 
   // = initial page load =
   loadTodos();
@@ -42,6 +44,28 @@ const newTodo = function(event) {
   $(this).trigger('apis');
   // error handling. text field empty
 };
+
+
+
+  const loginSubmit = function(event)  {
+   event.preventDefault();
+   const htmlString = `<p>logged in as </p>`;
+  const $form = $(this);
+   const inputText = $form.serialize();
+
+  $.post('/users', inputText)
+   .then((user) => {
+     $form.find('input').val('');
+     $('#login').hide();
+     $('#logout').show();
+     $('nav').append(htmlString);
+  });
+
+  }
+
+
+
+
 
 const deleteTodo = () => {
   const $todo = $(this).closest('article');

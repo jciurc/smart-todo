@@ -9,15 +9,25 @@ const express = require('express');
 const router = express.Router();
 const { getUserByName } = require('../queries');
 
-router.get('/', (req, res) => {
-  getUserByName('Jordan')
+router.get("/", (req, res) => {
+
+});
+
+router.post("/", (req, res) => {
+
+  const name = req.body.text;
+
+  getUserByName(name)
     .then((user) => {
       res.cookie('user', user.id);
-      res.json({ user });
+      res.json(user);
+      console.log(user);
     })
     .catch((err) => {
       res.status(500).json({ error: err.message });
     });
-});
+
+
+})
 
 module.exports = router;
