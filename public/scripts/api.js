@@ -1,6 +1,6 @@
 $(document).ready(() => {
 
-  $('#new-todo').on('apis', callApis);
+  $('#new-todo').on('newSubmission', callApis);
 });
 
 const fetchMoviesForUser = function () {

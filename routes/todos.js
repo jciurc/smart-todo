@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
-const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
+const { getAllTodos, deleteTodo } = require('../queries');
 
 router.get("/", (req, res) => {
   const user = 1;

@@ -1,37 +1,90 @@
-<main>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Smart ToDo</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/client.js"></script>
+  <script type="text/javascript" src="/scripts/api.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900	text-slate-300">
+  <nav class="bg-slate-800">
+    <ul class="flex justify-end items-center">
+      <!-- <img src="./images/logo.svg" alt="Kiwi standing on oval"> -->
+      <form class="flex" id="login">
+        <li class="mr-6">
+          <input
+            class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
+            type="text" name="text" placeholder="Username"><br>
+        </li>
+        <li class="mr-10">
+          <button type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
+        </li>
+      </form>
+
+      <form class="flex items-center" id="logout">
+        <li class="mr-6">
+          <div></div>
+          <br>
+        </li>
+        <li class="mr-10">
+          <button type="button"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Logout</button>
+        </li>
+      </form>
+    </ul>
+  </nav>
+
+  <h1 class="text-4xl font-semibold">Hello, user!</h1>
   <form id="new-todo">
-    <input class="m-10" type="text" name="text" placeholder="add new todo"><br>
+    <input
+      class="form-control px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-10 mb-5"
+      type="text"  name="text" placeholder="New Todo"><br>
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
   </form>
 
   <section id="categories-container" class="flex justify-center mt-20 h-68">
 
-    <div hidden id="Movies" class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
-      <header class="font-bold text-xl mb-2">Movies</header>
-      <div class="todo-container px-6 py-4">
-      </div>
-    </div>
 
-    <div hidden id="Music" class="category w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
-      <header class="todo-container font-bold text-xl mb-2">Music</header>
+    <div class="w-1/4 rounded overflow-y-scroll h-80 shadow-lg mr-10 bg-slate-800">
       <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">Movies</div>
+        <div class="font-bold text-xl mb-2" id="Movies-container"></div>
+        <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
+          Movie One
+        </p>
+        <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
+          Movie Two
+        </p>
       </div>
     </div>
 
-
-    <div hidden id="Books" class="category w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
-      <header class="todo-container font-bold text-xl mb-2">Books</header>
+    <div class="w-1/4 rounded overflow-y-scroll h-80 shadow-lg bg-slate-800">
       <div class="px-6 py-4">
+
+        <div class="font-bold text-xl mb-2">Music</div>
+        <div class="font-bold text-xl mb-2" id="Music-container"></div>
+        <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
+          Album One
+        </p>
+        <p class="text-base rounded text-base bg-slate-700 m-5 p-5">
+          Album Two
+        </p>
       </div>
     </div>
-
-
-    <div hidden id="Products" class="category w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
-      <header class="todo-container font-bold text-xl mb-2">Products</header>
-      <div class="px-6 py-4">
-      </div>
-    </div>
-
 
   </section>
 </main>
+
+</body>
+</html>
