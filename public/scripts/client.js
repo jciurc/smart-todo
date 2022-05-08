@@ -118,7 +118,9 @@
       });
   };
 
-const editTodo = function()
+  const editTodo = function () {
+  
+}
 
 
   const deleteTodo = function() {
