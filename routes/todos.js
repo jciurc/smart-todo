@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
       res.json(todo || null);
     })
     .catch((err) => {
-
+      console.error(err);
     })
   });
 });
@@ -56,8 +56,16 @@ router.post('/', (req, res) => {
 
 
 router.delete("/:id", (req, res) => {
-  //   db.deleteTodos(req.params.id)
+  const id = req.params.id;
+  deleteTodo(id)
+  .then((data) => {
+    res.send(true);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
 });
+
 module.exports = router;
 
 

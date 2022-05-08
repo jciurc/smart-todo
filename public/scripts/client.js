@@ -6,14 +6,11 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.delete-button').on('click', deleteTodo);
+    $('button').on('click', deleteTodo);
 
     // = initial page load =
     checkLogin();
     loadTodos();
-
-
-    console.log('latest version???');
   });
 
   // == helpers ==
@@ -27,6 +24,7 @@
     const htmlString = `
     <article class="todo rounded">
       <p class="text-base rounded bg-slate-700 m-3 p-4" alt="${todo.id}">${safeHtml(todo.description)}</p>
+      <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
     </article>
   `;
     return htmlString;
@@ -107,13 +105,16 @@
   };
 
 
-  const deleteTodo = () => {
+  const deleteTodo = function() {
+    console.log("Todo function");
     const $todo = $(this).closest('article');
-    const id = $todo.alt;
+    // const id = $todo.attr('alt');
+    const id = 3;
+    console.log("todo id", id);
 
-    $.delete('/' + id)
+    $.ajax({url: '/todos/' + id, type: 'DELETE'})
       .then(() => {
-        $todo.closest('section').removeElement($todo);
+        $todo.closest('section').remove($todo);
       });
   };
 
