@@ -6,7 +6,8 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('button').on('click', deleteTodo);
+    $('.todo-container').on('click', 'article', editMode);
+    $('.todo-container').on('click', '.delete-button', deleteTodo);
 
     // = initial page load =
     checkLogin();
@@ -14,6 +15,11 @@
   });
 
   // == helpers ==
+  const editMode = function() {
+    const $todo = $(this);
+    $todo.show('button')
+  };
+
   const safeHtml = (text) => {
     const safe = document.createElement("div");
     safe.appendChild(document.createTextNode(text));
@@ -22,9 +28,15 @@
 
   const buildTodoCard = (todo) => {
     const htmlString = `
-    <article class="todo rounded">
-      <p class="text-base rounded bg-slate-700 m-3 p-4" alt="${todo.id}">${safeHtml(todo.description)}</p>
-      <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+    <article class="todo rounded" alt="${todo.id}">
+      <p class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</p>
+
+<form hidden>
+
+        <textarea class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
+        <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
+        <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+</form>
     </article>
   `;
     return htmlString;
@@ -43,15 +55,17 @@
       .then(renderTodos);
   };
 
-  const setNavbar = (name) => {
+  const renderBasedOnUser = (name) => {
     if (name) {
       const htmlString = `<p class="align-text">${safeHtml(name)}</p>`;
       $('#login').hide();
       $('#logout').show().find('div').append(htmlString);
+      $('#new-todo').show().find('h1').text(`Hello, ${name}!`);
       return;
     }
     $('#login').show();
     $('#logout').hide().find('div').text('');
+    $('#new-todo').hide().find('h1').text('');
   };
 
   // == events ==
@@ -82,7 +96,7 @@
     $.post('/users/login', $form.serialize())
       .then((user) => {
         $inputField.val('');
-        setNavbar(user.name);
+        renderBasedOnUser(user.name);
         loadTodos();
       });
   };
@@ -91,8 +105,8 @@
     $.post('/users/logout')
       .then((loggedOut) => {
         if (loggedOut) {
-          setNavbar(false);
-          clearTodos();
+          renderBasedOnUser(false);
+          loadTodos();
         }
       });
   };
@@ -100,21 +114,20 @@
   const checkLogin = () => {
     $.get('/users')
       .then((user) => {
-        setNavbar(user.name);
+        renderBasedOnUser(user.name);
       });
   };
 
+const editTodo = function()
+
 
   const deleteTodo = function() {
-    console.log("Todo function");
     const $todo = $(this).closest('article');
-    // const id = $todo.attr('alt');
-    const id = 3;
-    console.log("todo id", id);
+    const id = $todo.attr('alt');
 
     $.ajax({url: '/todos/' + id, type: 'DELETE'})
       .then(() => {
-        $todo.closest('section').remove($todo);
+        $todo.remove();
       });
   };
 
