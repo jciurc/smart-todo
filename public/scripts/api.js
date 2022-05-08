@@ -24,11 +24,11 @@ const fetchMoviesForUser = function () {
   })
 };
 
-const fetchMusicForUser = function() {
+const fetchMusicForUser = function(text) {
   const options = {
     method: 'get',
     url: 'https://shazam.p.rapidapi.com/search',
-    data: { term: "kiss the rain", locale: "en-US", offset: "0", limit: "5" },
+    data: { term: text, locale: "en-US", offset: "0", limit: "5" },
     headers: {
       "X-RapidAPI-Host": "shazam.p.rapidapi.com",
       "X-RapidAPI-Key": "API_KEY",
@@ -51,6 +51,9 @@ const findCategory = (text) => {
   ])
   .then((category) => {
     return category || 'Unlabeled';
+  })
+  .catch((err) => {
+    console.error(err);
   });
 }
 
@@ -63,7 +66,8 @@ const newTodo = (event) => {
 
   findCategory(description)
     .then((category) => {
-    $.post('/todos', {description, category})
+      const user_id = 1; // need to get user id
+    $.post('/todos', {user_id, description, category})
     $.get('/todos');
   });
 };
