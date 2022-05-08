@@ -12,6 +12,7 @@
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/client.js"></script>
+  <script type="text/javascript" src="/scripts/api.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -33,8 +34,8 @@
 
   <h1 class="text-4xl">Good Morning</h1>
 
-  <form method = "POST" action = "/todos/new">
-    <input class="m-10" type="text" id="new-todo" name="" placeholder = "add new todo"><br>
+  <form method = "POST" action = "/todos/new" id="new-todo">
+    <input class="m-10" type="text" name="text" placeholder = "add new todo"><br>
     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
   </form>
 </body>
