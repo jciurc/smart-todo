@@ -14,11 +14,13 @@ const safeHtml = (text) => {
 };
 
 const buildTodoCard = (todo) => {
+
   const htmlString = `
   <article class="todo rounded flex" style="background-color: #225778;>
-    <p class="text-base">${safeHtml(todo.description)}</p>
+    <p class="text-base rounded text-base bg-slate-700 m-5 p-5">${safeHtml(todo.description)}</p>
   </article>
 `;
+
     return htmlString;
 }
 
