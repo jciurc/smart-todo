@@ -3,12 +3,11 @@ const axios = require('axios').default;
 // = api calls =
 const fetchMoviesForUser = function() {
   const options = {
-    method: "GET",
     url: "https://movie-database-alternative.p.rapidapi.com/",
     params: { s: "Avengers Endgame", r: "json", page: "1" },
     headers: {
       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-      "X-RapidAPI-Key": "env",
+      "X-RapidAPI-Key": process.env.API_KEY,
     },
   };
   return $.ajax(options)
