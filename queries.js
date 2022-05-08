@@ -97,4 +97,4 @@ const deleteTodo = (id) => {
 // stretch getUserTodosByCategory(id, category)
 
 
-module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo };
+module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo, editTodo };

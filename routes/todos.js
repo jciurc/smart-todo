@@ -6,8 +6,10 @@
  */
 
 const express = require('express');
+var methodOverride = require('method-override');
 const router  = express.Router();
 const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
+
 
 router.get("/", (req, res) => {
   const user = 1;
@@ -22,9 +24,31 @@ router.get("/", (req, res) => {
     });
 });
 
-//Edit todo
-router.()
+//POST todo
+router.post("/:id", (req, res) => {
+  //const todo = req.body.text
+  //const user = cookies.user
 
+  //Update database
+  //const category = req.body. catagory //??????????
+  //if user is not logged in or if user is not the user from the database return error
+});
+
+//Edit todo
+router.put("/:id_put", (req, res) => {
+  //const todo = req.body.text
+  //const user = cookies.user
+
+  //Update database
+  //const category = req.body. catagory //??????????
+  //if user is not logged in or if user is not the user from the database reurn error
+});
+
+
+
+router.delete("/:id_delete", {
+  //   db.deleteTodos(req.params.id)
+})
 module.exports = router;
 
 

@@ -21,6 +21,7 @@ app.use("/styles", sassMiddleware({
 })
 );
 app.use(express.static("public"));
+app.use(methodOverride("_method"));
 
 // Separated Routes for each Resource
 const usersRoutes = require("./routes/users");
