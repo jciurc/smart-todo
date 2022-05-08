@@ -11,6 +11,7 @@
 
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/api.js"></script>
   <script type="text/javascript" src="/scripts/client.js"></script>
   <script type="text/javascript" src="/scripts/api.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,6 +20,7 @@
 <body class="bg-gray-900	text-slate-300">
   <nav class="bg-slate-800">
     <ul class="flex justify-end items-center">
+<<<<<<< HEAD
 
       <li class="mr-6">
         <input
@@ -56,10 +58,59 @@
       <div hidden id="Books-container" class="category w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
         <div class="px-6 py-4">
           <header class="font-bold text-xl mb-2">Books</header>
+=======
+      <!-- <img src="./images/logo.svg" alt="Kiwi standing on oval"> -->
+      <form id="login" hidden class="flex">
+        <li class="mr-6">
+          <input
+            class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
+            type="text" name="text" placeholder="Username"><br>
+        </li>
+        <li class="mr-10">
+          <button type="submit"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
+        </li>
+      </form>
+
+      <form id="logout" hidden class="flex items-center" >
+        <li class="mr-6">
+          <div></div>
+          <br>
+        </li>
+        <li class="mr-10">
+          <button type="button"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Logout</button>
+        </li>
+      </form>
+    </ul>
+  </nav>
+
+  <h1 class="text-4xl font-semibold">Hello, user!</h1>
+  <form id="new-todo">
+    <input
+      class="form-control px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-10 mb-5"
+      type="text"  name="text" placeholder="New Todo"><br>
+    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+  </form>
+
+  <main>
+    <section id="categories-container" class="flex justify-center mt-20 h-68">
+
+      <div id="Movies" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+        <header class="font-bold text-xl m-4">Movies</header>
+        <div class="px-6 py-4">
+        </div>
+      </div>
+
+      <div id="Music" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+        <header class="font-bold text-xl m-4">Music</header>
+        <div class="px-6 py-4">
+>>>>>>> 58c5717c71bbde3002ae41dce4cbbd62dbe70d24
         </div>
       </div>
 
 
+<<<<<<< HEAD
       <div hidden id="Products-container" class="category w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
         <div class="px-6 py-4">
           <header class="font-bold text-xl mb-2">Products</header>
@@ -71,4 +122,23 @@
   </main>
 </body>
 
+=======
+      <div id="Books" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+        <header class="font-bold text-xl m-4">Books</header>
+        <div class="px-6 py-4">
+        </div>
+      </div>
+
+
+      <div id="Products" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+        <header class="font-bold text-xl m-4">Products</header>
+        <div class="px-6 py-4">
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+</body>
+>>>>>>> 58c5717c71bbde3002ae41dce4cbbd62dbe70d24
 </html>

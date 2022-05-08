@@ -1,17 +1,14 @@
-/*
- * All routes for Widgets are defined here
- * Since this file is loaded in server.js into api/widgets,
- *   these routes are mounted onto /widgets
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
-
 const express = require('express');
+//const methodOverride = require('method-override');
 const router  = express.Router();
-const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
+const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName } = require('../queries');
+const { findCategory } = require('../api');
+//app.use(methodOverride("'X-HTTP-Method-Override'"));
+//app.use(methodOverride('_method'));
 
 router.get("/", (req, res) => {
-  const user = 1;
-  getAllTodos(user || null)
+  const userId = req.cookies.user;
+  getAllTodos(userId || null)
     .then((todos) => {
       res.json(todos);
     })
@@ -22,6 +19,45 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  const description = req.body.text;
+  // get category from external apis
+  findCategory(description)
+    .then((category) => {
+      return getCategoryByName(category)
+
+      .then((cat) => {
+      const user_id = req.cookies.user;
+      const category_id = cat.id;
+
+      // create new todo in database
+      insertNewTodo({ user_id, description, category_id })
+    })
+    .then((todo) => {
+
+      // return new todo back to front end
+      res.json(todo || null);
+    })
+    .catch((err) => {
+
+    })
+  });
+});
+
+//Edit todo
+// router.post('/:id') {
+//   const todoId = req.params.id
+//   const newTodo = req.body.text;
+//   const category = req.body.category;
+//   const userId = req.cookie.user
+// })
+
+
+
+
+router.delete("/:id", (req, res) => {
+  //   db.deleteTodos(req.params.id)
+});
 module.exports = router;
 
 
