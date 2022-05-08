@@ -39,6 +39,12 @@ const getAllTodos = (id) => {
   })
 };
 
+// ==Edit catagory==
+
+
+
+//Edit text
+
 // == alters ==
 const editTodo = (todo) => {
   const values = [];
@@ -89,7 +95,7 @@ const deleteTodo = (id) => {
 
   return db.query(queryString, values)
   .then((data) => {
-    console.log('data from delete', data); // for testing
+    console.log('data from delete', data.rows); // for testing
     return true;
   })
   .catch((err) => {
