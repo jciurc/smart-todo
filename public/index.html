@@ -17,51 +17,58 @@
 </head>
 
 <body class="bg-gray-900	text-slate-300">
-  <nav class="bg-slate-800"><ul class="flex justify-end items-center">
+  <nav class="bg-slate-800">
+    <ul class="flex justify-end items-center">
 
-    <li class="mr-6">
-      <input class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5" type="text" id="user_id" name="" placeholder = "username"><br>
-    </li>
-    <li class="mr-10">
-      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
-    </li>
+      <li class="mr-6">
+        <input
+          class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
+          type="text" id="user_id" name="" placeholder="username">
+          <br>
+      </li>
+      <li class="mr-10">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
+      </li>
+    </ul>
+  </nav>
 
+  <main>
+    <form method="POST" action="/todos/new" id="new-todo">
+      <input class="m-10" type="text" name="text" placeholder="add new todo"><br>
+      <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+    </form>
 
-  <form method = "POST" action = "/todos/new" id="new-todo">
-    <input class="m-10" type="text" name="text" placeholder = "add new todo"><br>
-    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
-  </form>
+    <section id="categories-container" class="flex justify-center mt-20 h-68">
 
-<section id="todo-container" class="flex justify-center mt-20 h-68">
-  <article class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
-  <div class="px-6 py-4">
-    <header class="font-bold text-xl mb-2" id="Movies-container">Movies</header>
-    <p class="text-base">
-      Movie One
-    </p>
-    <p class="text-base">
-      Movie Two
-    </p>
-  </div>
-</article>
+      <div hidden id="Movies-container" class="w-1/4 rounded overflow-hidden shadow-lg mr-10 bg-slate-800">
+        <div class="px-6 py-4">
+          <header class="font-bold text-xl mb-2">Movies</header>
+        </div>
+      </div>
 
-<div class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
-  <div class="px-6 py-4">
-    <div class="font-bold text-xl mb-2" id="Music-container">Music</div>
-    <p class="text-base">
-      Album One
-    </p>
-    <p class="text-base">
-      Album Two
-    </p>
-  </div>
-</div>
-</section>
+      <div hidden id="Music-container" class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
+        <div class="px-6 py-4">
+          <header class="font-bold text-xl mb-2">Music</header>
+        </div>
+      </div>
 
 
+      <div hidden id="Books-container" class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
+        <div class="px-6 py-4">
+          <header class="font-bold text-xl mb-2">Books</header>
+        </div>
+      </div>
 
 
+      <div hidden id="Products-container" class="w-1/4 rounded overflow-hidden shadow-lg bg-slate-800">
+        <div class="px-6 py-4">
+          <header class="font-bold text-xl mb-2">Products</header>
+        </div>
+      </div>
+
+
+    </section>
+  </main>
 </body>
 
 </html>
-
