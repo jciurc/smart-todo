@@ -40,7 +40,7 @@ const getAllTodos = (id) => {
 };
 
 // == alters ==
-
+//Edit todo//==========still to be tested
 const editTodo = () => {
   const values = [];
   const queryString = `UPDATE todos`
@@ -63,7 +63,7 @@ const editTodo = () => {
     });
 };
 
-
+//Edit completed check//===========Not finished
 const editcompleted = () => {
   const queryString = `INSERT INTO todos (completed) VALUES (true)`;
 
@@ -97,4 +97,4 @@ const deleteTodo = (id) => {
 // stretch getUserTodosByCategory(id, category)
 
 
-module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo, editTodo };
+module.exports = { getUserByName, getUserById, getAllTodos, getUserTodos: getAllTodos, deleteTodo, };

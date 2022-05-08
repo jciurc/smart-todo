@@ -6,10 +6,11 @@
  */
 
 const express = require('express');
-var methodOverride = require('method-override');
+//const methodOverride = require('method-override');
 const router  = express.Router();
 const { getAllTodos, getUserTodos, deleteTodo } = require('../queries');
-
+//app.use(methodOverride("'X-HTTP-Method-Override'"));
+//app.use(methodOverride('_method'));
 
 router.get("/", (req, res) => {
   const user = 1;
@@ -35,20 +36,21 @@ router.post("/:id", (req, res) => {
 });
 
 //Edit todo
-router.put("/:id_put", (req, res) => {
+router.post("/:id", (req, res) => {
   //const todo = req.body.text
   //const user = cookies.user
-
+  res.send('Put request called');
   //Update database
   //const category = req.body. catagory //??????????
   //if user is not logged in or if user is not the user from the database reurn error
+  //res.json
 });
 
 
 
-router.delete("/:id_delete", {
+router.delete("/:id", (req, res) => {
   //   db.deleteTodos(req.params.id)
-})
+});
 module.exports = router;
 
 

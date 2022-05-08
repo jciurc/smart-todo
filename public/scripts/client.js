@@ -41,6 +41,11 @@ const newTodo = function(event) {
   // error handling. text field empty
 };
 
+const editTodo = function (event) {
+  event.preventDefault();
+  
+}
+
 const deleteTodo = () => {
   const $todo = $(this).closest('article');
   const id = $todo.id;
