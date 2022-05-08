@@ -61,7 +61,6 @@ const callApis = function() {
   const $inputField = $form.find('input');
   const description = $inputField.val() || "Avengers Endgame";
   $inputField.val('');
-  // error handling. text field empty
 
   findCategory(description)
     .then((category) => {
@@ -69,4 +68,4 @@ const callApis = function() {
     $.post('/todos', {user_id, description, category})
     $.get('/todos');
   });
-};    
+};
