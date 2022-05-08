@@ -1,6 +1,6 @@
 -- Drop and recreate totdos table
-
 DROP TABLE IF EXISTS todos CASCADE;
+
 CREATE TABLE todos (
   id SERIAL PRIMARY KEY NOT NULL,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
