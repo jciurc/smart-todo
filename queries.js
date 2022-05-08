@@ -40,19 +40,37 @@ const getAllTodos = (id) => {
 };
 
 // == alters ==
-const editTodo = () => {
+const editTodo = (todo) => {
   const values = [];
   const queryString = `UPDATE todos`
 
   if (todo.description) {
     values.push(`${todos.description}`)
-    values += `SET description = $${values.length},`;
+    queryString += `SET description = $${values.length},`;
   }
   if (todos.catagory_id) {
-    values.push(`${todos.category_id}`)
-    values += `catagory_id = $${todos.catagory_id.length}`
+    values.push(`${todo.category_id}`)
+    queryString += `catagory_id = $${values.length}`
   }
-  `WHERE user_id = $${todos.user_id} RETURNING *;`;
+  `WHERE user_id = $${todo.user_id} RETURNING *;`;
+  return db.query(queryString, values)
+    .then((data) => {
+      return data.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+
+const setCompleted = (id, isComplete) => {
+  const values = [id, isComplete]
+  const queryString = `
+  UPDATE todos SET completed = $1
+  WHERE id = $2
+  RETURNING *
+`;
+
   return db.query(queryString, values)
     .then((data) => {
       return data.rows;
@@ -71,7 +89,7 @@ const deleteTodo = (id) => {
 
   return db.query(queryString, values)
   .then((data) => {
-    console.log('data from delete', data.rows); // for testing
+    console.log('data from delete', data); // for testing
     return true;
   })
   .catch((err) => {
@@ -79,7 +97,9 @@ const deleteTodo = (id) => {
   })
 };
 
-module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo };
+// stretch getUserTodosByCategory(id, category)
+
+module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo, setCompleted };
 
 
 
@@ -108,7 +128,4 @@ module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo
 //     });
 // };
 //
-
 //
-// stretch getUserTodosByCategory(id, category)
-// temporary extra lines
