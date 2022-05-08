@@ -5,7 +5,7 @@ $(document).ready(() => {
 });
 
 const fetchMoviesForUser = function () {
-  const movieOptions = {
+  const options = {
     method: "GET",
     url: "https://movie-database-alternative.p.rapidapi.com/",
     params: { s: "Avengers Endgame", r: "json", page: "1" },
@@ -14,9 +14,9 @@ const fetchMoviesForUser = function () {
       "X-RapidAPI-Key": "process.env.API_KEY",
     },
   };
-  axios.request(movieOptions)
+  return ajax.request(options)
     .then((response) => {
-      console.log("data", response.data);
+      if (response.data.search.title.length >= 1) return "Movies";
 
     })
     .catch ((err) => {
@@ -70,4 +70,4 @@ const newTodo = (event) => {
     $.post('/todos', {user_id, description, category})
     $.get('/todos');
   });
-};
+};    
