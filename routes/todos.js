@@ -66,7 +66,6 @@ router.put('/:id', (req, res) => {
   });
 });
 
-
 // Complete todo
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
@@ -74,10 +73,11 @@ router.patch('/:id', (req, res) => {
   console.log('received', complete);
   setCompleted({id, complete})
     .then((todo) => {
-      console.log('here', todo.completed);
+      console.log(todo.description, todo.completed ? 'todo done' : 'todo not done');
       res.json(todo);
     })
     .catch((err) => {
+      console.log(error );
       console.log(err);
   })
 });
@@ -85,8 +85,6 @@ router.patch('/:id', (req, res) => {
 // delete todo
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
-  const user_id = req.cookies.user;
-  if (!user_id ) console.log('user not logged');
   deleteTodo(id)
   .then((data) => {
     res.send(true);
