@@ -7,9 +7,9 @@
     // todo routes
     $('#new-todo').on('submit', newTodo);
     $('.todo-container').on('click', 'article', editMode);
-    // $('.todo-container').on('click', '.delete-button', deleteTodo);
+    $('.todo-container').on('click', '.delete-button', deleteTodo);
     $('.todo-container').on('submit', 'form', editTodo);
-    $('.todo-container').on('click', '.delete-button', completeTodo);
+    $('.todo-container').on('click', '.form-check-input ', completeTodo);
 
 
 
@@ -132,7 +132,7 @@
     const $todo = $(this).closest('article');
 
     //console.log('serialized text', text);
-    const data = $(this).serialize();
+    const data = $(this).serialize() + '&category=';
     const id = $todo.attr("alt");
 
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
