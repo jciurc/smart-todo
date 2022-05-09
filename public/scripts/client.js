@@ -9,7 +9,7 @@
     $('.todo-container').on('click', 'article', editMode);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
     $('.todo-container').on('submit', 'form', editTodo);
-    $('.todo-container').on('click', '.form-check-input ', completeTodo);
+    $('.todo-container').on('click', '.form-check-input', completeTodo);
 
 
     // = initial page load =
@@ -33,7 +33,8 @@
   const buildTodoCard = (todo) => {
     const htmlString = `
     <article class="todo rounded" alt="${todo.id}">
-      <p class="todo-description text-base rounded bg-slate-700 m-3 p-4"><input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault">
+      <p class="todo-description text-base rounded bg-slate-700 m-3 p-4">
+      <input type="checkbox" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="flexCheckDefault">
       ${safeHtml(todo.description)}<i class="far fa-edit cursor-pointer"></i></p>
 
       <form hidden>
@@ -143,13 +144,20 @@
 
   const completeTodo = function (event) {
     event.preventDefault();
+
     const data = 'complete=true';
-    console.log("data", data);
     const $todo = $(this).closest("article");
     const id = $todo.attr('alt');
+
     $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
-      .then((res) => {
-        console.log(" I'm back with the clients");
+
+      .then((todo) => {
+        $todo.removeClass('complete');
+        if (todo.completed)$todo.addClass('complete');
+        const $check = $todo.find('.form-check-input');
+        console.log('check status', $check.attr('checked'));
+        $check.attr('checked', '');
+        console.log('check status', $check.attr('checked'));
         loadTodos();
     });
   };

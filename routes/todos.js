@@ -64,31 +64,23 @@ router.put('/:id', (req, res) => {
         console.log(err);
       });
   });
-
-
-
-
 });
+
 
 // Complete todo
 router.patch('/:id', (req, res) => {
-  const todo_id = req.params.id;
+  const id = req.params.id;
   const complete = req.body.complete;
-  ///???????? boolean true or faulse response
-  console.log(" complte string", req.body.complete);
-  setCompleted({todo_id, complete})
-    .then((data) => {
-      res.send(true);
+  setCompleted({id, complete})
+    .then((todo) => {
+      res.send(todo);
     })
     .catch((err) => {
       console.log(err);
   })
 });
 
-
-
-
-
+// delete todo
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
   deleteTodo(id)
@@ -102,22 +94,3 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
-
-
-
-// .get('/') {
-//   db.getAllTodos()
-//   app.then((todos) => {
-//     renderTodos(todos)
-//   })
-// }
-
-// .delete('/:id') {
-//   db.deleteTodos(req.params.id)
-// }
-// .get('/') {
-//   db.getAllTodos()
-// }
-// .get('/') {
-//   db.getAllTodos()
-// }

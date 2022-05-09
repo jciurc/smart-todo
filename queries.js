@@ -80,7 +80,7 @@ const setCompleted = (options) => {
 
   return db.query(queryString, values)
     .then((data) => {
-      return data.rows;
+      return data.rows[0];
     })
     .catch((err) => {
       console.error(err);
