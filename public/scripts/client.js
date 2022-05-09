@@ -12,6 +12,7 @@
 
 
 
+
     // = initial page load =
     checkLogin();
     loadTodos();
@@ -20,8 +21,9 @@
   // == helpers ==
   const editMode = function() {
     const $todo = $(this);
-    $todo.find('form').show();
+    $todo.find('form').toggle();
   };
+
 
   const safeHtml = (text) => {
     const safe = document.createElement("div");
@@ -80,7 +82,9 @@
     event.preventDefault();
 
     // error handling. text field empty
-    if (!$(this).find('input').val()) return; // set up alert
+    if (!$(this).find('input').val()) {
+     alert('☹️Text field is empty!☹️');
+    }; // set up alert
 
     // sends todo text backend
     $.post('/todos', $(this).serialize())
@@ -135,7 +139,7 @@
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
         loadTodos();
-    })
+      });
   };
 
   const deleteTodo = function() {
