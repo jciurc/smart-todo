@@ -8,6 +8,8 @@ const { findCategory } = require('../api');
 
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
+  if (!userId) console.log("user not logged");
+
   getAllTodos(userId)
     .then((todos) => {
       res.json(todos);
@@ -21,6 +23,8 @@ router.get("/", (req, res) => {
 
 router.post('/', (req, res) => {
   const description = req.body.text;
+  const userId = req.cookies.user;
+  if (!userId) console.log("user not logged");
   // get category from external apis
   findCategory(description)
     .then((category) => {
@@ -50,7 +54,8 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   const description = req.body.text;
   const category = req.body.category;
-
+  const userId = req.cookies.user;
+  if (!userId) console.log("user not logged");
   console.log('req body', req.body);
 
   return getCategoryByName(category)
@@ -70,6 +75,8 @@ router.put('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
   const complete = req.body.complete;
+  const userId = req.cookies.user;
+  if (!userId) console.log("user not logged");
   console.log('received', complete);
   setCompleted({id, complete})
     .then((todo) => {
