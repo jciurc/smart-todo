@@ -42,19 +42,31 @@ const getAllTodos = (id) => {
 // == alters ==
 const editTodo = (todo) => {
   const values = [];
-  const queryString = `UPDATE todos`
+  console.log("todo", todo);
+  let queryString = `UPDATE todos `
 
   if (todo.description) {
-    values.push(`${todos.description}`)
-    queryString += `SET description = $${values.length},`;
+    values.push(`${todo.description}`)
+    queryString += `SET description = $${values.length}
+    ${todo.category ? ', ' : ''}
+    `
   }
-  if (todos.catagory_id) {
+
+
+  if (todo.category_id) {
     values.push(`${todo.category_id}`)
-    queryString += `catagory_id = $${values.length}`
+    queryString += `category_id = $${values.length} `
   }
-  `WHERE user_id = $${todo.user_id} RETURNING *;`;
+
+  values.push(todo.todo_id);
+  queryString +=
+    `WHERE id = $${values.length} RETURNING *;
+  `;
+  console.log("values", values);
+  console.log("query string", queryString);
   return db.query(queryString, values)
     .then((data) => {
+      console.log(" I'm here");
       return data.rows;
     })
     .catch((err) => {

@@ -26,9 +26,9 @@ router.post('/', (req, res) => {
     .then((category) => {
       return getCategoryByName(category)
 
-      .then((cat) => {
+      .then((user) => {
       const user_id = req.cookies.user;
-      const category_id = cat.id;
+      const category_id = user.id;
 
       // create new todo in database
       insertNewTodo({ user_id, description, category_id })
@@ -45,13 +45,14 @@ router.post('/', (req, res) => {
 });
 
 //Edit todo
-router.post('/:id', (req, res) => {
-  const user_id = req.params.id
+router.put('/:id', (req, res) => {
+  console.log("description", req.body.text);
+  //const category_id = cat.id;
+  const todo_id = req.params.id
   const description = req.body.text;
-  const category_id = cat.id;
 
 
-  editTodo(description, category_id, user_id)
+  editTodo({ description, todo_id }) /*category_id,*/
     .then((data) => {
       res.send(true);
     })
@@ -59,6 +60,24 @@ router.post('/:id', (req, res) => {
       console.log(err);
   })
 });
+
+// Complete todo
+router.patch('/:id', (req, res) => {
+  // const user_id = req.params.id
+  // const description = req.body.text;
+  // const category_id = cat.id;
+
+
+  // editTodo(description, category_id, user_id)
+  //   .then((data) => {
+  //     res.send(true);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  // })
+});
+
+
 
 
 
