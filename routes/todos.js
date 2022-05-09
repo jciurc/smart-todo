@@ -71,9 +71,11 @@ router.put('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
   const complete = req.body.complete;
+  console.log('received', complete);
   setCompleted({id, complete})
     .then((todo) => {
-      res.send(todo);
+      console.log('here', todo.completed);
+      res.json(todo);
     })
     .catch((err) => {
       console.log(err);

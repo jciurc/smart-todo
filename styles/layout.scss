@@ -1,6 +1,8 @@
-body,
-html {
+body, html {
   margin: 0;
+}
+nav {
+  width: 100vw;
 }
 
 h1.text-4xl {
@@ -8,6 +10,8 @@ h1.text-4xl {
 }
 
 i.far.fa-edit{
+  position: relative;
   margin-left:20px;
   color:coral;
+  right: 2px;
 }

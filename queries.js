@@ -3,8 +3,8 @@ const db = require("./lib/db");
 // == users ==
 const getUserByName = (name) => {
   return db.query(`SELECT * FROM users WHERE name = $1`, [name])
-  .then((data) => {
-    return data.rows[0];
+  .then((res) => {
+    return res.rows[0];
   })
   .catch((err) => {
     console.error(err);
@@ -13,8 +13,8 @@ const getUserByName = (name) => {
 
 const getUserById = (id) => {
   return db.query(`SELECT * FROM users WHERE id = $1`, [id])
-  .then((data) => {
-    return data.rows[0];
+  .then((res) => {
+    return res.rows[0];
   })
   .catch((err) => {
     console.error(err);
@@ -27,10 +27,11 @@ const getAllTodos = (id = null) => {
   SELECT todos.*, name FROM todos
   JOIN categories ON categories.id = category_id
   WHERE user_id = $1
+  ORDER BY id;
 `;
   return db.query(queryString, [id])
-  .then((data) => {
-    return data.rows;
+  .then((res) => {
+    return res.rows;
   })
   .catch((err) => {
     console.error(err);
@@ -57,12 +58,9 @@ const editTodo = (todo) => {
   queryString +=
     `WHERE id = $${values.length} RETURNING *;
   `;
-
-  console.log('queryString', queryString);
-  console.log('values', values);
   return db.query(queryString, values)
-    .then((data) => {
-      return data.rows;
+    .then((res) => {
+      return res.rows;
     })
     .catch((err) => {
       console.error(err);
@@ -76,10 +74,9 @@ const setCompleted = (options) => {
   WHERE id = $2
   RETURNING *
 `;
-
   return db.query(queryString, values)
-    .then((data) => {
-      return data.rows[0];
+    .then((res) => {
+      return res.rows[0];
     })
     .catch((err) => {
       console.error(err);
@@ -89,8 +86,8 @@ const setCompleted = (options) => {
 
 const getCategoryByName = (name) => {
   return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
-    .then((data) => {
-      return data.rows[0];
+    .then((res) => {
+      return res.rows[0];
     })
     .catch((err) => {
       console.error(err);
@@ -107,9 +104,9 @@ const insertNewTodo = (todo) => {
 `;
 
   return db.query(queryString, values)
-    .then((data) => {
-      console.log('new todo inserted:', data.rows );
-      return data.rows[0];
+    .then((res) => {
+      console.log('new todo inserted:', res.rows );
+      return res.rows[0];
     })
     .catch((err) => {
       console.error(err);
@@ -125,7 +122,7 @@ const deleteTodo = (id) => {
   `;
 
   return db.query(queryString, values)
-  .then((data) => {
+  .then((res) => {
     return true;
   })
   .catch((err) => {

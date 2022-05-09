@@ -6,11 +6,10 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article', editMode);
-    $('.todo-container').on('click', '.delete-button', deleteTodo);
-    $('.todo-container').on('submit', 'form', editTodo);
+    $('.todo-container').on('click', 'article .far', editMode);
+    $('.todo-container').on('submit', 'form', submitEdit);
     $('.todo-container').on('click', '.form-check-input', completeTodo);
-
+    $('.todo-container').on('click', '.delete-button', deleteTodo);
 
     // = initial page load =
     checkLogin();
@@ -19,8 +18,11 @@
 
   // == helpers ==
   const editMode = function() {
-    const $todo = $(this);
-    $todo.find('form').toggle();
+    $('.editing').removeClass('editing');
+    const $todo = $(this).closest('article').addClass('editing');
+    const $textarea = $todo.find('form').find('[name="text"]').focus();
+    const text = $textarea.val();
+    $textarea.val('').val(text);
   };
 
 
@@ -32,14 +34,14 @@
 
   const buildTodoCard = (todo) => {
     const htmlString = `
-    <article class="todo rounded" alt="${todo.id}">
-      <p class="todo-description text-base rounded bg-slate-700 m-3 p-4">
-      <input type="checkbox" class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="flexCheckDefault">
-      ${safeHtml(todo.description)}<i class="far fa-edit cursor-pointer"></i></p>
+    <article class="todo rounded flex-col justify-center" completed="${todo.completed}" alt="${todo.id}">
+      <p class="todo-description text-base ${todo.completed ? 'complete' : ''} text-center rounded bg-slate-700 m-3 p-4">
+      <input ${todo.completed ? 'checked' : ''} type="checkbox" class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="flexCheckDefault">
+      ${safeHtml(todo.description)}<i class="far fa-edit hover cursor-pointer"></i></p>
 
-      <form hidden>
-        <textarea name="category" class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.name)}</textarea>
+      <form>
         <textarea name="text" class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
+        <textarea name="category" class="text-base rounded bg-slate-700 m-4 p-1">${safeHtml(todo.name)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
         <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
       </form>
@@ -49,9 +51,8 @@
   };
 
   const renderTodos = (todos) => {
-    // need to empty containers first
-    const $container = $('#categories-container');
-    $container.children('.todo-container').hide().find('div').empty();
+    const $container = $('main').find('#categories-container');
+    $container.children('.todo-container').hide().find('div').empty(); // reset containers
     for (const todo of todos) {
       $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
     }
@@ -75,14 +76,12 @@
     $('#new-todo').hide().find('h1').text('');
   };
 
-  // == events ==
+  // == event functions ==
   const newTodo = function(event) {
     event.preventDefault();
 
     // error handling. text field empty
-    if (!$(this).find('input').val()) {
-     alert('☹️Text field is empty!☹️');
-    }; // set up alert
+    if (!$(this).find('input').val()) return console.log('☹️ Text field is empty! ☹️');  // todo set up unintrusive alert
 
     // sends todo text backend
     $.post('/todos', $(this).serialize())
@@ -99,7 +98,7 @@
     const $inputField = $form.find('input');
 
     // error handling
-    if (!$inputField.val().trim()) return; // todo send alert
+    if (!$inputField.val().trim()) return; // todo send unintrusive alert
 
     // login user
     $.post('/users/login', $form.serialize())
@@ -114,7 +113,7 @@
     $.post('/users/logout')
       .then((loggedOut) => {
         if (loggedOut) {
-          renderBasedOnUser(false);
+          renderBasedOnUser(null);
           loadTodos();
         }
       });
@@ -128,36 +127,25 @@
       });
   };
 
-  const editTodo = function (event) {
+  const submitEdit = function(event) {
     event.preventDefault();
-    const $todo = $(this).closest('article');
     const data = $(this).serialize();
-    console.log('serialized form input', data);
-    const id = $todo.attr("alt");
-
+    const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
         loadTodos();
     })
-  }
-
+  };
 
   const completeTodo = function (event) {
+    event.stopPropagation();
     event.preventDefault();
-
-    const data = 'complete=true';
     const $todo = $(this).closest("article");
+    const data = 'complete=' + !($todo.attr('completed') === 'true');
     const id = $todo.attr('alt');
-
     $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
-
       .then((todo) => {
-        $todo.removeClass('complete');
-        if (todo.completed)$todo.addClass('complete');
-        const $check = $todo.find('.form-check-input');
-        console.log('check status', $check.attr('checked'));
-        $check.attr('checked', '');
-        console.log('check status', $check.attr('checked'));
+
         loadTodos();
     });
   };
