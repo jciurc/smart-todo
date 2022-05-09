@@ -87,7 +87,6 @@ router.delete("/:id", (req, res) => {
   const id = req.params.id;
   const user_id = req.cookies.user;
   if (!user_id ) console.log('user not logged');
-
   deleteTodo(id)
   .then((data) => {
     res.send(true);
