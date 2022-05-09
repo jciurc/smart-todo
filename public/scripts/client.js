@@ -121,8 +121,16 @@
   };
 
   const editTodo = function () {
+    const $todo = $(this).serialised()/// needs to change description input field
+    //maybe second input parameter?
+    const id = $todo.attr("alt");//user id
 
-}
+    $.ajax({ url: "/todos/" + id, type: "PUT" })
+      .then((res) => {
+      //renderbasedOnUser()
+    })
+
+  }
 
 
   const deleteTodo = function() {
