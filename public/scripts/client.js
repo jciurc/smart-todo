@@ -10,8 +10,6 @@
     $('.todo-container').on('click', '.delete-button', deleteTodo);
     $('.todo-container').on('submit', 'form', editTodo);
 
-
-
     // = initial page load =
     checkLogin();
     loadTodos();
@@ -144,7 +142,7 @@
 
     $.ajax({url: '/todos/' + id, type: 'DELETE'})
       .then(() => {
-        $todo.remove();
+        loadTodos();
       });
   };
 
