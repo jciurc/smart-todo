@@ -30,16 +30,19 @@ article.todo {
     max-height: 100px;
     cursor: pointer;
 
-    p {
-      font-weight: 400;
-    }
-
+    // todo checkbox
     [type=checkbox] {
       position: absolute;
       left: 4px;
     }
 
-    // edit icon
+    // todo description
+    p {
+      padding: 4px 6px;
+      font-weight: 400;
+    }
+
+    // todo edit icon
     i.far.fa-edit {
       position: absolute;
       right: 4px;
