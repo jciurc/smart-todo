@@ -38,11 +38,11 @@ const fetchMusicForUser = (text) => {
 
 // = main function =
 const findCategory = (text) => {
-  // todo sanitize query text
-  return Promise.any([
-    fetchMusicForUser(text),
-    fetchMoviesForUser(text),
-  ])
+  // return Promise.any([
+  //   fetchMusicForUser(text),
+  //   fetchMoviesForUser(text),
+  // ])
+  return fetchMusicForUser(text)
     .then((category) => {
       console.log('promise any response', category);
       return category || 'Unlabeled';

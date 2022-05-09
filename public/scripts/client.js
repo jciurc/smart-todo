@@ -6,7 +6,7 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article', editMode);  //temportrary
+    $('.todo-container').on('click', 'article', editMode);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
 
 
@@ -33,7 +33,6 @@
       <p class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</p>
 
 <form hidden>
-
         <textarea class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
         <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
@@ -46,6 +45,7 @@
   const renderTodos = (todos) => {
     // need to empty containers first
     const $container = $('#categories-container');
+    $container.find('.todo-container').hide().find('div').empty();
     for (const todo of todos) {
       $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
     }
@@ -78,10 +78,10 @@
 
     // sends todo text backend
     $.post('/todos', $(this).serialize())
-
     // get new todo object back
-    .this((todo) => {
-      if (todo) loadTodos();
+    .then((todo) => {
+      $(this).find('input').val('');
+      loadTodos();
     });
   };
 
