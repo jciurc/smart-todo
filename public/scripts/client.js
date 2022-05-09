@@ -9,6 +9,8 @@
     $('.todo-container').on('click', 'article', editMode);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
     $('.todo-container').on('submit', 'form', editTodo);
+    $('.todo-container').on('click', '.form-check-input ', completeTodo);
+
 
     // = initial page load =
     checkLogin();
@@ -18,8 +20,9 @@
   // == helpers ==
   const editMode = function() {
     const $todo = $(this);
-    $todo.find('form').show();
+    $todo.find('form').toggle();
   };
+
 
   const safeHtml = (text) => {
     const safe = document.createElement("div");
@@ -78,7 +81,9 @@
     event.preventDefault();
 
     // error handling. text field empty
-    if (!$(this).find('input').val()) return; // set up alert
+    if (!$(this).find('input').val()) {
+     alert('☹️Text field is empty!☹️');
+    }; // set up alert
 
     // sends todo text backend
     $.post('/todos', $(this).serialize())
@@ -129,7 +134,7 @@
     const $todo = $(this).closest('article');
 
     //console.log('serialized text', text);
-    const data = $(this).serialize();
+    const data = $(this).serialize() + '&category=';
     const id = $todo.attr("alt");
 
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
