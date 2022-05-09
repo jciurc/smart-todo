@@ -1,7 +1,7 @@
 const express = require('express');
 //const methodOverride = require('method-override');
 const router  = express.Router();
-const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo } = require('../queries');
+const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo, setCompleted } = require('../queries');
 const { findCategory } = require('../api');
 //app.use(methodOverride("'X-HTTP-Method-Override'"));
 //app.use(methodOverride('_method'));
@@ -54,7 +54,7 @@ router.put('/:id', (req, res) => {
 
   editTodo({ description, todo_id }) /*category_id,*/
     .then((data) => {
-      res.send(true);
+      res.json(data);
     })
     .catch((err) => {
       console.log(err);
@@ -63,18 +63,17 @@ router.put('/:id', (req, res) => {
 
 // Complete todo
 router.patch('/:id', (req, res) => {
-  // const user_id = req.params.id
-  // const description = req.body.text;
-  // const category_id = cat.id;
-
-
-  // editTodo(description, category_id, user_id)
-  //   .then((data) => {
-  //     res.send(true);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  // })
+  const todo_id = req.params.id;
+  const complete = req.body.complete;
+  ///???????? boolean true or faulse response
+  console.log(" complte string", req.body.complete);
+  setCompleted({todo_id, complete})
+    .then((data) => {
+      res.send(true);
+    })
+    .catch((err) => {
+      console.log(err);
+  })
 });
 
 

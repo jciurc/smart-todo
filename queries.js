@@ -73,8 +73,10 @@ const editTodo = (todo) => {
 };
 
 
-const setCompleted = (id, isComplete) => {
-  const values = [id, isComplete]
+const setCompleted = (options) => {
+  console.log("complete in query", options);
+  const values = [options.complete, options.id];
+  
   const queryString = `
   UPDATE todos SET completed = $1
   WHERE id = $2

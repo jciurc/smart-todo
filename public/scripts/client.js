@@ -7,8 +7,9 @@
     // todo routes
     $('#new-todo').on('submit', newTodo);
     $('.todo-container').on('click', 'article', editMode);
-    $('.todo-container').on('click', '.delete-button', deleteTodo);
+    // $('.todo-container').on('click', '.delete-button', deleteTodo);
     $('.todo-container').on('submit', 'form', editTodo);
+    $('.todo-container').on('click', '.delete-button', completeTodo);
 
     // = initial page load =
     checkLogin();
@@ -127,6 +128,8 @@
   const editTodo = function (event) {
     event.preventDefault();
     const $todo = $(this).closest('article');
+
+    //console.log('serialized text', text);
     const data = $(this).serialize();
     const id = $todo.attr("alt");
 
@@ -134,6 +137,20 @@
       .then((res) => {
         loadTodos();
     })
+  }
+
+
+  const completeTodo = function (event) {
+    event.preventDefault();
+    const data = 'complete=true';
+    console.log("data", data);
+    const $todo = $(this).closest("article");
+    const id = $todo.attr('alt');
+    $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
+      .then((res) => {
+        console.log(" I'm back with the clients");
+        loadTodos();
+    });
   };
 
   const deleteTodo = function() {
