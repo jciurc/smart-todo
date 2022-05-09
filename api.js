@@ -2,25 +2,25 @@ const axios = require('axios').default;
 const any = require('promise.any');
 
 // = api calls =
-const fetchMoviesForUser = (text) => {
+const queryFood = (text) => {
   const options = {
-    params: { s: text, r: "json", page: "1" },
+    params: { query: text, r: "json", page: "1" },
     headers: {
-      "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+      "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.API_KEY,
     },
   };
-  return axios.get('https://movie-database-alternative.p.rapidapi.com/', options)
+  return axios.get('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/complexSearch', options)
     .then((res) => {
-      console.log('testing movies response', res.data)
-      if (res.data.Search.length > 1) return "Movies";
+      console.log('food query response', res.data);
+      if (res.data.Search.length > 1) return "Food";
     })
     .catch((err) => {
       console.log("err", err);
     });
 };
 
-const fetchMusicForUser = (text) => {
+const queryMusic = (text) => {
   const options = {
     params: { term: text, locale: "en-US", offset: "0", limit: "3" },
     headers: {
@@ -30,26 +30,46 @@ const fetchMusicForUser = (text) => {
   };
 
   return axios.get('https://shazam.p.rapidapi.com/search', options)
+  .then((res) => {
+    console.log('testing music: hits', Object.keys(res.data).length);
+    if (Object.keys(res.data).length > 0) return "Music";
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+};
+
+const queryMovies = (text) => {
+  const options = {
+    params: { s: text, r: "json", page: "1" },
+    headers: {
+      "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
+      "X-RapidAPI-Key": process.env.API_KEY,
+    },
+  };
+  return axios.get('https://movie-database-alternative.p.rapidapi.com/', options)
     .then((res) => {
-      console.log('testing music: hits', Object.keys(res.data).length);
-      if (Object.keys(res.data).length > 0) return "Music";
+      console.log('movies query hits:', res.data.Search.length);
+      if (res.data.Search.length > 1) return "Movies";
     })
     .catch((err) => {
-      console.error(err);
+      console.log("err", err);
     });
 };
+
 
 // = main function =
 const findCategory = (text) => {
   return any([
-    fetchMusicForUser(text),
-    fetchMoviesForUser(text),
+    queryFood(text),
+    queryMusic(text),
   ])
     .then((category) => {
       console.log('promise any response', category);
-      return category || 'Unlabeled';
+      return category || queryMovies(text).then(category => category || 'Unlabeled')
     })
     .catch((err) => {
+      console.log('error finding category', err.message || '');
       console.error(err);
       return 'Unlabeled';
     });

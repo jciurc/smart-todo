@@ -24,6 +24,7 @@ router.post('/', (req, res) => {
   // get category from external apis
   findCategory(description)
     .then((category) => {
+      console.log('category found:', category);
       return getCategoryByName(category)
         .then((cat) => {
           const user_id = req.cookies.user;
@@ -46,7 +47,6 @@ router.post('/', (req, res) => {
 
 //Edit todo
 router.put('/:id', (req, res) => {
-  console.log("description", req.body.text);
   //const category_id = cat.id;
   const todo_id = req.params.id
   const description = req.body.text;

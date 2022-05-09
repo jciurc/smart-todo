@@ -11,8 +11,6 @@
     $('.todo-container').on('submit', 'form', editTodo);
     $('.todo-container').on('click', '.form-check-input ', completeTodo);
 
-
-
     // = initial page load =
     checkLogin();
     loadTodos();
@@ -161,7 +159,7 @@
 
     $.ajax({url: '/todos/' + id, type: 'DELETE'})
       .then(() => {
-        $todo.remove();
+        loadTodos();
       });
   };
 
