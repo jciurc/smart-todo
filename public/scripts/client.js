@@ -17,7 +17,19 @@
   });
 
   // == helpers ==
-  const editMode = function() {
+
+  const showAlert = (message, style) => {
+    const $alert = $('#alert-box');
+    $alert.removeClass("red green").addClass(style);
+    $alert.find('.alert-text').text(message);
+    $alert.slideDown();
+    setTimeout(() => {
+      $alert.slideUp();
+    }, 6000);
+  };
+
+
+const editMode = function() {
     $('.editing').removeClass('editing');
     const $todo = $(this).closest('article').addClass('editing');
     const $textarea = $todo.find('form').find('[name="text"]').focus();
@@ -88,15 +100,19 @@
     event.preventDefault();
 
     // error handling. text field empty
-    if (!$(this).find('input').val()) return console.log('☹️ Text field is empty! ☹️');  // todo set up unintrusive alert
-
+    if (!$(this).find('input').val()) {
+      showAlert('Text field is empty', 'red');
+    } else {
+      showAlert('New todo added!', 'green');
+    }
     // sends todo text backend
     $.post('/todos', $(this).serialize())
     // get new todo object back
-    .then((todo) => {
-      $(this).find('input').val('');
-      loadTodos();
-    });
+      .then((todo) => {
+        $(this).find('input').val('');
+        loadTodos();
+      });
+
   };
 
   const loginSubmit = function(event) {
@@ -105,12 +121,16 @@
     const $inputField = $form.find('input');
 
     // error handling
-    if (!$inputField.val().trim()) return; // todo send unintrusive alert
-
+    if (!$inputField.val().trim()) {
+      showAlert('Please enter a username', 'red');
+    } else {
+      showAlert('Logged in', 'green');
+    }
     // login user
     $.post('/users/login', $form.serialize())
       .then((user) => {
         $inputField.val('');
+
         renderBasedOnUser(user.name);
         loadTodos();
       });
