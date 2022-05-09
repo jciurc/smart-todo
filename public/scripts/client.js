@@ -6,8 +6,10 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article', editMode);  //temportrary
+    $('.todo-container').on('click', 'article', editMode);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
+    $('.todo-container').on('submit', 'form', editTodo);
+
 
 
     // = initial page load =
@@ -34,7 +36,7 @@
 
 <form hidden>
 
-        <textarea class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
+        <textarea name="text" class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
         <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
 </form>
@@ -120,16 +122,18 @@
       });
   };
 
-  const editTodo = function () {
-    const $todo = $(this).serialised()/// needs to change description input field
+  const editTodo = function (event) {
+    event.preventDefault();
+    const $todo = $(this).closest('article');
+    const text = $(this).serialize()
+    console.log('serialized text', text);
     //maybe second input parameter?
-    const id = $todo.attr("alt");//user id
+    const id = $todo.attr("alt");id
 
-    $.ajax({ url: "/todos/" + id, type: "PUT" })
+    $.ajax({ url: "/todos/" + id, data: text, type: "PUT" })
       .then((res) => {
-      //renderbasedOnUser()
+        loadTodos();
     })
-
   }
 
 
