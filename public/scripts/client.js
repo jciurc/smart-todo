@@ -9,8 +9,7 @@
     $('.todo-container').on('click', 'article', editMode);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
     $('.todo-container').on('submit', 'form', editTodo);
-
-
+    $('.todo-container').on('click', '.form-check-input ', completeTodo);
 
 
     // = initial page load =
@@ -133,13 +132,29 @@
   const editTodo = function (event) {
     event.preventDefault();
     const $todo = $(this).closest('article');
-    const data = $(this).serialize();
+
+    //console.log('serialized text', text);
+    const data = $(this).serialize() + '&category=';
     const id = $todo.attr("alt");
 
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
         loadTodos();
-      });
+    })
+  }
+
+
+  const completeTodo = function (event) {
+    event.preventDefault();
+    const data = 'complete=true';
+    console.log("data", data);
+    const $todo = $(this).closest("article");
+    const id = $todo.attr('alt');
+    $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
+      .then((res) => {
+        console.log(" I'm back with the clients");
+        loadTodos();
+    });
   };
 
   const deleteTodo = function() {
@@ -148,7 +163,7 @@
 
     $.ajax({url: '/todos/' + id, type: 'DELETE'})
       .then(() => {
-        $todo.remove();
+        loadTodos();
       });
   };
 

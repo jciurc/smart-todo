@@ -22,15 +22,13 @@ const getUserById = (id) => {
 };
 
 // == todos ==
-const getAllTodos = (id) => {
-  const queryParams = [`
+const getAllTodos = (id = null) => {
+  const queryString = `
   SELECT todos.*, name FROM todos
   JOIN categories ON categories.id = category_id
-  ${id ? 'WHERE user_id = $1' : ''}
-`];
-  if (id) queryParams.push([id]);
-
-  return db.query(...queryParams)
+  WHERE user_id = $1
+`;
+  return db.query(queryString, [id])
   .then((data) => {
     return data.rows;
   })
@@ -75,8 +73,10 @@ const editTodo = (todo) => {
 };
 
 
-const setCompleted = (id, isComplete) => {
-  const values = [id, isComplete]
+const setCompleted = (options) => {
+  console.log("complete in query", options);
+  const values = [options.complete, options.id];
+  
   const queryString = `
   UPDATE todos SET completed = $1
   WHERE id = $2
@@ -96,7 +96,6 @@ const setCompleted = (id, isComplete) => {
 const getCategoryByName = (name) => {
   return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
     .then((data) => {
-      console.log('result category id', data.rows );
       return data.rows[0];
     })
     .catch((err) => {
