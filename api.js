@@ -1,4 +1,5 @@
 const axios = require('axios').default;
+const any = require('promise.any');
 
 // = api calls =
 const fetchMoviesForUser = (text) => {
@@ -11,7 +12,8 @@ const fetchMoviesForUser = (text) => {
   };
   return axios.get('https://movie-database-alternative.p.rapidapi.com/', options)
     .then((res) => {
-      if (res.data.length > 1) return "Movies";
+      console.log('testing movies response', res.data)
+      if (res.data.Search.length > 1) return "Movies";
     })
     .catch((err) => {
       console.log("err", err);
@@ -29,6 +31,7 @@ const fetchMusicForUser = (text) => {
 
   return axios.get('https://shazam.p.rapidapi.com/search', options)
     .then((res) => {
+      console.log('testing music: hits', Object.keys(res.data).length);
       if (Object.keys(res.data).length > 0) return "Music";
     })
     .catch((err) => {
@@ -38,11 +41,10 @@ const fetchMusicForUser = (text) => {
 
 // = main function =
 const findCategory = (text) => {
-  // return Promise.any([
-  //   fetchMusicForUser(text),
-  //   fetchMoviesForUser(text),
-  // ])
-  return fetchMusicForUser(text)
+  return any([
+    fetchMusicForUser(text),
+    fetchMoviesForUser(text),
+  ])
     .then((category) => {
       console.log('promise any response', category);
       return category || 'Unlabeled';
@@ -53,4 +55,4 @@ const findCategory = (text) => {
     });
 };
 
-module.exports = { findCategory }
+module.exports = { findCategory };

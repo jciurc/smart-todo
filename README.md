@@ -31,7 +31,7 @@
 
 - Node 10.x or above
 - NPM 5.x or above
-- axios
+- axios 0.2x
 - express 4.x
 - pg 8.x
 - chalk 2.x,
@@ -40,6 +40,7 @@
 - morgan 1.x
 - sass 1.x
 - cookie-parser 1.x
+- promise.any 2.x
 
   ## Dev Dependencies
 - nodemon 2.x
