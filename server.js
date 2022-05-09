@@ -7,10 +7,7 @@ const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-<<<<<<< HEAD
 //const methodOverride = require("method-override");
-=======
->>>>>>> 9ac48082daafd9fcf7618e8fa7ea50000eeb6f3f
 const app = express();
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
