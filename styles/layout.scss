@@ -1,5 +1,26 @@
+// Global styling
 body, html {
   margin: 0;
+}
+
+* {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 8px;
+  transition: 0.3s;
+  text-align: center;
+}
+
+nav, textarea {
+  transition: none;
+}
+
+body {
+  min-height: 100vh;
+  text-align: center;
+  padding-bottom: 100px;
+  user-select: none;
+  overflow: hidden;
 }
 
 nav {
@@ -7,12 +28,11 @@ nav {
 }
 
 h1.text-4xl {
-  margin-top: 100px;
+  margin-top: 6rem;
 }
 
-i.far.fa-edit{
-  position: relative;
-  margin-left:20px;
-  color:coral;
-  right: 2px;
+main {
+  background-color: inherit;
+  margin: auto;
+  width: 95vw;
 }
