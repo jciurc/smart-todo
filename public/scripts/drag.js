@@ -1,5 +1,6 @@
 (() => {
   $(() => {
+    // Allows drag scrolling on entire document
     $.dragScroll = function(options) {
       const settings = $.extend({
         scrollVertical: true,
@@ -32,6 +33,6 @@
         }
       });
     };
-    $.dragScroll();
+    // $.dragScroll(); // enable or disable here
   });
 })();

@@ -6,8 +6,8 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article .far', editMode);
-    $('.todo-container').on('submit', 'form', submitEdit);
+    $('.todo-container').on('click', 'article.todo i.far', editMode);
+    $('.todo-container').on('submit', 'form.edit', submitEdit);
     $('.todo-container').on('click', '.form-check-input', completeTodo);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
 
@@ -34,27 +34,23 @@
 
   const buildTodoCard = (todo) => {
     const htmlString = `
-    <article class="todo rounded flex-col flex-1 justify-center mb-4" completed="${todo.completed}" alt="${todo.id}">
-      <p class="todo-description flex flex-1 justify-between items-center text-base ${todo.completed ? 'complete' : ''} text-center rounded bg-slate-700 h-14 m-3 p-2">
-      <input ${todo.completed ? 'checked' : ''} type="checkbox" class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" id="flexCheckDefault">
-      ${safeHtml(todo.description)}<i class="far fa-edit float-right hover cursor-pointer"></i></p>
+    <article class="todo rounded flex-col flex-nowrap justify-center my-2" completed="${todo.completed}" alt="${todo.id}">
+      <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 h-16 m-3 p-2">
+        <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
+        <p class="text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
+        <i class="far fa-edit hover cursor-pointer"></i>
+      </header>
 
-      <form>
-        <textarea name="text" class="text-base text-center rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
+      <form class="edit">
+        <textarea name="text" class="text-base text-center self-center rounded bg-slate-700 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+        <div class="inline-block text-left">
+          <button type="button" name="category" hidden alt${todo.category_id} class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-slate-600 text-sm font-medium text-light-700 hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">${safeHtml(todo.name)}
+            <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg></button></div>
         <textarea name="category" class="text-base rounded w-32 bg-slate-700 m-4 p-1">${safeHtml(todo.name)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
         <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-
-
-      <div class="relative inline-block text-left">
-      <div>
-        <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-slate-600 text-sm font-medium text-light-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-          Categories
-          <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
-      </div>
       </form>
     </article>
   `;
@@ -62,10 +58,10 @@
   };
 
   const renderTodos = (todos) => {
-    const $container = $('main').find('#categories-container');
-    $container.children('.todo-container').hide().find('div').empty(); // reset containers
+    const $section = $('main').find('#categories-container');
+    $section.children('.category').hide().find('.todo-container').empty();
     for (const todo of todos) {
-      $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
+      $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo));
     }
   };
 
@@ -76,10 +72,10 @@
 
   const renderBasedOnUser = (name) => {
     if (name) {
-      const htmlString = `<p class="align-text">${safeHtml(name)}</p>`;
+      const username = `<p class="align-text">${safeHtml(name)}</p>`;
       $('#login').hide();
-      $('#logout').show().find('div').append(htmlString);
-      $('#new-todo').show().find('h1').text(`Hello, ${name}!`);
+      $('#logout').show().find('div').append(username);
+      $('#new-todo').show().find('h1').text(`Hello, ${safeHtml(name)}!`);
       return;
     }
     $('#login').show();
