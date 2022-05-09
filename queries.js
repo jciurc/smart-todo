@@ -71,7 +71,6 @@ const editTodo = (todo) => {
 
 const setCompleted = (options) => {
   const values = [options.complete, options.id];
-
   const queryString = `
   UPDATE todos SET completed = $1
   WHERE id = $2
