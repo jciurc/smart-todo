@@ -3,17 +3,15 @@ const axios = require('axios').default;
 // = api calls =
 const fetchMoviesForUser = (text) => {
   const options = {
-    url: "https://movie-database-alternative.p.rapidapi.com/",
     params: { s: text, r: "json", page: "1" },
     headers: {
       "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.API_KEY,
     },
   };
-  return $.ajax(options)
-    .then((response) => {
-      if (response.data.search.title.length >= 1) return "Movies";
-
+  return axios.get('https://movie-database-alternative.p.rapidapi.com/', options)
+    .then((res) => {
+      if (res.data.length > 1) return "Movies";
     })
     .catch((err) => {
       console.log("err", err);
@@ -40,15 +38,18 @@ const fetchMusicForUser = (text) => {
 
 // = main function =
 const findCategory = (text) => {
-  const apiList = [fetchMusicForUser, fetchMoviesForUser];
   // todo sanitize query text
-  Promise.any(apiList)
-  return fetchMusicForUser(text)
+  return Promise.any([
+    fetchMusicForUser(text),
+    fetchMoviesForUser(text),
+  ])
     .then((category) => {
+      console.log('promise any response', category);
       return category || 'Unlabeled';
     })
     .catch((err) => {
       console.error(err);
+      return 'Unlabeled';
     });
 };
 
