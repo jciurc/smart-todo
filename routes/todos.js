@@ -25,20 +25,20 @@ router.post('/', (req, res) => {
   findCategory(description)
     .then((category) => {
       return getCategoryByName(category)
+        .then((cat) => {
+          const user_id = req.cookies.user;
+          const category_id = cat.id;
 
-      .then((user) => {
-      const user_id = req.cookies.user;
-      const category_id = user.id;
+          // create new todo in database
+          insertNewTodo({ user_id, description, category_id });
+        })
+        .then((todo) => {
 
-      // create new todo in database
-      insertNewTodo({ user_id, description, category_id })
-    })
-    .then((todo) => {
-
-      // return new todo back to front end
-      res.json(todo || null);
+          // return new todo back to front end
+          res.json(todo || null);
     })
     .catch((err) => {
+      console.log('error posting new todo');
       console.error(err);
     })
   });
@@ -87,6 +87,7 @@ router.delete("/:id", (req, res) => {
     res.send(true);
   })
   .catch((err) => {
+    console.log('error deleting todo');
     console.error(err);
   })
 });

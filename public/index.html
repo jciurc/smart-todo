@@ -8,13 +8,13 @@
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/main.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/api.js"></script>
   <script type="text/javascript" src="/scripts/client.js"></script>
-  <script type="text/javascript" src="/scripts/api.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body class="bg-gray-900	text-slate-300">
@@ -57,13 +57,14 @@
   <main>
     <section id="categories-container" class="flex justify-center mt-20 h-68">
 
-      <div id="Movies" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+      <div id="Movies" hidden class="form-check todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800 mr-10">
         <header class="font-bold text-xl m-4">Movies</header>
         <div class="px-6 py-4">
+          <br>
         </div>
       </div>
 
-      <div id="Music" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+      <div id="Music" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800 mr-10">
         <header class="font-bold text-xl m-4">Music</header>
         <div class="px-6 py-4">
         </div>
@@ -79,6 +80,12 @@
 
       <div id="Products" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
         <header class="font-bold text-xl m-4">Products</header>
+        <div class="px-6 py-4">
+        </div>
+      </div>
+
+      <div id="Unlabeled" hidden class="todo-container flex-col w-1/4 rounded overflow-y-auto h-80 shadow-lg bg-slate-800">
+        <header class="font-bold text-xl m-4">Unlabeled</header>
         <div class="px-6 py-4">
         </div>
       </div>

@@ -33,10 +33,13 @@
   const buildTodoCard = (todo) => {
     const htmlString = `
     <article class="todo rounded" alt="${todo.id}">
-      <p class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</p>
+
+      <p class="text-base rounded bg-slate-700 m-3 p-4"><input class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" value="" id="flexCheckDefault">
+      ${safeHtml(todo.description)}<i class="far fa-edit cursor-pointer"></i></p>
 
 <form hidden>
 
+       <textarea name="text" class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.name)}</textarea>
         <textarea name="text" class="text-base rounded bg-slate-700 m-3 p-4">${safeHtml(todo.description)}</textarea>
         <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
         <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
@@ -49,6 +52,7 @@
   const renderTodos = (todos) => {
     // need to empty containers first
     const $container = $('#categories-container');
+    $container.children('.todo-container').hide().find('div').empty();
     for (const todo of todos) {
       $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
     }
@@ -81,10 +85,10 @@
 
     // sends todo text backend
     $.post('/todos', $(this).serialize())
-
     // get new todo object back
-    .this((todo) => {
-      if (todo) loadTodos();
+    .then((todo) => {
+      $(this).find('input').val('');
+      loadTodos();
     });
   };
 
@@ -126,16 +130,17 @@
   const editTodo = function (event) {
     event.preventDefault();
     const $todo = $(this).closest('article');
-    const text = $(this).serialize()
-    console.log('serialized text', text);
 
+    //console.log('serialized text', text);
+    const data = $(this).serialize();
     const id = $todo.attr("alt");
 
-    $.ajax({ url: "/todos/" + id, data: text, type: "PUT" })
+    $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
         loadTodos();
     })
   }
+
 
   const completeTodo = function (event) {
     event.preventDefault();
