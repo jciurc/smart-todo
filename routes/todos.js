@@ -1,15 +1,10 @@
 const express = require('express');
-//const methodOverride = require('method-override');
 const router  = express.Router();
 const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo, setCompleted } = require('../queries');
 const { findCategory } = require('../api');
-//app.use(methodOverride("'X-HTTP-Method-Override'"));
-//app.use(methodOverride('_method'));
 
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
-
   getAllTodos(userId)
     .then((todos) => {
       res.json(todos);
@@ -66,7 +61,7 @@ router.put('/:id', (req, res) => {
         res.json(data);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   });
 });
@@ -84,8 +79,8 @@ router.patch('/:id', (req, res) => {
       res.json(todo);
     })
     .catch((err) => {
-      console.log(error );
-      console.log(err);
+      console.log('error checking off todo' );
+      console.error(err);
   })
 });
 

@@ -21,6 +21,29 @@ const getUserById = (id) => {
   })
 };
 
+
+// == categories ==
+const getAllCategories = () => {
+  return db.query(`SELECT * FROM categories;`)
+    .then((res) => {
+      return res.rows;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+const getCategoryByName = (name) => {
+  return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
+    .then((res) => {
+      return res.rows[0];
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
+
+
 // == todos ==
 const getAllTodos = (id = null) => {
   const queryString = `
@@ -84,16 +107,6 @@ const setCompleted = (options) => {
 };
 
 
-const getCategoryByName = (name) => {
-  return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
-    .then((res) => {
-      return res.rows[0];
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-};
-
 
 const insertNewTodo = (todo) => {
   const values = [todo.user_id, todo.description, todo.category_id];
@@ -132,4 +145,14 @@ const deleteTodo = (id) => {
 
 // stretch getUserTodosByCategory(id, category)
 
-module.exports = { getUserByName, getUserById, getAllTodos, deleteTodo, editTodo, setCompleted, insertNewTodo, getCategoryByName };
+module.exports = {
+  getUserByName,
+   getUserById,
+   getAllTodos,
+   deleteTodo,
+   editTodo,
+   setCompleted,
+   insertNewTodo,
+   getCategoryByName,
+   getAllCategories,
+   };
