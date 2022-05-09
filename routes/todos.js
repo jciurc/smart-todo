@@ -1,7 +1,7 @@
 const express = require('express');
 //const methodOverride = require('method-override');
 const router  = express.Router();
-const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName } = require('../queries');
+const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo } = require('../queries');
 const { findCategory } = require('../api');
 //app.use(methodOverride("'X-HTTP-Method-Override'"));
 //app.use(methodOverride('_method'));
@@ -45,12 +45,22 @@ router.post('/', (req, res) => {
 });
 
 //Edit todo
-// router.post('/:id') {
-//   const todoId = req.params.id
-//   const newTodo = req.body.text;
-//   const category = req.body.category;
-//   const userId = req.cookie.user
-// })
+router.post('/:id', (req, res) => {
+  const user_id = req.params.id
+  const description = req.body.text;
+  const category_id = cat.id;
+
+
+  editTodo(description, category_id, user_id)
+    .then((data) => {
+      res.send(true);
+    })
+    .catch((err) => {
+      console.log(err);
+  })
+});
+
+
 
 
 
