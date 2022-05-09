@@ -51,6 +51,7 @@
   const renderTodos = (todos) => {
     // need to empty containers first
     const $container = $('#categories-container');
+    $container.children('.todo-container').hide().find('div').empty();
     for (const todo of todos) {
       $container.find(`#${todo.name}`).show().find('div').prepend(buildTodoCard(todo));
     }
@@ -83,10 +84,10 @@
 
     // sends todo text backend
     $.post('/todos', $(this).serialize())
-
     // get new todo object back
-    .this((todo) => {
-      if (todo) loadTodos();
+    .then((todo) => {
+      $(this).find('input').val('');
+      loadTodos();
     });
   };
 
@@ -128,17 +129,14 @@
   const editTodo = function (event) {
     event.preventDefault();
     const $todo = $(this).closest('article');
-    const text = $(this).serialize()
-    console.log('serialized text', text);
-    //maybe second input parameter?
+    const data = $(this).serialize();
     const id = $todo.attr("alt");
 
-    $.ajax({ url: "/todos/" + id, data: text, type: "PUT" })
+    $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
         loadTodos();
     })
-  }
-
+  };
 
   const deleteTodo = function() {
     const $todo = $(this).closest('article');
