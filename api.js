@@ -31,7 +31,7 @@ const queryMusic = (text) => {
 
   return axios.get('https://shazam.p.rapidapi.com/search', options)
   .then((res) => {
-    console.log('testing music: hits', Object.keys(res.data).length);
+    console.log('music query hits', Object.keys(res.data).length);
     if (Object.keys(res.data).length > 0) return "Music";
   })
   .catch((err) => {
@@ -53,7 +53,7 @@ const queryMovies = (text) => {
       if (res.data.Search.length > 1) return "Movies";
     })
     .catch((err) => {
-      console.log("err", err);
+      console.error("err");
     });
 };
 
