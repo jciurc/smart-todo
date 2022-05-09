@@ -40,31 +40,28 @@ const getAllTodos = (id = null) => {
 // == alters ==
 const editTodo = (todo) => {
   const values = [];
-  console.log("todo", todo);
   let queryString = `UPDATE todos `
 
   if (todo.description) {
-    values.push(`${todo.description}`)
+    values.push(todo.description)
     queryString += `SET description = $${values.length}
-    ${todo.category ? ', ' : ''}
     `
   }
 
-
   if (todo.category_id) {
-    values.push(`${todo.category_id}`)
-    queryString += `category_id = $${values.length} `
+    values.push(todo.category_id)
+    queryString += `${todo.description ? ', ' : 'SET'} category_id = $${values.length} `
   }
 
-  values.push(todo.todo_id);
+  values.push(todo.id);
   queryString +=
     `WHERE id = $${values.length} RETURNING *;
   `;
-  console.log("values", values);
-  console.log("query string", queryString);
+
+  console.log('queryString', queryString);
+  console.log('values', values);
   return db.query(queryString, values)
     .then((data) => {
-      console.log(" I'm here");
       return data.rows;
     })
     .catch((err) => {
@@ -72,11 +69,9 @@ const editTodo = (todo) => {
     });
 };
 
-
 const setCompleted = (options) => {
-  console.log("complete in query", options);
   const values = [options.complete, options.id];
-  
+
   const queryString = `
   UPDATE todos SET completed = $1
   WHERE id = $2
@@ -101,7 +96,7 @@ const getCategoryByName = (name) => {
     .catch((err) => {
       console.error(err);
     });
-}
+};
 
 
 const insertNewTodo = (todo) => {

@@ -47,18 +47,27 @@ router.post('/', (req, res) => {
 
 //Edit todo
 router.put('/:id', (req, res) => {
-  //const category_id = cat.id;
-  const todo_id = req.params.id
+  const id = req.params.id
   const description = req.body.text;
+  const category = req.body.category;
+
+  console.log('req body', req.body);
+
+  return getCategoryByName(category)
+  .then((cat) => {
+    const category_id = cat ? cat.id : null;
+    editTodo({ id, description, category_id })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 
 
-  editTodo({ description, todo_id }) /*category_id,*/
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-  })
+
+
 });
 
 // Complete todo

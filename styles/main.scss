@@ -3,3 +3,13 @@ body {
   text-align: center;
   padding-bottom: 100px;
 }
+
+.todo-container {
+  min-width: 260px;
+  max-width: 300px;
+  min-height: 500px;
+}
+
+.todo-description {
+  cursor:pointer;
+}
