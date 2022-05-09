@@ -46,14 +46,10 @@ router.post('/', (req, res) => {
 
 //Edit todo
 // router.post('/:id') {
-//   const todoId = req.params.id
-//   const newTodo = req.body.text;
+//   const id = req.params.id
+//   const description = req.body.text;
 //   const category = req.body.category;
-//   const userId = req.cookie.user
 // })
-
-
-
 
 router.delete("/:id", (req, res) => {
   const id = req.params.id;

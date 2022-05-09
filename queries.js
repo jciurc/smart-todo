@@ -121,7 +121,6 @@ const deleteTodo = (id) => {
 
   return db.query(queryString, values)
   .then((data) => {
-    console.log('data from delete', data.rows); // for testing
     return true;
   })
   .catch((err) => {
