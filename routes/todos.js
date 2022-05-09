@@ -85,6 +85,13 @@ router.patch('/:id', (req, res) => {
 // delete todo
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
+  const user_id = req.cookies.user;
+  if (!user_id ) {
+    return res.status(401).send("SORRY: You must be logged in to delete a todo!");
+  }
+   //redirect to home page
+  res.redirect("/");
+
   deleteTodo(id)
   .then((data) => {
     res.send(true);
