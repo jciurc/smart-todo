@@ -3,8 +3,8 @@ const db = require("./lib/db");
 // == users ==
 const getUserByName = (name) => {
   return db.query(`SELECT * FROM users WHERE name = $1`, [name])
-  .then((data) => {
-    return data.rows[0];
+  .then((res) => {
+    return res.rows[0];
   })
   .catch((err) => {
     console.error(err);
@@ -13,8 +13,8 @@ const getUserByName = (name) => {
 
 const getUserById = (id) => {
   return db.query(`SELECT * FROM users WHERE id = $1`, [id])
-  .then((data) => {
-    return data.rows[0];
+  .then((res) => {
+    return res.rows[0];
   })
   .catch((err) => {
     console.error(err);
@@ -27,10 +27,11 @@ const getAllTodos = (id = null) => {
   SELECT todos.*, name FROM todos
   JOIN categories ON categories.id = category_id
   WHERE user_id = $1
+  ORDER BY id;
 `;
   return db.query(queryString, [id])
-  .then((data) => {
-    return data.rows;
+  .then((res) => {
+    return res.rows;
   })
   .catch((err) => {
     console.error(err);
@@ -40,52 +41,42 @@ const getAllTodos = (id = null) => {
 // == alters ==
 const editTodo = (todo) => {
   const values = [];
-  console.log("todo", todo);
   let queryString = `UPDATE todos `
 
   if (todo.description) {
-    values.push(`${todo.description}`)
+    values.push(todo.description)
     queryString += `SET description = $${values.length}
-    ${todo.category ? ', ' : ''}
     `
   }
 
-
   if (todo.category_id) {
-    values.push(`${todo.category_id}`)
-    queryString += `category_id = $${values.length} `
+    values.push(todo.category_id)
+    queryString += `${todo.description ? ', ' : 'SET'} category_id = $${values.length} `
   }
 
-  values.push(todo.todo_id);
+  values.push(todo.id);
   queryString +=
     `WHERE id = $${values.length} RETURNING *;
   `;
-  console.log("values", values);
-  console.log("query string", queryString);
   return db.query(queryString, values)
-    .then((data) => {
-      console.log(" I'm here");
-      return data.rows;
+    .then((res) => {
+      return res.rows;
     })
     .catch((err) => {
       console.error(err);
     });
 };
 
-
 const setCompleted = (options) => {
-  console.log("complete in query", options);
   const values = [options.complete, options.id];
-  
   const queryString = `
   UPDATE todos SET completed = $1
   WHERE id = $2
   RETURNING *
 `;
-
   return db.query(queryString, values)
-    .then((data) => {
-      return data.rows;
+    .then((res) => {
+      return res.rows[0];
     })
     .catch((err) => {
       console.error(err);
@@ -95,13 +86,13 @@ const setCompleted = (options) => {
 
 const getCategoryByName = (name) => {
   return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
-    .then((data) => {
-      return data.rows[0];
+    .then((res) => {
+      return res.rows[0];
     })
     .catch((err) => {
       console.error(err);
     });
-}
+};
 
 
 const insertNewTodo = (todo) => {
@@ -113,9 +104,9 @@ const insertNewTodo = (todo) => {
 `;
 
   return db.query(queryString, values)
-    .then((data) => {
-      console.log('new todo inserted:', data.rows );
-      return data.rows[0];
+    .then((res) => {
+      console.log('new todo inserted:', res.rows );
+      return res.rows[0];
     })
     .catch((err) => {
       console.error(err);
@@ -131,7 +122,7 @@ const deleteTodo = (id) => {
   `;
 
   return db.query(queryString, values)
-  .then((data) => {
+  .then((res) => {
     return true;
   })
   .catch((err) => {

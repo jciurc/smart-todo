@@ -47,41 +47,51 @@ router.post('/', (req, res) => {
 
 //Edit todo
 router.put('/:id', (req, res) => {
-  //const category_id = cat.id;
-  const todo_id = req.params.id
+  const id = req.params.id
   const description = req.body.text;
+  const category = req.body.category;
 
+  console.log('req body', req.body);
 
-  editTodo({ description, todo_id }) /*category_id,*/
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      console.log(err);
-  })
+  return getCategoryByName(category)
+  .then((cat) => {
+    const category_id = cat ? cat.id : null;
+    editTodo({ id, description, category_id })
+      .then((data) => {
+        res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 });
+
 
 // Complete todo
 router.patch('/:id', (req, res) => {
-  const todo_id = req.params.id;
+  const id = req.params.id;
   const complete = req.body.complete;
-  ///???????? boolean true or faulse response
-  console.log(" complte string", req.body.complete);
-  setCompleted({todo_id, complete})
-    .then((data) => {
-      res.send(true);
+  console.log('received', complete);
+  setCompleted({id, complete})
+    .then((todo) => {
+      console.log('here', todo.completed);
+      res.json(todo);
     })
     .catch((err) => {
       console.log(err);
   })
 });
 
-
-
-
-
+// delete todo
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
+  const user_id = req.cookies.user;
+  if (!user_id ) {
+    return res.status(401).send("SORRY: You must be logged in to delete a todo!");
+  }
+   //redirect to home page
+  res.redirect("/");
+
   deleteTodo(id)
   .then((data) => {
     res.send(true);
@@ -93,22 +103,3 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
-
-
-
-// .get('/') {
-//   db.getAllTodos()
-//   app.then((todos) => {
-//     renderTodos(todos)
-//   })
-// }
-
-// .delete('/:id') {
-//   db.deleteTodos(req.params.id)
-// }
-// .get('/') {
-//   db.getAllTodos()
-// }
-// .get('/') {
-//   db.getAllTodos()
-// }
