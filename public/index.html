@@ -25,42 +25,42 @@
     <div>
       <div class="logo">taskr</div>
       <ul class="flex justify-end">
-      <!-- <img src="./images/logo.svg" alt="Kiwi standing on oval"> -->
-      <form id="login" hidden class="flex items-center">
-
-        <li class="mr-6">
-          <input
-            class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
-            type="text" name="text" placeholder="Username"><br>
-        </li>
-        <li class="mr-10">
-          <button type="submit"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
-        </li>
-      </form>
-    </div>
-      <form id="logout" hidden class="flex align-middle items-center" >
-        <div class="mr-6"></div>
-        <li class="mr-10">
-          <button type="button"
+        <form id="login" hidden class="flex items-center">
+        <!-- <img src="./images/logo.svg" alt="Kiwi standing on oval"> -->
+          <li class="mr-6">
+            <input
+              class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
+              type="text" name="text" placeholder="Username"><br>
+          </li>
+          <li class="mr-10">
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
+          </li>
+        </form>
+        <form id="logout" hidden class="flex align-middle items-center" >
+          <div class="mr-6"></div>
+          <li class="mr-10">
+            <button type="button"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Logout</button>
-        </li>
-      </form>
-    </ul>
+          </li>
+        </form>
+      </ul>
+    </div>
   </nav>
 
 
 <div id="alert-box">
 <p class="alert-text"></p>
 </div>
-<span class="text-base">Welcome to your smart todo app</span>
-<div class='tetrominos'>
-  <div class='tetromino box1'></div>
-  <div class='tetromino box2'></div>
-  <div class='tetromino box3'></div>
-  <div class='tetromino box4'></div>
+<div id="splash" class="text-base">
+  <span class="welcome">Welcome to your smart todo app</span>
+  <div class='tetrominos'>
+    <div class='tetromino box1'></div>
+    <div class='tetromino box2'></div>
+    <div class='tetromino box3'></div>
+    <div class='tetromino box4'></div>
+  </div>
 </div>
-
   <form hidden id="new-todo">
     <h1 class="text-4xl font-semibold"></h1>
     <input
