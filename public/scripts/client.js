@@ -65,8 +65,12 @@
     return safe.innerHTML;
   };
 
-  const buildTodoCard = (todo, options) => {
-    console.log('replace top category with current one. regex? current:', `${safeHtml(todo.name)} , options`, options);
+  const buildTodoCard = (todo, dropdownOptions) => {
+    // move current category to top of dropdown list
+    const sorted = [...dropdownOptions];
+    const [current] = sorted.splice(sorted.findIndex(item => item.includes('value="' + todo.category_id)), 1);
+    sorted.unshift(current);
+
     const htmlString = `
 <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
   <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
@@ -83,7 +87,7 @@
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i></header>
       <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
       <select name="category_id" class="text-base rounded w-28 bg-slate-800 m-30">
-        ${options}
+        ${sorted.join('\n')}
         </select>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
@@ -95,26 +99,20 @@
     return htmlString;
   };
 
-  const buildList = (list) => {
-    let options = '';
-    for (const item of list) {
-      options += `\n<option value="${item.id}">${safeHtml(item.name)}</option> `
-    }
-    return options;
-  };
-
-  const loadCategories = () => {
+  const buildCategories = () => {
     return $.get('/categories')
-      .then(buildList)
+      .then((categories) => {
+        return categories.map((item) => `<option value="${item.id}">${safeHtml(item.name)}</option>`);
+      })
   };
 
   const renderTodos = (todos) => {
-    loadCategories()
+    buildCategories()
       .then((categories) => {
         const $section = $('main').find('#categories-container');
         $section.children('.category').hide().find('.todo-container').empty();
         for (const todo of todos) {
-          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(100);
+          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
         }
       });
   };
