@@ -113,12 +113,24 @@ article.todo {
   padding:5px;
 }
 
-#Movies header{
+#Movies .todo header{
   background-color:rgb(54 83 20);
 }
 
-#Music header{
+#Music .todo header{
   background-color:rgb(21 94 117);
 }
+
+#Books .todo header{
+  background-color:rgb(206, 95, 16);
+}
+
+#Food .todo header{
+  background-color:rgb(127 29 29);
+}
+
+
+
+
 
 
