@@ -13,7 +13,7 @@ const axiosGet = (url, host, params) => {
     }
   };
 
-  return axios.get( url, options)
+  return axios.get(url, options)
   .then((res) => {
     return res.data;
   })
@@ -22,9 +22,6 @@ const axiosGet = (url, host, params) => {
   });
 };
 
-//     return ['Music', 'Track' + title + 'by:' +  subtitle];
-
-
 
 const queryFood = (text) => {
   const host = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com";
@@ -32,21 +29,33 @@ const queryFood = (text) => {
   const params = { query: text, number: "10" };
 
   return axios(host, url, params)
-    .then((data) => {
-      console.log(data);
-      //const { title, subtitle } = data.tracks.hits[0];
+  .then((data) => {
+    console.log(data);
+    const { title } = data.title;
+    return ['Food' + title ];
   })
 
+const queryProducts = (text) => {
+  const host = "amazon-price1.p.rapidapi.com";
+  const url = "https://amazon-price1.p.rapidapi.com/search";
+  const params = { keywords: text, marketplace: "ES" };
+
+  return axios(host, url, params)
+    .then((data) => {
+      console.log(data);
+      const { title } = data.title;
+      return ['Product' + title ];
+    });
+};
 
 
-const getMusicInfo = (text) => {
+const queryMusic = (text) => {
   const url = 'https://shazam.p.rapidapi.com/search'
-  const slug = '/search'
+  const host = 'shazam.p.rapidapi.com'
   const params = { term: text, locale: "en-US", offset: "0", limit: "3" }
-  return axiosGet(url, slug, params)
+  return axiosGet(url, host, params)
     .then((data) => {
       const { title, subtitle } = data.tracks.hits[0];
-      console.log(' track', title, 'by:', subtitle);
     return ['Music', 'Track' + title + 'by:' +  subtitle];
     });
 };
@@ -67,31 +76,6 @@ const queryBooks = (text) => {
     writeFile(`./testing/books-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
       if (err) throw err;
       console.log('The books result has been saved!');
-    });
-
-    return res.data;
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
-};
-
-const queryProducts = (text) => {
-  const options = {
-    method: "GET",
-    url: "https://amazon-price1.p.rapidapi.com/search",
-    params: { keywords: text, marketplace: "ES" },
-    headers: {
-      "X-RapidAPI-Host": "amazon-price1.p.rapidapi.com",
-      "X-RapidAPI-Key": process.env.API_KEY,
-    },
-  };
-  return axios.get("https://amazon-price1.p.rapidapi.com/search", options)
-    .then((res) => {
-    // save results to disc
-    writeFile(`./testing/products-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
-      if (err) throw err;
-      console.log('The products result has been saved!');
     });
 
     return res.data;
@@ -126,7 +110,7 @@ const queryMovies = (text) => {
 };
 
 
-const uclassifyRequest = (subject, text) => {
+  const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`
   const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(' ').join('+')}`;
   return axios.get(url + options)
@@ -155,11 +139,11 @@ const findCategory = (text) => {
   return findTopic(text)
 };
 
-const getSubtitle = (category, text) {
+const getSubtitle = (category, text) => {
   // todo make run external api call
-}
+};
 
-module.exports = { findCategory };
+module.exports = { findCategory, getSubtitle };
 
-// // = TESTING APIs  =
-// findCategory("hello");
+// = TESTING APIs  =
+//findCategory("hello");
