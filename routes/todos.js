@@ -1,15 +1,10 @@
 const express = require('express');
-//const methodOverride = require('method-override');
 const router  = express.Router();
 const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo, setCompleted } = require('../queries');
 const { findCategory } = require('../api');
-//app.use(methodOverride("'X-HTTP-Method-Override'"));
-//app.use(methodOverride('_method'));
 
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
-
   getAllTodos(userId)
     .then((todos) => {
       res.json(todos);
@@ -53,22 +48,15 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const id = req.params.id
   const description = req.body.text;
-  const category = req.body.category;
-  const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
-  console.log('req body', req.body);
-
-  return getCategoryByName(category)
-  .then((cat) => {
-    const category_id = cat ? cat.id : null;
-    editTodo({ id, description, category_id })
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  const category_id = req.body.category_id;
+  console.log('put req bod', req.body);
+  editTodo({ id, description, category_id })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 });
 
 
@@ -81,20 +69,18 @@ router.patch('/:id', (req, res) => {
   console.log('received', complete);
   setCompleted({id, complete})
     .then((todo) => {
-      console.log('here', todo.completed);
+      console.log(todo.description, todo.completed ? 'todo done' : 'todo not done');
       res.json(todo);
     })
     .catch((err) => {
-      console.log(err);
+      console.log('error checking off todo' );
+      console.error(err);
   })
 });
 
 // delete todo
 router.delete("/:id", (req, res) => {
   const id = req.params.id;
-  const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
-
   deleteTodo(id)
   .then((data) => {
     res.send(true);

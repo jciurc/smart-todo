@@ -70,7 +70,7 @@ article.todo {
   }
 
   // text area categories box - will replace with dropdown later
-  .w-32 {
+  .w-28 {
     resize: none;
     height: 40px;
     overflow: hidden;
@@ -85,6 +85,10 @@ article.todo {
   }
 
   &.editing {
+
+    min-width: 240px;
+    margin: 20px;
+
     > .card {
       display: none;
     }

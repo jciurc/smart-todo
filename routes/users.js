@@ -13,11 +13,9 @@ router.get('/', (req, res) => {
 
 router.post('/login', (req, res) => {
   const name = req.body.text;
-
   getUserByName(name)
     .then((user) => {
-      const current = user || addUserToDatabase();
-      res.cookie('user', current.id);
+      res.cookie('user', user.id);
       res.json(current);
     })
     .catch((err) => {

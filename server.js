@@ -23,8 +23,10 @@ app.use(express.static('public'));
 
 // Separated Routes for each Resource
 const usersRoutes = require('./routes/users');
+const categoriesRoutes = require('./routes/categories');
 const todosRoutes = require('./routes/todos');
 app.use('/users', usersRoutes);
+app.use('/categories', categoriesRoutes);
 app.use('/todos', todosRoutes);
 
 app.get('*', (req, res) => {

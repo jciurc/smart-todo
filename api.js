@@ -26,15 +26,18 @@ const queryBooks = (text) => {
 const queryFood = (text) => {
   const options = {
     method: "GET",
-    url: "https://themealdb.p.rapidapi.com/filter.php",
-    params: { c: text },
+    url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
+    params: { query: text, number: "10" },
     headers: {
-      "X-RapidAPI-Host": "themealdb.p.rapidapi.com",
+      "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.API_KEY,
     },
   };
   return axios
-    .get("https://themealdb.p.rapidapi.com/filter.php", options)
+    .get(
+      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
+      options
+    )
     .then((res) => {
       console.log("food query response", res);
       if (res.length > 0) return "Food";
