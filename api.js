@@ -4,7 +4,7 @@ const { writeFile } = require('fs');
 // = api calls =
 
 
-const axiosGet = (url, slug, params) => {
+const axiosGet = (url, host, params) => {
   const options = {
     params,
     headers: {
@@ -13,7 +13,7 @@ const axiosGet = (url, slug, params) => {
     }
   };
 
-  return axios.get(url + slug, options)
+  return axios.get(host + url + slug, options)
   .then((res) => {
     return res.data;
   })
@@ -84,13 +84,24 @@ const queryProducts = (text) => {
       console.error(err.message);
     });
 };
-
+// const getMusicInfo = (text) => {
+//   const url = 'https://shazam.p.rapidapi.com/search'
+//   const slug = '/search'
+//   const params = { term: text, locale: "en-US", offset: "0", limit: "3" }
+//   return axiosGet(url, slug, params)
+//     .then((data) => {
+//       const { title, subtitle } = data.tracks.hits[0];
+//       console.log(' track', title, 'by:', subtitle);
+//     return ['Music', 'Track' + title + 'by:' +  subtitle];
+//     });
+// };
 const queryFood = (text) => {
-  const options = {
-    method: "GET",
-    url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
-    params: { query: text, number: "10" },
-    headers: {
+  const host = "https://spoonacular-recipe-food-nutrition-v1.";
+  const url = "p.rapidapi.com";
+  const params = { query: text, number: "10" };
+  const slug = "/recipes/autocomplete";
+
+
       "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.API_KEY,
     },
