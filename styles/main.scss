@@ -11,8 +11,8 @@ body {
     font-weight: 500;
   }
 
-  min-width: 240px;
-  max-width: 320px;
+  min-width: 280px;
+  max-width: 360px;
   min-height: 460px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -31,7 +31,7 @@ article.todo {
     color: coral;
   }
 
-  .card {
+  header.card {
     box-shadow: 0px 6px 3px 2px rgba(26, 24, 25, 0.2);
     min-height: calc(60px + 0.3vw);
     max-height: 100px;
@@ -43,11 +43,17 @@ article.todo {
       left: 4px;
     }
 
-    // todo description
-    p {
+    p.description {
       padding: 4px 6px;
       font-weight: 400;
     }
+
+    p.subtitle {
+      font-weight: 500;
+      color: rgb(152, 180, 180);
+      font-size: 0.8em;
+    }
+
 
     &.complete {
       box-shadow: 0px 0px 8px 3px rgba(255, 60, 151, 0.6);
@@ -63,7 +69,6 @@ article.todo {
   .hover {
     opacity: 0;
   }
-
   &:hover .hover {
     opacity: 1;
   }
@@ -111,24 +116,18 @@ article.todo {
   padding:5px;
 }
 
-#Movies .todo header{
-  background-color:rgb(54 83 20);
+#Movies .todo > header.card {
+  background-color:rgb(20, 83, 39);
 }
 
-#Music .todo header{
+#Music .todo > header.card {
   background-color:rgb(21 94 117);
 }
 
-#Books .todo header{
+#Books .todo > header.card {
   background-color:rgb(206, 95, 16);
 }
 
-#Food .todo header{
+#Food .todo > header.card {
   background-color:rgb(127 29 29);
 }
-
-
-
-
-
-
