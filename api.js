@@ -8,12 +8,12 @@ const axiosGet = (url, host, params) => {
   const options = {
     params,
     headers: {
-      "X-RapidAPI-Host": url,
+      "X-RapidAPI-Host": host,
       "X-RapidAPI-Key": process.env.API_KEY,
     }
   };
 
-  return axios.get(host + url + slug, options)
+  return axios.get( url, options)
   .then((res) => {
     return res.data;
   })
@@ -21,6 +21,22 @@ const axiosGet = (url, host, params) => {
     console.error(err.message);
   });
 };
+
+//     return ['Music', 'Track' + title + 'by:' +  subtitle];
+
+
+
+const queryFood = (text) => {
+  const host = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com";
+  const url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete";
+  const params = { query: text, number: "10" };
+
+  return axios(host, url, params)
+    .then((data) => {
+      console.log(data);
+      //const { title, subtitle } = data.tracks.hits[0];
+  })
+
 
 
 const getMusicInfo = (text) => {
@@ -84,43 +100,6 @@ const queryProducts = (text) => {
       console.error(err.message);
     });
 };
-// const getMusicInfo = (text) => {
-//   const url = 'https://shazam.p.rapidapi.com/search'
-//   const slug = '/search'
-//   const params = { term: text, locale: "en-US", offset: "0", limit: "3" }
-//   return axiosGet(url, slug, params)
-//     .then((data) => {
-//       const { title, subtitle } = data.tracks.hits[0];
-//       console.log(' track', title, 'by:', subtitle);
-//     return ['Music', 'Track' + title + 'by:' +  subtitle];
-//     });
-// };
-const queryFood = (text) => {
-  const host = "https://spoonacular-recipe-food-nutrition-v1.";
-  const url = "p.rapidapi.com";
-  const params = { query: text, number: "10" };
-  const slug = "/recipes/autocomplete";
-
-
-      "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-      "X-RapidAPI-Key": process.env.API_KEY,
-    },
-  };
-  return axios.get( "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",options)
-    .then((res) => {
-    // save results to disc
-    writeFile(`./testing/food-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
-      if (err) throw err;
-      console.log('The food result has been saved!');
-    });
-
-    return res.data;
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
-};
-
 
 
 const queryMovies = (text) => {
