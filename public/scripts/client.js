@@ -127,10 +127,14 @@
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
+      $('#splash').hide();
+      $('#logout').show().find('div').append(username);
+      $('#new-todo').show().find('h1').text(`Hello, ${safeHtml(name)}!`);
       $('#new-todo').show().find('h1').text(`${greeting}, ${safeHtml(name)}!`);
       return;
     }
     $('#login').show();
+    $('#splash').show();
     $('#logout').hide().find('div').text('');
     $('#new-todo').hide().find('h1').text('');
   };
