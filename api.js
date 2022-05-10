@@ -107,7 +107,7 @@ const queryMovies = (text) => {
 // = main function =
 const findCategory = (text) => {
   return any([
-    //queryFood(text),
+    queryFood(text),
     queryMusic(text),
     queryBooks(text),
     queryProducts(text)
@@ -124,5 +124,5 @@ const findCategory = (text) => {
       return 'Unlabeled';
     });
 };
-
-module.exports = { findCategory };
+findCategory("cake")
+//module.exports = { findCategory };
