@@ -19,27 +19,20 @@
     // = initial page load =
     checkLogin();
     loadTodos();
+
+    // offset page rendering
+    setTimeout(() => {
+      $('delay').show();
+    }, 100);
+
   });
 
   // == helpers ==
-
-  //create function for this
-  const thehours = new Date().getHours();
-  let greeting = '';
-  const morning = ('Good morning');
-  const afternoon = ('Good afternoon');
-  const evening = ('Good evening');
-
-  if (thehours >= 0 && thehours < 12) {
-    greeting = morning;
-
-  } else if (thehours >= 12 && thehours < 17) {
-    greeting = afternoon;
-
-  } else if (thehours >= 17 && thehours < 24) {
-    greeting = evening;
+  const getGreeting = (hours) => {
+    if (hours < 12) return 'Good morning';
+    if (hours < 17) return 'Good afternoon';
+    return 'Good evening';
   };
-
 
   const showAlert = (message, style) => {
     const $alert = $('#alert-box');
@@ -123,11 +116,12 @@
   };
 
   const renderBasedOnUser = (name) => {
+    const currentTime = new Date().getHours();
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
       $('#splash').hide();
-      $('#new-todo').show().find('h1').text(`${greeting}, ${safeHtml(name)}!`);
+      $('#new-todo').show().find('h1').text(`${getGreeting(currentTime)}, ${safeHtml(name)}!`);
       return;
     }
     $('#login').show();

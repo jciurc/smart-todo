@@ -6,6 +6,19 @@ body {
 }
 
 // = main todos section =
+
+nav .logo {
+  &::first-letter {
+    color:#09C;
+  }
+  &:nth-letter(even) {
+    color:rgb(170, 0, 204);
+  }
+  &::last-letter {
+    color:rgb(0, 204, 92);
+  }
+}
+
 .category {
   header {
     font-weight: 500;
