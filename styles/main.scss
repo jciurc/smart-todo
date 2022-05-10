@@ -17,9 +17,9 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
 }
 
 article.todo {

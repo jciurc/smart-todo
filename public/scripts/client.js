@@ -66,6 +66,7 @@
   };
 
   const buildTodoCard = (todo, options) => {
+    console.log('replace top category with current one. regex? current:', `${safeHtml(todo.name)} , options`, options);
     const htmlString = `
 <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
   <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
@@ -73,7 +74,7 @@
     <div>
     <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
     <p class="subtitle">Subtitle Text</p>
-</div>
+    </div>
     <i class="far fa-edit hover cursor-pointer"></i>
   </header>
 
@@ -81,7 +82,7 @@
   <header class="m-2 pt-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i></header>
       <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
-      <select name="category_id" class="text-base rounded w-28 bg-slate-800 m-3 ">${safeHtml(todo.name)}">
+      <select name="category_id" class="text-base rounded w-28 bg-slate-800 m-30">
         ${options}
         </select>
     <footer class="flex justify-around pb-4">
