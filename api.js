@@ -5,15 +5,18 @@ const any = require('promise.any');
 const queryFood = (text) => {
   const options = {
     method: "GET",
-    url: "https://themealdb.p.rapidapi.com/filter.php",
-    params: { c: text },
+    url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
+    params: { query: text, number: "10" },
     headers: {
-      "X-RapidAPI-Host": "themealdb.p.rapidapi.com",
+      "X-RapidAPI-Host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
       "X-RapidAPI-Key": process.env.API_KEY,
     },
   };
   return axios
-    .get("https://themealdb.p.rapidapi.com/filter.php", options)
+    .get(
+      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
+      options
+    )
     .then((res) => {
       console.log("food query response", res);
       if (res.length > 0) return "Food";
@@ -69,8 +72,8 @@ const findCategory = (text) => {
   ])
     .then((category) => {
       console.log('promise any response', category);
-      return category || queryMovies(text).then(category => category || 'Unlabeled')
-      //return category.then((category) => category || "Unlabeled");
+      //return category || queryMovies(text).then(category => category || 'Unlabeled')
+      return category.then((category) => category || "Unlabeled");
     })
     .catch((err) => {
       console.log('error finding category', err.message || '');
