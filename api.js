@@ -2,6 +2,27 @@ const axios = require('axios').default;
 const any = require('promise.any');
 
 // = api calls =
+
+const queryBooks = (text) => {
+  const options = {
+    headers: {
+      'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
+      'X-RapidAPI-Key':  process.env.API_KEY,
+    },
+
+  };
+  const url = "https://hapi-books.p.rapidapi.com/search/" + text.toLowerCase().split(" ").join("+");
+  return axios
+    .get(url, options)
+    .then((res) => {
+      console.log("book query response", res.data);
+      if (res.data.length > 0) return "Books";
+    })
+    .catch((err) => {
+      console.error("err", err);
+    });
+};
+
 const queryFood = (text) => {
   const options = {
     method: "GET",
@@ -37,7 +58,7 @@ const queryMusic = (text) => {
 
   return axios.get('https://shazam.p.rapidapi.com/search', options)
   .then((res) => {
-    console.log('music query hits', Object.keys(res.data));
+    console.log('music query hits', Object.keys(res.data.tracks));
     if (Object.keys(res.data).length > 0) return "Music";
   })
   .catch((err) => {
@@ -67,13 +88,14 @@ const queryMovies = (text) => {
 // = main function =
 const findCategory = (text) => {
   return any([
-    queryFood(text),
+    //queryFood(text),
     queryMusic(text),
+    queryBooks(text)
   ])
     .then((category) => {
       console.log('promise any response', category);
       //return category || queryMovies(text).then(category => category || 'Unlabeled')
-      return category.then((category) => category || "Unlabeled");
+      return category || "Unlabeled";
     })
     .catch((err) => {
       console.log('error finding category', err.message || '');

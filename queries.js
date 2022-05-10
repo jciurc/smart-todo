@@ -116,7 +116,7 @@ const insertNewTodo = (todo) => {
 
   return db.query(queryString, values)
     .then((res) => {
-      console.log('new todo inserted:', res.rows );
+      console.log('new todo inserted:', res.rows);
       return res.rows[0];
     })
     .catch((err) => {
