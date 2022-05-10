@@ -228,9 +228,17 @@ $speed: 1.5s;
   }
 }
 
+body > nav > div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .logo {
   font-family: 'Gluten',cursive;
+  margin-left: 1em;
+  margin-top: 8px;
   color: white;
   font-weight: 400;
   font-size: 3rem;
+
 }
