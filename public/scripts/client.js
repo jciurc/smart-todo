@@ -91,7 +91,7 @@ const editMode = function() {
         const $section = $('main').find('#categories-container');
         $section.children('.category').hide().find('.todo-container').empty();
         for (const todo of todos) {
-          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories));
+          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(100);
         }
       });
   };

@@ -49,8 +49,6 @@ article.todo {
       font-weight: 400;
     }
 
-
-
     &.complete {
       box-shadow: 0px 0px 8px 3px rgba(255, 60, 151, 0.6);
       opacity: 0.5;
@@ -59,7 +57,6 @@ article.todo {
       background: radial-gradient(circle, #3f235a 0%, #1b0c43 100%);
     }
   }
-
 
   // = edit mode styling =
   // reveal buttons
@@ -102,7 +99,6 @@ article.todo {
 }
 
 //alert classes
-
 .red{
   background-color: rgb(239 68 68);
   height:30px;
@@ -122,5 +118,3 @@ article.todo {
 #Music header{
   background-color:rgb(21 94 117);
 }
-
-
