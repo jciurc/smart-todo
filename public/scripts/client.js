@@ -47,10 +47,14 @@ const editMode = function() {
   const buildTodoCard = (todo) => {
     const htmlString = `
     <article class="todo rounded flex-col flex-nowrap justify-center my-2" completed="${todo.completed}" alt="${todo.id}">
-      <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 h-16 m-3 p-2">
+      <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded  m-3 p-2">
         <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
+        <div>
         <p class="text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
+        <p class= "text-sm text-center self-center p-2">Subtitle Text Here</p>
+        </div>
         <i class="far fa-edit hover cursor-pointer"></i>
+
       </header>
 
       <form class="edit">
@@ -109,7 +113,9 @@ const editMode = function() {
     $.post('/todos', $(this).serialize())
     // get new todo object back
       .then((todo) => {
+        console.log('todo', todo);
         $(this).find('input').val('');
+        console.log('this',$(this));
         loadTodos();
       });
 

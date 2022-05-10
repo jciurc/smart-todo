@@ -35,10 +35,10 @@ router.post('/', (req, res) => {
           const category_id = cat.id;
 
           // create new todo in database
-          insertNewTodo({ user_id, description, category_id });
+          return insertNewTodo({ user_id, description, category_id })
         })
         .then((todo) => {
-
+       console.log('todo',todo);
           // return new todo back to front end
           res.json(todo || null);
     })
