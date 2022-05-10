@@ -124,5 +124,5 @@ const findCategory = (text) => {
       return 'Unlabeled';
     });
 };
-findCategory("cake")
-//module.exports = { findCategory };
+
+module.exports = { findCategory };

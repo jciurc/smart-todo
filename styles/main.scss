@@ -118,7 +118,16 @@ article.todo {
 #Music .todo header{
   background-color:rgb(21 94 117);
 }
-//Logo
+
+#Books .todo header {
+  background-color: rgb(206, 95, 16);
+}
+
+#Food .todo header {
+  background-color: rgb(127 29 29);
+}
+
+//Splash page animation
 $w: 96px;
 $h: 112px;
 $xspace: $w/2;
@@ -238,6 +247,7 @@ $speed: 1.5s;
   }
 }
 
+// Logo and splash styling
 body > nav > div {
   display: flex;
   justify-content: space-between;
@@ -262,13 +272,7 @@ body > nav > div {
 
 }
 
-#Books .todo header{
-  background-color:rgb(206, 95, 16);
-}
 
-#Food .todo header{
-  background-color:rgb(127 29 29);
-}
 
 
 

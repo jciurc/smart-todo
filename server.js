@@ -30,7 +30,7 @@ app.use('/categories', categoriesRoutes);
 app.use('/todos', todosRoutes);
 
 app.get('*', (req, res) => {
-  res.redirect(404, '/');
+  res.redirect(404, "/");
 });
 
 app.listen(PORT, () => {
