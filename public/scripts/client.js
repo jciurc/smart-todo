@@ -38,7 +38,7 @@
 
   } else if (thehours >= 17 && thehours < 24) {
     greeting = evening;
-  }
+  };
 
 
   const showAlert = (message, style) => {
@@ -66,22 +66,23 @@
   };
 
   const buildTodoCard = (todo, options) => {
+    console.log('replace top category with current one. regex? current:', `${safeHtml(todo.name)} , options`, options);
     const htmlString = `
 <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
   <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
     <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
     <div>
-    <p class="text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
-    <p>Subtitle Text</p>
-</div>
+    <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
+    <p class="subtitle">Subtitle Text</p>
+    </div>
     <i class="far fa-edit hover cursor-pointer"></i>
   </header>
 
   <form class="edit">
   <header class="m-2 pt-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i></header>
-      <textarea name="text" class="text-base text-center self-center rounded bg-slate-600 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
-      <select name="category_id" class="text-base rounded w-28 bg-slate-600 m-3 ">${safeHtml(todo.name)}">
+      <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+      <select name="category_id" class="text-base rounded w-28 bg-slate-800 m-30">
         ${options}
         </select>
     <footer class="flex justify-around pb-4">
@@ -124,7 +125,6 @@
   };
 
   const renderBasedOnUser = (name) => {
-
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
@@ -185,12 +185,13 @@
     if (!$(this).find('input').val()) return showAlert('Text field is empty', 'red');
 
     // sends todo text backend
-    showAlert('New todo added!', 'green');
+    showAlert('Finding suitable category..', 'green');
     $.post('/todos', $(this).serialize())
     // get new todo object back
-      .then((todo) => {
-        $(this).find('input').val('');
-        loadTodos();
+    .then((todo) => {
+      $(this).find('input').val('');
+      loadTodos();
+      showAlert('Match found! Added Todo to ' + todo.name, 'green');
       });
   };
 
