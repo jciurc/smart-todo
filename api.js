@@ -99,26 +99,34 @@ const queryMovies = (text) => {
 const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`
   const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(' ').join('+')}`;
+  // topics dictionary
+  const topics = {
+    Arts: 'art-topics',
+    Home: 'home-topics',
+    Literature: 'Books',
+    Music: 'Music' ,
+    Movies_Television: 'Movies',
+    Cooking: 'Food',
+  };
+
   return axios.get(url + options)
     .then((res) => {
       const allowedTopics = ['Arts', 'Home', 'Literature', 'Music', 'Movies_Television', 'Cooking'];
       const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
       const sorted = filtered.sort((a, b) => b[1] - a[1]);
-      return sorted[0][0];
+      return topics[sorted[0][0]];
     })
 };
 
 
 // = main function =
 const findCategory = (text) => {
-  const subtopic = { Arts: 'art-topics', Home: 'home-topics' }
-  const categories = { Arts: 'art-topics', Home: 'home-topics' }
   return uclassifyRequest('topics', text)
     .then((topic) => {
-      return uclassifyRequest(subtopic[topic], text)
+      return uclassifyRequest(topic, text)
     })
-    .then((topic) => {
-      return categories[topic];
+    .then((category) => {
+      return category;
     })
     .catch((err) => {
       console.log('error getting category');
@@ -126,14 +134,22 @@ const findCategory = (text) => {
     });
 };
 
-const getSubtitle = (category, text) => {
-  queries[category](text)
+const query = {
+  Music(text) {},
+  Food(text) {},
+  Books(text) {},
+  Products(text) {},
+  Movies(text) {},
+};
 
+
+const getSubtitle = (category, text) => {
+  return query[category.toLowerCase()](text)
   .catch((err) => {
     console.log('error getting subtitle');
     console.error(err.message);
   });
-}
+};
 
 module.exports = { findCategory, getSubtitle };
 
