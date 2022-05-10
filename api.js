@@ -4,16 +4,16 @@ const { writeFile } = require('fs');
 // = api calls =
 
 
-const axiosGet = (url, slug, params) => {
+const axiosGet = (url, host, params) => {
   const options = {
     params,
     headers: {
-      "X-RapidAPI-Host": url,
+      "X-RapidAPI-Host": host,
       "X-RapidAPI-Key": process.env.API_KEY,
     }
   };
 
-  return axios.get(url + slug, options)
+  return axios.get(url, options)
   .then((res) => {
     return res.data;
   })
@@ -23,14 +23,13 @@ const axiosGet = (url, slug, params) => {
 };
 
 
-const getMusicInfo = (text) => {
+const queryMusic = (text) => {
   const url = 'https://shazam.p.rapidapi.com/search'
-  const slug = '/search'
+  const host = 'shazam.p.rapidapi.com'
   const params = { term: text, locale: "en-US", offset: "0", limit: "3" }
-  return axiosGet(url, slug, params)
+  return axiosGet(url, host, params)
     .then((data) => {
       const { title, subtitle } = data.tracks.hits[0];
-      console.log(' track', title, 'by:', subtitle);
     return ['Music', 'Track' + title + 'by:' +  subtitle];
     });
 };
@@ -158,7 +157,7 @@ const getSubtitle = (category, text) => {
   // todo make run external api call
 };
 
-module.exports = { findCategory };
+module.exports = { findCategory, getSubtitle };
 
 // // = TESTING APIs  =
 // findCategory("hello");
