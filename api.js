@@ -30,32 +30,21 @@ const queryMusic = (text) => {
   return axiosGet(url, host, params)
     .then((data) => {
       const { title, subtitle } = data.tracks.hits[0];
-    return ['Music', 'Track' + title + 'by:' +  subtitle];
+      return ['Music', 'Track' + title + 'by:' +  subtitle];
     });
 };
 
 
 const queryBooks = (text) => {
-  const options = {
-    headers: {
-      'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
-      'X-RapidAPI-Key': process.env.API_KEY,
-    },
 
-  };
-  const url = "https://hapi-books.p.rapidapi.com/search/" + text.toLowerCase().split(" ").join("+");
-  return axios.get(url, options)
-    .then((res) => {
-    // save results to disc
-    writeFile(`./testing/books-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
-      if (err) throw err;
-      console.log('The books result has been saved!');
-    });
-
-    return res.data;
-    })
-    .catch((err) => {
-      console.error(err.message);
+  const url = 'https://hapi-books.p.rapidapi.com/search/' + text.toLowerCase().split(" ").join("+");
+  const host = 'hapi-books.p.rapidapi.com';
+  const params = {};
+  return axiosGet(url, host, params)
+    .then((data) => {
+      const { title, authors } = data;
+      console.log(' Book', title, 'Author', authors);
+      return  title +  authors;
     });
 };
 
@@ -113,14 +102,13 @@ const queryMovies = (text) => {
 
   const url = 'https://movie-database-alternative.p.rapidapi.com/';
   const host = 'movie-database-alternative.p.rapidapi.com';
-  const params = { s: text, plot: 'short', r: "json", page: "1" }
+  const params = { s: text, r: "json", page: "1" }
   return axiosGet(url, host, params)
     .then((data) => {
-      const { title, subtitle } = data.title;
-      console.log(' Movie', title, 'Directed By:', subtitle);
-      return 'Title' + title + 'Directed By:' +  subtitle;
+      const { Title, Year } = data.Search;
+      console.log(' Movie', Title, 'year', Year);
+      return  Title +  Year;
     });
-
 };
 
 
