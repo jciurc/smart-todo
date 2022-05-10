@@ -20,6 +20,34 @@ const axiosGet = (url, host, params) => {
 };
 
 
+const queryFood = (text) => {
+  const host = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com";
+  const url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete";
+  const params = { query: text, number: "10" };
+
+  return axios(host, url, params)
+    .then((data) => {
+      console.log(data);
+      const { title } = data.title;
+      return ['Food' + title];
+    })
+};
+
+
+const queryProducts = (text) => {
+  const host = "amazon-price1.p.rapidapi.com";
+  const url = "https://amazon-price1.p.rapidapi.com/search";
+  const params = { keywords: text, marketplace: "ES" };
+
+  return axios(host, url, params)
+    .then((data) => {
+      console.log(data);
+      const { title } = data.title;
+      return ['Product' + title ];
+    });
+};
+
+
 const queryMusic = (text) => {
   const url = 'https://shazam.p.rapidapi.com/search';
   const host = 'shazam.p.rapidapi.com';
@@ -45,42 +73,6 @@ const queryBooks = (text) => {
     });
 };
 
-const queryProducts = (text) => {
-  const options = {
-    params: { keywords: text, marketplace: "ES" },
-    headers: {
-      "X-RapidAPI-Host": "amazon-price1.p.rapidapi.com",
-      "X-RapidAPI-Key": process.env.API_KEY,
-    },
-  };
-  return axios.get("https://amazon-price1.p.rapidapi.com/search", options)
-    .then((res) => {
-    // save results to disc
-    writeFile(`./testing/products-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
-      if (err) throw err;
-      console.log('The products result has been saved!');
-    });
-
-    return res.data;
-    })
-};
-
-const queryFood = (text) => {
-  const options = {
-    url: "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
-    params: { query: text, number: "10" },
-  };
-  return axios.get( "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",options)
-    .then((res) => {
-    // save results to disc
-    writeFile(`./testing/food-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
-      if (err) throw err;
-      console.log('The food result has been saved!');
-    });
-
-    return res.data;
-    })
-};
 
 const queryMovies = (text) => {
 
@@ -96,7 +88,7 @@ const queryMovies = (text) => {
 };
 
 
-const uclassifyRequest = (subject, text) => {
+  const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`
   const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(' ').join('+')}`;
   // topics dictionary
@@ -153,5 +145,5 @@ const getSubtitle = (category, text) => {
 
 module.exports = { findCategory, getSubtitle };
 
-// // = TESTING APIs  =
-// findCategory("hello");
+// = TESTING APIs  =
+//findCategory("hello");
