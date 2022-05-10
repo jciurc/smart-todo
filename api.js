@@ -110,29 +110,18 @@ const queryFood = (text) => {
     });
 };
 
-
-
 const queryMovies = (text) => {
-  const options = {
-    params: { s: text, plot: 'short', r: "json", page: "1" },
-    headers: {
-      "X-RapidAPI-Host": "movie-database-alternative.p.rapidapi.com",
-      "X-RapidAPI-Key": process.env.API_KEY,
-    },
-  };
-  return axios.get('https://movie-database-alternative.p.rapidapi.com/', options)
-    .then((res) => {
-    // save results to disc
-    writeFile(`./testing/movie-${text.split(' ').join('-')}.json`, JSON.stringify(res.data), (err) => {
-      if (err) throw err;
-      console.log('The movie result has been saved!');
+
+  const url = 'https://movie-database-alternative.p.rapidapi.com/';
+  const host = 'movie-database-alternative.p.rapidapi.com';
+  const params = { s: text, plot: 'short', r: "json", page: "1" }
+  return axiosGet(url, host, params)
+    .then((data) => {
+      const { title, subtitle } = data.title;
+      console.log(' Movie', title, 'Directed By:', subtitle);
+      return 'Title' + title + 'Directed By:' +  subtitle;
     });
 
-    return res.data;
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
 };
 
 
@@ -165,9 +154,9 @@ const findCategory = (text) => {
   return findTopic(text)
 };
 
-const getSubtitle = (category, text) {
+const getSubtitle = (category, text) => {
   // todo make run external api call
-}
+};
 
 module.exports = { findCategory };
 
