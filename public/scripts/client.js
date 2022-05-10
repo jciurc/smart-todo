@@ -22,6 +22,25 @@
   });
 
   // == helpers ==
+
+  //create function for this
+  const thehours = new Date().getHours();
+  let greeting = '';
+  const morning = ('Good morning');
+  const afternoon = ('Good afternoon');
+  const evening = ('Good evening');
+
+  if (thehours >= 0 && thehours < 12) {
+    greeting = morning;
+
+  } else if (thehours >= 12 && thehours < 17) {
+    greeting = afternoon;
+
+  } else if (thehours >= 17 && thehours < 24) {
+    greeting = evening;
+  }
+
+
   const showAlert = (message, style) => {
     const $alert = $('#alert-box');
     $alert.removeClass("red green").addClass(style);
@@ -32,7 +51,7 @@
     }, 6000);
   };
 
-const editMode = function() {
+  const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('article').addClass('editing ring');
     const $textarea = $todo.find('form').find('[name="text"]').focus();
@@ -49,9 +68,12 @@ const editMode = function() {
   const buildTodoCard = (todo, options) => {
     const htmlString = `
 <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
-  <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 h-16 m-3 p-2">
+  <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
     <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
+    <div>
     <p class="text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
+    <p>Subtitle Text</p>
+</div>
     <i class="far fa-edit hover cursor-pointer"></i>
   </header>
 
@@ -102,12 +124,14 @@ const editMode = function() {
   };
 
   const renderBasedOnUser = (name) => {
+
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
       $('#splash').hide();
       $('#logout').show().find('div').append(username);
       $('#new-todo').show().find('h1').text(`Hello, ${safeHtml(name)}!`);
+      $('#new-todo').show().find('h1').text(`${greeting}, ${safeHtml(name)}!`);
       return;
     }
     $('#login').show();

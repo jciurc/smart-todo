@@ -9,3 +9,6 @@ INSERT INTO todos (user_id, category_id, description) VALUES (2, 1,'The Bodyguar
 INSERT INTO todos (user_id, category_id, description) VALUES (3, 2,'Jazzy Jeff and the Fresh Prince');
 INSERT INTO todos (user_id, category_id, description) VALUES (3, 4,'Hamilton');
 INSERT INTO todos (user_id, category_id, description) VALUES (3, 1,'The Lion King');
+INSERT INTO todos (user_id, category_id, description) VALUES (2, 3,'Pistachios');
+INSERT INTO todos (user_id, category_id, description) VALUES (2, 3,'Bread');
+INSERT INTO todos (user_id, category_id, description) VALUES (2, 1,'Monsters Inc');
