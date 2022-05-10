@@ -7,7 +7,7 @@ const queryBooks = (text) => {
   const options = {
     headers: {
       'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
-      'X-RapidAPI-Key':  process.env.API_KEY,
+      'X-RapidAPI-Key': process.env.API_KEY,
     },
 
   };
@@ -20,6 +20,8 @@ const queryBooks = (text) => {
     })
     .catch((err) => {
       console.error("err", err);
+    });
+};
 
 const queryProducts = (text) => {
   const options = {
@@ -36,7 +38,7 @@ const queryProducts = (text) => {
     .then((res) => {
       console.log("products query response", res.data[0]);
       //console.log("products query response.docs", res.data.docs[0]);
-      if (res.data.length) return "Products";
+      if (Object.keys(res.data.length)) return "Products";
     })
     .catch((err) => {
       console.error("err", err.message);
@@ -54,13 +56,10 @@ const queryFood = (text) => {
     },
   };
   return axios
-    .get(
-      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",
-      options
-    )
+    .get( "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete",options)
     .then((res) => {
       console.log("food query response", res.data);
-      if (res.data.length > 0) return "Food";
+      if (Object.keys(res.data.length > 0)) return "Food";
     })
     .catch((err) => {
       console.error("err", err.message);
