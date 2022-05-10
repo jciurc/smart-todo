@@ -10,20 +10,17 @@ router.get("/", (req, res) => {
       res.json(todos);
     })
     .catch((err) => {
-      res
-        .status(500)
-        .json({ error: err.message });
+      console.log('error getting user\'s todos');
+      console.error(err);
     });
 });
 
 router.post('/', (req, res) => {
-  const description = req.body.text;
-  const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
+  const text = req.body.text;
   // get category from external apis
-  findCategory(description)
+  findCategory(text)
     .then((category) => {
-      console.log('category found:', category);
+      console.log('category suggested from query:', category);
       return getCategoryByName(category)
         .then((cat) => {
           const user_id = req.cookies.user;
@@ -49,12 +46,12 @@ router.put('/:id', (req, res) => {
   const id = req.params.id
   const description = req.body.text;
   const category_id = req.body.category_id;
-  console.log('put req bod', req.body);
   editTodo({ id, description, category_id })
     .then((data) => {
       res.json(data);
     })
     .catch((err) => {
+      console.log('error editing todo');
       console.error(err);
     });
 });
@@ -64,9 +61,6 @@ router.put('/:id', (req, res) => {
 router.patch('/:id', (req, res) => {
   const id = req.params.id;
   const complete = req.body.complete;
-  const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
-  console.log('received', complete);
   setCompleted({id, complete})
     .then((todo) => {
       console.log(todo.description, todo.completed ? 'todo done' : 'todo not done');

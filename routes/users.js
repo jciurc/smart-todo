@@ -14,12 +14,13 @@ router.get('/', (req, res) => {
 router.post('/login', (req, res) => {
   const name = req.body.text;
   getUserByName(name)
-    .then((user) => {
+  .then((user) => {
       res.cookie('user', user.id);
-      res.json(current);
+      res.json(user);
     })
     .catch((err) => {
-      res.status(500).send({ error: err.message });
+      console.log('error logging in');
+      console.error(err);
     });
 });
 

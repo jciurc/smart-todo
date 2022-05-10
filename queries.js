@@ -43,6 +43,7 @@ const getCategoryByName = (name) => {
     });
 };
 
+// stretch getUserTodosByCategory(id, category)
 
 // == todos ==
 const getAllTodos = (id = null) => {
@@ -61,7 +62,6 @@ const getAllTodos = (id = null) => {
   })
 };
 
-// == alters ==
 const editTodo = (todo) => {
   const values = [];
   let queryString = `UPDATE todos `
@@ -106,8 +106,6 @@ const setCompleted = (options) => {
     });
 };
 
-
-
 const insertNewTodo = (todo) => {
   const values = [todo.user_id, todo.description, todo.category_id];
   const queryString = `
@@ -126,7 +124,6 @@ const insertNewTodo = (todo) => {
     });
 };
 
-
 const deleteTodo = (id) => {
   const values = [id]
   const queryString = `
@@ -143,7 +140,6 @@ const deleteTodo = (id) => {
   })
 };
 
-// stretch getUserTodosByCategory(id, category)
 
 module.exports = {
   getUserByName,
