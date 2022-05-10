@@ -20,6 +20,26 @@ const queryBooks = (text) => {
     })
     .catch((err) => {
       console.error("err", err);
+
+const queryProducts = (text) => {
+  const options = {
+    method: "GET",
+    url: "https://amazon-price1.p.rapidapi.com/search",
+    params: { keywords: text, marketplace: "ES" },
+    headers: {
+      "X-RapidAPI-Host": "amazon-price1.p.rapidapi.com",
+      "X-RapidAPI-Key": process.env.API_KEY,
+    },
+  };
+  return axios
+    .get("https://amazon-price1.p.rapidapi.com/search", options)
+    .then((res) => {
+      console.log("products query response", res.data[0]);
+      //console.log("products query response.docs", res.data.docs[0]);
+      if (res.data.length) return "Products";
+    })
+    .catch((err) => {
+      console.error("err", err.message);
     });
 };
 
@@ -39,8 +59,8 @@ const queryFood = (text) => {
       options
     )
     .then((res) => {
-      console.log("food query response", res);
-      if (res.length > 0) return "Food";
+      console.log("food query response", res.data);
+      if (res.data.length > 0) return "Food";
     })
     .catch((err) => {
       console.error("err", err.message);
@@ -90,12 +110,14 @@ const findCategory = (text) => {
   return any([
     //queryFood(text),
     queryMusic(text),
-    queryBooks(text)
+    queryBooks(text),
+    queryProducts(text)
   ])
     .then((category) => {
       console.log('promise any response', category);
       //return category || queryMovies(text).then(category => category || 'Unlabeled')
       return category || "Unlabeled";
+      //.then((category) => category || "Unlabeled");
     })
     .catch((err) => {
       console.log('error finding category', err.message || '');
