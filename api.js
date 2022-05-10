@@ -107,7 +107,7 @@ const queryMovies = (text) => {
 // = main function =
 const findCategory = (text) => {
   return any([
-    //queryFood(text),
+    queryFood(text),
     queryMusic(text),
     queryBooks(text),
     queryProducts(text)
