@@ -6,10 +6,15 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article.todo i.far', editMode);
+    $('.todo-container').on('click', 'article.todo i.fa-edit', editMode);
     $('.todo-container').on('submit', 'form.edit', submitEdit);
     $('.todo-container').on('click', '.form-check-input', completeTodo);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
+
+    // close editor
+    $('.todo-container').on('click', 'header > .fa-solid', () => {
+      $('.editing').removeClass('editing ring');
+    });
 
     // = initial page load =
     checkLogin();
@@ -52,7 +57,7 @@ const editMode = function() {
 
   <form class="edit">
   <header class="m-2 pt-2">
-      <label for="text" class="text-center"">Update Todo</label><i class="far fa-close cursor-pointer m-1" style="position: absolute; right: 4px;"></i></header>
+      <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i></header>
       <textarea name="text" class="text-base text-center self-center rounded bg-slate-600 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
       <select name="category_id" class="text-base rounded w-28 bg-slate-600 m-3 ">${safeHtml(todo.name)}">
         ${options}
@@ -67,7 +72,6 @@ const editMode = function() {
     return htmlString;
   };
 
-
   const buildList = (list) => {
     let options = '';
     for (const item of list) {
@@ -75,7 +79,6 @@ const editMode = function() {
     }
     return options;
   };
-
 
   const loadCategories = () => {
     return $.get('/categories')
@@ -110,24 +113,14 @@ const editMode = function() {
     $('#new-todo').hide().find('h1').text('');
   };
 
+
   // == event functions ==
-  const newTodo = function(event) {
-    event.preventDefault();
-
-    // error handling. text field empty
-    if (!$(this).find('input').val()) {
-      showAlert('Text field is empty', 'red');
-    } else {
-      showAlert('New todo added!', 'green');
-    }
-    // sends todo text backend
-    $.post('/todos', $(this).serialize())
-    // get new todo object back
-      .then((todo) => {
-        $(this).find('input').val('');
-        loadTodos();
+  // = user events =
+  const checkLogin = () => {
+    $.get('/users')
+      .then((user) => {
+        renderBasedOnUser(user.name);
       });
-
   };
 
   const loginSubmit = function(event) {
@@ -137,16 +130,15 @@ const editMode = function() {
 
     // error handling
     if (!$inputField.val().trim()) return showAlert('Please enter a username', 'red');
-    showAlert('Logged in', 'green');
 
     // login user
     $.post('/users/login', $form.serialize())
-      .then((user) => {
-        $inputField.val('');
-
-        renderBasedOnUser(user.name);
-        loadTodos();
-      });
+    .then((user) => {
+      $inputField.val('');
+      renderBasedOnUser(user.name);
+      showAlert('Logged in!', 'green');
+      loadTodos();
+    });
   };
 
   const loggedOut = () => {
@@ -159,10 +151,21 @@ const editMode = function() {
       });
   };
 
-  const checkLogin = () => {
-    $.get('/users')
-      .then((user) => {
-        renderBasedOnUser(user.name);
+
+  // = todo events =
+  const newTodo = function(event) {
+    event.preventDefault();
+
+    // error handling. text field empty
+    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'red');
+
+    // sends todo text backend
+    showAlert('New todo added!', 'green');
+    $.post('/todos', $(this).serialize())
+    // get new todo object back
+      .then((todo) => {
+        $(this).find('input').val('');
+        loadTodos();
       });
   };
 
