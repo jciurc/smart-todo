@@ -41,88 +41,56 @@ const editMode = function() {
     return safe.innerHTML;
   };
 
-
-  const buildDropdown = (list) => {
-    let dropdownHtml = `
-      <!-- Heroicon name: solid/chevron-down -->
-      <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-      </svg>
-    </button>
-  </div>
-
-  <!--
-    Dropdown menu, show/hide based on menu state.
-
-    Entering: "transition ease-out duration-100"
-      From: "transform opacity-0 scale-95"
-      To: "transform opacity-100 scale-100"
-    Leaving: "transition ease-in duration-75"
-      From: "transform opacity-100 scale-100"
-      To: "transform opacity-0 scale-95"
-  -->
-  <div class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-    <div class="py-1" role="none">
-    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-`
-    for (const item of list) {
-      dropdownHtml += `\n<a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-${item.id}">${safeHtml(item.name)}</a> `
-    }
-    dropdownHtml += `
-      <form method="POST" action="#" role="none">
-        <button type="submit" class="text-gray-700 block w-full text-left px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
-      </form>
-    </div>
-  </div>
-</div>
-`;
-    return dropdownHtml;
-  };
-
-  const loadCategories = () => {
-    return $.get('/categories')
-      .then(buildDropdown)
-  };
-
-
-  const buildTodoCard = (todo, dropdown) => {
+  const buildTodoCard = (todo, options) => {
     const htmlString = `
-    <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
-      <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 h-16 m-3 p-2">
-        <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
-        <p class="text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
-        <i class="far fa-edit hover cursor-pointer"></i>
-      </header>
+<article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
+  <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 h-16 m-3 p-2">
+    <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
+    <p class="text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
+    <i class="far fa-edit hover cursor-pointer"></i>
+  </header>
 
-      <form class="edit">
-      <label for="text" class="mt-4">Update Todo</label>
-        <textarea name="text" class="text-base text-center self-center rounded bg-slate-700 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
-            <div class="relative inline-block text-left">
-      <div>
-        <button type="button" name="category" alt="${todo.category_id}" class="inline-flex flex-no-wrap justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-slate-600 text-sm font-medium text-light-700 hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">${todo.name}
-          <button type="button" name="category" alt="${todo.category_id}" class="inline-flex flex-no-wrap justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-slate-600 text-sm font-medium text-light-700 hover:bg-slate-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">${safeHtml(todo.name)}
-            ${dropdown}
-            <!--  <textarea name="category" class="text-base rounded w-32 bg-slate-700 m-4 p-1">${safeHtml(todo.name)}</textarea> -->
-        <footer class="pb-4">
-          <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
-          <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-        </footer>
-      </form>
-    </article>
+  <form class="edit">
+  <header class="m-2 pt-2">
+      <label for="text" class="text-center"">Update Todo</label><i class="far fa-close cursor-pointer m-1" style="position: absolute; right: 4px;"></i></header>
+      <textarea name="text" class="text-base text-center self-center rounded bg-slate-600 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+      <select name="category_id" class="text-base rounded w-28 bg-slate-600 m-3 ">${safeHtml(todo.name)}">
+        ${options}
+        </select>
+    <footer class="flex justify-around pb-4">
+      <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
+      <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+    </footer>
+  </form>
+</article>
   `;
     return htmlString;
   };
 
-  const renderTodos = (todos) => {
-    const $section = $('main').find('#categories-container');
-    $section.children('.category').hide().find('.todo-container').empty();
 
+  const buildList = (list) => {
+    let options = '';
+    for (const item of list) {
+      options += `\n<option value="${item.id}">${safeHtml(item.name)}</option> `
+    }
+    return options;
+  };
+
+
+  const loadCategories = () => {
+    return $.get('/categories')
+      .then(buildList)
+  };
+
+  const renderTodos = (todos) => {
     loadCategories()
-    .then((dropdown) => {
-      for (const todo of todos) {
-        $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, dropdown));
-      }
-    });
+      .then((categories) => {
+        const $section = $('main').find('#categories-container');
+        $section.children('.category').hide().find('.todo-container').empty();
+        for (const todo of todos) {
+          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories));
+        }
+      });
   };
 
   const loadTodos = () => {

@@ -48,23 +48,17 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   const id = req.params.id
   const description = req.body.text;
-  const category = req.body.category;
-  const userId = req.cookies.user;
-  if (!userId) console.log("user not logged");
-  console.log('req body', req.body);
-
-  return getCategoryByName(category)
-  .then((cat) => {
-    const category_id = cat ? cat.id : null;
-    editTodo({ id, description, category_id })
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  });
+  const category_id = req.body.category_id;
+  console.log('put req bod', req.body);
+  editTodo({ id, description, category_id })
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 });
+
 
 // Complete todo
 router.patch('/:id', (req, res) => {
