@@ -76,7 +76,7 @@ const setCompleted = (options) => {
   const values = [options.complete, options.id];
   const queryString = `
   UPDATE todos SET completed = $1
-  WHERE id = $2
+  WHERE todos.id = $2
   RETURNING *
 `;
   return db.query(queryString, values)
@@ -90,7 +90,7 @@ const insertNewTodo = (todo) => {
   const queryString = `
   INSERT INTO todos (user_id, description, subtitle, category_id)
   VALUES ($1, $2, $3, $4)
-  RETURNING *;
+  RETURNING *, (SELECT name FROM categories WHERE id = $4);
 `;
 
   return db.query(queryString, values)
