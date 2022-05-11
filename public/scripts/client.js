@@ -64,11 +64,21 @@
     sorted.unshift(current);
 
     const htmlString = `
-<article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
-  <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
-    <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-solid fa-circle${todo.completed ? '-check' : ''}" id="flexCheckDefault" ></i>
+<article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${
+      todo.completed
+    }" alt="${todo.id}">
+  <header class="card flex justify-center items-center ${
+    todo.completed ? "complete" : ""
+  } rounded bg-slate-700 m-3 p-2">
+    <i type="button" ${
+      todo.completed ? "checked" : ""
+    } class="check-complete hover cursor-pointer fa-solid fa-circle${
+      todo.completed ? "-check" : ""
+    }" id="flexCheckDefault" ></i>
     <div>
-    <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
+    <p class="description text-base text-center self-center p-2">${safeHtml(
+      todo.description
+    )}</p>
     <p class="subtitle text-base text-center">${safeHtml(todo.subtitle)}</p>
     </div>
     <i class="far fa-edit hover cursor-pointer"></i>
@@ -76,13 +86,20 @@
 
   <form class="edit">
     <header class="m-2">
+      <div id="alert-box">
+        <p class="text-base alert-text"></p>
+      </div>
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+    <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(
+      todo.description
+    )}</textarea>
     <select name="category_id" class="text-base rounded bg-slate-800 m-30">
-        ${sorted.join('\n')}
+        ${sorted.join("\n")}
         </select>
-        <textarea name="subtitle" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.subtitle)}</textarea>
+        <textarea name="subtitle" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(
+          todo.subtitle
+        )}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
