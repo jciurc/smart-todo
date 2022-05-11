@@ -22,7 +22,7 @@
 
     // offset page rendering
     setTimeout(() => {
-      $('body > .delay').show();
+      $('body > #delay').show();
     }, 100);
   });
 
@@ -46,7 +46,7 @@
   const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('article').addClass('editing ring');
-    const $textarea = $todo.find('form').find('[name="text"]').focus();
+    const $textarea = $todo.find("form").find('[name="text"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -81,6 +81,7 @@
       <select name="category_id" class="text-base rounded w-28 bg-slate-800 m-30">
         ${sorted.join('\n')}
         </select>
+        <textarea name="subtitle" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.subtitle)}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
@@ -189,6 +190,7 @@
   const submitEdit = function(event) {
     event.preventDefault();
     const data = $(this).serialize();
+    console.log("data to submit edit func", data);
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
