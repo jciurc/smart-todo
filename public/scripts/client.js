@@ -181,6 +181,7 @@
     $.post('/todos', $(this).serialize())
     // get new todo object back
     .then((todo) => {
+      console.log("todo response", todo);
       $(this).find('input').val('');
       loadTodos();
       showAlert('Match found! Added Todo to ' + todo.name, 'green');
