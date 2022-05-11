@@ -36,11 +36,9 @@
 - pg 8.x
 - chalk 2.x,
 - dotenv 2.x
-- ejs 2.x,
 - morgan 1.x
 - sass 1.x
 - cookie-parser 1.x
-- promise.any 2.x
 
   ## Dev Dependencies
 - nodemon 2.x
