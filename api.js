@@ -172,3 +172,18 @@ findCategory("hello") //description
 //     console.log('found:', response);
 //   });
 
+const options = {
+  method: 'GET',
+  url: 'https://rawg-video-games-database.p.rapidapi.com/games',
+  headers: {
+    'X-RapidAPI-Host': 'rawg-video-games-database.p.rapidapi.com',
+    'X-RapidAPI-Key': '9d724666d4msha087a518290223bp1e9994jsn841dcf3e5cdb'
+  }
+};
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
+
