@@ -14,3 +14,4 @@ INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 3,'Pi
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 3,'Bread', 'sourdough');
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 1,'Monsters Inc', 'Scary film');
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 5,'Curtains', 'dark');
+INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 6,'Cuphead', 'genre');
