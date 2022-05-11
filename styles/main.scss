@@ -11,12 +11,7 @@ nav .logo {
   &::first-letter {
     color:#09C;
   }
-  &:nth-letter(even) {
-    color:rgb(170, 0, 204);
-  }
-  &::last-letter {
-    color:rgb(0, 204, 92);
-  }
+
 }
 
 .category {
@@ -35,8 +30,9 @@ nav .logo {
   // }
 }
 
+// = todo card styling =
 article.todo {
-  // = main card styling =
+
   // fa icons
   i.far, i.fa-solid {
     position: absolute;
@@ -156,8 +152,8 @@ article.todo {
 //Splash page animation
 $w: 96px;
 $h: 112px;
-$xspace: $w/2;
-$yspace: $h/4 - 1;
+$xspace: math.div($w, 2);
+$yspace: math.div($h, 4) - 1;
 $speed: 1.5s;
 
 .tetrominos {
