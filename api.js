@@ -17,6 +17,10 @@ const query = {
     });
   },
 
+  Unlabeled(text) {
+    return '😵‍💫?';
+  },
+
   Food(text) {
     const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete';
     const host = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
@@ -116,15 +120,16 @@ const uclassifyRequest = (subject, text) => {
       "Cooking",
       "Family",
     ];
-    const filtered = Object.entries(res.data).filter((item) =>
-      allowedTopics.includes(item[0])
-    );
+    console.log('unfiltered', res);
+    const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
     const sorted = filtered.sort((a, b) => b[1] - a[1]);
+    console.log('sorted results', sorted);
+    if (sorted[1] < 0.05) return 'Unlabeled';
     return topics[sorted[0][0]];
   });
 };
 
-const getSubtitle = (category = 'Untitled', text = null) => {
+const getSubtitle = (category = 'Unlabeled', text = null) => {
   return query[category](text)
     .catch((err) => {
       console.log('error getting subtitle for ', category, text, err.message);
@@ -136,6 +141,8 @@ const getSubtitle = (category = 'Untitled', text = null) => {
 const findCategory = (text) => {
   return uclassifyRequest("topics", text)
     .then((topic) => {
+      console.log('first topic', topic);
+      if (topic === 'Unlabeled') return 'Unlabeled';
       return uclassifyRequest(topic, text);
     })
     .then((category) => {
