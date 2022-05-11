@@ -25,7 +25,7 @@ const getAllCategories = () => {
 };
 
 const getCategoryByName = (name) => {
-  return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
+  return db.query(`SELECT * FROM categories WHERE name = $1`, [name])
     .then((res) => {
       return res.rows[0];
     });
@@ -86,7 +86,7 @@ const setCompleted = (options) => {
 };
 
 const insertNewTodo = (todo) => {
-  const values = [todo.user_id, todo.description,todo.subtitle, todo.category_id];
+  const values = [todo.user_id, todo.description, todo.subtitle, todo.category_id];
   const queryString = `
   INSERT INTO todos (user_id, description, subtitle, category_id)
   VALUES ($1, $2, $3, $4)

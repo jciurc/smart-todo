@@ -1,5 +1,4 @@
 const axios = require("axios").default;
-const { getCategoryByName } = require("./queries");
 
 // = External API Calls =
 // Object that holds all our API methods so we can call them dynamically
@@ -93,10 +92,8 @@ const query = {
 // Find category
 const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`;
-  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text
-    .toLowerCase()
-    .split(" ")
-    .join("+")}`;
+  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(" ").join("+")}`;
+
   // topics dictionary
   const topics = {
     Arts: "art-topics",
@@ -151,26 +148,3 @@ const findCategory = (text) => {
 };
 
 module.exports = { findCategory, getSubtitle };
-
-// = TESTING APIs  =
-findCategory("hello") //description
-  .then(getCategoryByName)
-  .then((cat) => {
-    console.log("cat ", cat);
-     getSubtitle(cat.name, "hello")
-      .then((subtitle) => {
-        console.log("cat name", cat.name);
-        console.log("subtitle", subtitle);
-      })
-  });
-
-
-
-// = Testing API =
-// findCategory('hello')
-//   .then((cat) => {
-//     return getSubtitle(cat, 'hello');
-//   })
-//   .then((response) => {
-//     console.log('found:', response);
-//   });
