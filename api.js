@@ -28,22 +28,22 @@ const query = {
         console.log('Got food response');
         const { title } = data[0] || { title: text };
         return `Enjoy the ${title.slice(0, 50)} 😊🍦`;
-      })
-    },
+      });
+  },
 
 
-    Products(text) {
-      const url = 'https://amazon-price1.p.rapidapi.com/search';
-      const host = 'amazon-price1.p.rapidapi.com';
-      const params = { keywords: text, marketplace: 'ES' };
+  Products(text) {
+    const url = 'https://amazon-price1.p.rapidapi.com/search';
+    const host = 'amazon-price1.p.rapidapi.com';
+    const params = { keywords: text, marketplace: 'ES' };
 
-      return this.axiosGet(url, host, params)
+    return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got Amazon response');
 
         const { title } = data[0] || { title: 'No product info' };
         return title.slice(0, 50);
-      })
+      });
   },
 
   Music(text) {
@@ -57,7 +57,7 @@ const query = {
         if (!data.tracks) return `Track ${text.slice(0, 40)} by: unknown`;
         const { title, subtitle } = data.tracks.hits[0].track;
         return `Track ${title.slice(0, 40)} by: ${subtitle.slice(0, 20)}`;
-      })
+      });
   },
 
   Books(text) {
@@ -68,7 +68,8 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got book response');
-        const { name = text, authors = 'unknown' } = data[0] || { name: text, authors: ['unknown'] };
+        if (!data[0]) return `${text.slice(0, 40)} by: unknown`;
+        const { name = text, authors = ['unknown'] } = data[0];
         return `${name.slice(0, 40)} by: ${authors.join().slice(0, 20)}`;
       });
   },
@@ -80,7 +81,7 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Found movie response');
-        if (data.Error) return `${text} (unknown year)`
+        if (data.Error) return `${text} (unknown year)`;
         const { Title, Year } = data.Search[0] || { Title: text, Year: 'unknown year' };
         return `${Title.slice(0, 50)} (${Year})`;
       });
@@ -112,10 +113,10 @@ const uclassifyRequest = (subject, text) => {
     });
 };
 
-const getSubtitle = (category, text) => {
+const getSubtitle = (category = 'Untitled', text = null) => {
   return query[category](text)
     .catch((err) => {
-      console.log('error getting subtitle', err.message);
+      console.log('error getting subtitle for ', category, text, err.message);
       return `no details`;
     });
 };
@@ -139,8 +140,10 @@ const findCategory = (text) => {
 module.exports = { findCategory, getSubtitle };
 
 // = Testing API =
-// query.Products('cheshel')
-// // findCategory('chess').then(getSubtitle)
+// findCategory('hello')
+//   .then((cat) => {
+//     return getSubtitle(cat, 'hello');
+//   })
 //   .then((response) => {
 //     console.log('found:', response);
 //   });
