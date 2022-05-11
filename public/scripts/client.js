@@ -76,9 +76,14 @@
 
   <form class="edit">
     <header class="m-2">
+      <div id="alert-box">
+        <p class="text-base alert-text"></p>
+      </div>
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+    <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(
+      todo.description
+    )}</textarea>
     <select name="category_id" class="text-base rounded bg-slate-800 m-30">
       ${sorted.join('\n')}
     </select>
@@ -220,4 +225,4 @@
         loadTodos();
       });
   };
-})();
+})()
