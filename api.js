@@ -54,6 +54,7 @@ const query = {
       .then((data) => {
         if (!data.tracks.hits[0]) return 'No track information.';
         const { title, subtitle } = data.tracks.hits[0].track;
+        console.log('Track ' + title + 'by: ' + subtitle);
         return 'Track ' + title + 'by: ' + subtitle;
       });
   },
@@ -92,19 +93,26 @@ const uclassifyRequest = (subject, text) => {
   const topics = {
     Arts: 'art-topics',
     Home: 'home-topics',
+    Sports: 'home-topics',
     Literature: 'Books',
     Music: 'Music',
     Movies_Television: 'Movies',
     Cooking: 'Food',
+    Family: 'Products',
   };
 
   return axios.get(url + options)
     .then((res) => {
-      const allowedTopics = ['Arts', 'Home', 'Literature', 'Music', 'Movies_Television', 'Cooking'];
+      const allowedTopics = ['Arts', 'Home', 'Literature', 'Music', 'Movies_Television', 'Cooking', 'Family'];
       const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
       const sorted = filtered.sort((a, b) => b[1] - a[1]);
       return topics[sorted[0][0]];
     });
+};
+
+
+const getSubtitle = (category, text) => {
+  return query[category](text);
 };
 
 
@@ -120,11 +128,7 @@ const findCategory = (text) => {
 };
 
 
-const getSubtitle = (category, text) => {
-  return query[category.toLowerCase()](text);
-};
-
 module.exports = { findCategory, getSubtitle };
 
 // = TESTING APIs  =
-// findCategory("hello");
+// getSubtitle('Music', 'hello');

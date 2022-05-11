@@ -3,6 +3,7 @@ const router = express.Router();
 const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo, setCompleted } = require('../queries');
 const { findCategory } = require('../api');
 
+// Render all todos
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
   getAllTodos(userId)
@@ -15,33 +16,31 @@ router.get("/", (req, res) => {
     });
 });
 
+// New todo request
 router.post('/', (req, res) => {
   const description = req.body.text;
-  // get category from external apis
+  // get category info from external apis
   findCategory(description)
-    .then((category) => {
-      console.log(description, 'suggested category:', category);
-      return getCategoryByName(category)
-        .then((cat) => {
-          const user_id = req.cookies.user;
-          const category_id = cat.id;
+    .then(getCategoryByName)
+    .then((cat) => {
+      const user_id = req.cookies.user;
+      const category_id = cat.id;
 
-          // create new todo in database
-          return insertNewTodo({ user_id, description, category_id });
-        })
-        .then((todo) => {
-          console.log('New todo added', todo);
-          // return new todo back to front end
-          res.json(todo || null);
-        })
-        .catch((err) => {
-          console.log('error posting new todo');
-          console.error(err);
-        });
+      // create new todo in database
+      return insertNewTodo({ user_id, description, category_id });
+    })
+    .then((todo) => {
+      console.log('New todo added', todo);
+      // return new todo back to front end
+      res.json(todo || null);
+    })
+    .catch((err) => {
+      console.log('error adding new todo');
+      console.error(err);
     });
 });
 
-//Edit todo
+// Edit todo
 router.put('/:id', (req, res) => {
   const id = req.params.id;
   const description = req.body.text;
