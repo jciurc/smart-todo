@@ -51,17 +51,26 @@ const editTodo = (todo) => {
   const values = [];
   let queryString = `UPDATE todos `;
 
-  if (todo.description) {
-    values.push(todo.description);
-    queryString += `SET description = $${values.length}
-    `;
-  }
-
   if (todo.category_id) {
     values.push(todo.category_id);
-    queryString += `${todo.description ? ', ' : 'SET'} category_id = $${values.length} `;
+    queryString += `SET category_id = $${values.length} `;
+    console.log("queryString after category", queryString);
   }
 
+  if (todo.description) {
+    values.push(todo.description);
+    queryString += `${values.length >= 1 ? ", " : "SET"} description = $${values.length} `;
+    console.log("queryString after description", queryString);
+  }
+
+  if (todo.subtitle) {
+    values.push(todo.subtitle);
+    queryString += `${(values.length >= 1) ? ', ' : 'SET'} subtitle = $${values.length} `;
+    console.log("queryString after subtitile", queryString);
+  }
+
+
+  console.log("queryString after all", queryString);
   values.push(todo.id);
   queryString +=
     `WHERE id = $${values.length} RETURNING *;
