@@ -59,7 +59,12 @@ const editTodo = (todo) => {
 
   if (todo.category_id) {
     values.push(todo.category_id);
-    queryString += `${todo.description ? ', ' : 'SET'} category_id = $${values.length} `;
+    queryString += `${values.length > 1 ? ', ' : 'SET'} category_id = $${values.length} `;
+  }
+
+  if (todo.subtitle) {
+    values.push(todo.subtitle);
+    queryString += `${values.length > 1 ? ', ' : 'SET'} subtitle = $${values.length} `;
   }
 
   values.push(todo.id);
