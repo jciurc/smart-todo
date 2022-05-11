@@ -19,28 +19,31 @@ const query = {
   },
 
   Food(text) {
-    const url =
-      "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete";
-    const host = "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com";
-    const params = { query: text, number: "10" };
+    const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete';
+    const host = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
+    const params = { query: text, number: '10' };
 
-    return this.axiosGet(url, host, params).then((data) => {
-      console.log("food response", data[0]);
-      const { title } = data[0].title;
-      return "Recipe: " + title;
-    });
-  },
+    return this.axiosGet(url, host, params)
+      .then((data) => {
+        console.log('Got food response');
+        const { title } = data[0] || { title: text };
+        return `Enjoy the ${title.slice(0, 50)} 😊🍦`;
+      })
+    },
 
-  Products(text) {
-    const url = "https://amazon-price1.p.rapidapi.com/search";
-    const host = "amazon-price1.p.rapidapi.com";
-    const params = { keywords: text, marketplace: "ES" };
 
-    return this.axiosGet(url, host, params).then((data) => {
-      console.log("products response", data[0]);
-      const { title } = data[0].title;
-      return "Product: " + title;
-    });
+    Products(text) {
+      const url = 'https://amazon-price1.p.rapidapi.com/search';
+      const host = 'amazon-price1.p.rapidapi.com';
+      const params = { keywords: text, marketplace: 'ES' };
+
+      return this.axiosGet(url, host, params)
+      .then((data) => {
+        console.log('Got Amazon response');
+
+        const { title } = data[0] || { title: 'No product info' };
+        return title.slice(0, 50);
+      })
   },
 
   Music(text) {
@@ -48,12 +51,13 @@ const query = {
     const host = "shazam.p.rapidapi.com";
     const params = { term: text, locale: "en-US", limit: "5" };
 
-    return this.axiosGet(url, host, params).then((data) => {
-      if (!data.tracks.hits[0]) return "No track information.";
-      const { title, subtitle } = data.tracks.hits[0].track;
-      console.log("Track " + title + " by: " + subtitle);
-      return "Track " + title + " by: " + subtitle;
-    });
+    return this.axiosGet(url, host, params)
+      .then((data) => {
+        console.log('Got Shazam response');
+        if (!data.tracks) return `Track ${text.slice(0, 40)} by: unknown`;
+        const { title, subtitle } = data.tracks.hits[0].track;
+        return `Track ${title.slice(0, 40)} by: ${subtitle.slice(0, 20)}`;
+      })
   },
 
   Books(text) {
@@ -63,25 +67,29 @@ const query = {
     const host = "hapi-books.p.rapidapi.com";
     const params = {};
 
-    return this.axiosGet(url, host, params).then((data) => {
-      const { title, authors } = data;
-      console.log(" Book", title, "Author", authors);
-      return title + authors;
-    });
+    return this.axiosGet(url, host, params)
+      .then((data) => {
+        console.log('Got book response');
+        const { name = text, authors = 'unknown' } = data[0] || { name: text, authors: ['unknown'] };
+        return `${name.slice(0, 40)} by: ${authors.join().slice(0, 20)}`;
+      });
   },
 
   Movies(text) {
     const url = "https://movie-database-alternative.p.rapidapi.com/";
     const host = "movie-database-alternative.p.rapidapi.com";
     const params = { s: text, r: "json", page: "1" };
-    return this.axiosGet(url, host, params).then((data) => {
-      const { Title, Year } = data.Search;
-      console.log(" Movie", Title, "year", Year);
-      return `${Title} (${Year})`;
-    });
+    return this.axiosGet(url, host, params)
+      .then((data) => {
+        console.log('Found movie response');
+        if (data.Error) return `${text} (unknown year)`
+        const { Title, Year } = data.Search[0] || { Title: text, Year: 'unknown year' };
+        return `${Title.slice(0, 50)} (${Year})`;
+      });
   },
 };
 
+// Find category
 const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`;
   const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text
@@ -119,9 +127,11 @@ const uclassifyRequest = (subject, text) => {
 };
 
 const getSubtitle = (category, text) => {
-  console.log("subtitle category", category);
-  console.log("sub title text", text);
-  return query[category](text);
+  return query[category](text)
+    .catch((err) => {
+      console.log('error getting subtitle', err.message);
+      return `no details`;
+    });
 };
 
 // = main function =
@@ -132,6 +142,10 @@ const findCategory = (text) => {
     })
     .then((category) => {
       return category;
+    })
+    .catch((err) => {
+      console.log('error finding category', err.message);
+      return 'Unlabeled';
     });
 };
 
@@ -150,3 +164,9 @@ findCategory("adele") //description
 
 
 
+// = Testing API =
+// query.Products('cheshel')
+// // findCategory('chess').then(getSubtitle)
+//   .then((response) => {
+//     console.log('found:', response);
+//   });

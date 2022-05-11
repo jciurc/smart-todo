@@ -152,8 +152,8 @@ article.todo {
 //Splash page animation
 $w: 96px;
 $h: 112px;
-$xspace: math.div($w, 2);
-$yspace: math.div($h, 4) - 1;
+$xspace: $w/2;
+$yspace: $h/4 - 1;
 $speed: 1.5s;
 
 .tetrominos {
