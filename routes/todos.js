@@ -17,29 +17,29 @@ router.get("/", (req, res) => {
 });
 
 // New todo request
-router.post('/', (req, res) => {
-  const description = req.body.text;
-  // get category info from external apis
-  findCategory(description)
-    .then(getCategoryByName)
-    .then(getSubtitle)
-    .then((cat) => {
-      const user_id = req.cookies.user;
-      const category_id = cat.id;
-      console.log("promise response from get subtitle", cat);
-      // create new todo in database
-      return insertNewTodo({ user_id, description,subtitle, category_id });
-    })
-    .then((todo) => {
-      console.log('New todo added', todo);
-      // return new todo back to front end
-      res.json(todo || null);
-    })
-    .catch((err) => {
-      console.log('error adding new todo');
-      console.error(err);
-    });
-});
+// router.post('/', (req, res) => {
+//   const description = req.body.text;
+//   // get category info from external apis
+//   findCategory(description)
+//     .then(getCategoryByName)
+//     .then(getSubtitle)
+//     .then((cat) => {
+//       const user_id = req.cookies.user;
+//       const category_id = cat.id;
+//       console.log("promise response from get subtitle", cat);
+//       // create new todo in database
+//       return insertNewTodo({ user_id, description,subtitle, category_id });
+//     })
+//     .then((todo) => {
+//       console.log('New todo added', todo);
+//       // return new todo back to front end
+//       res.json(todo || null);
+//     })
+//     .catch((err) => {
+//       console.log('error adding new todo');
+//       console.error(err);
+//     });
+// });
 
 // Edit todo
 router.put('/:id', (req, res) => {
