@@ -8,7 +8,7 @@
     $('#new-todo').on('submit', newTodo);
     $('.todo-container').on('click', 'article.todo i.fa-edit', editMode);
     $('.todo-container').on('submit', 'form.edit', submitEdit);
-    $('.todo-container').on('click', '.form-check-input', completeTodo);
+    $('.todo-container').on('click', '.check-complete', completeTodo);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
 
     // close editor
@@ -23,7 +23,7 @@
     // offset page rendering
     setTimeout(() => {
       $('body > #delay').show();
-    }, 100);
+    }, 10);
   });
 
   // == helpers ==
@@ -35,8 +35,8 @@
 
   const showAlert = (message, style) => {
     const $alert = $('#alert-box');
-    $alert.removeClass("red green").addClass(style);
-    $alert.find('.alert-text').text(message);
+    $alert.removeClass("success warning bad").addClass(style);
+    $alert.find('.alert-text').text('').append(message);
     $alert.slideDown();
     setTimeout(() => {
       $alert.slideUp();
@@ -46,7 +46,7 @@
   const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('article').addClass('editing ring');
-    const $textarea = $todo.find('form').find('[name="text"]').focus();
+    const $textarea = $todo.find("form").find('[name="text"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -66,7 +66,7 @@
     const htmlString = `
 <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
   <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
-    <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
+    <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-solid fa-circle${todo.completed ? '-check' : ''}" id="flexCheckDefault" ></i>
     <div>
       <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
       <p class="subtitle text-base text-center">${safeHtml(todo.subtitle)}</p>
@@ -117,12 +117,12 @@
   };
 
   const renderBasedOnUser = (name) => {
-    const currentTime = new Date().getHours();
+    const currentHours = new Date().getHours();
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
       $('#splash').hide();
-      $('#new-todo').show().find('h1').text(`${getGreeting(currentTime)}, ${safeHtml(name)}!`);
+      $('#new-todo').show().find('h1').text(`${getGreeting(currentHours)}, ${safeHtml(name)}!`);
       return;
     }
     $('#login').show();
@@ -147,14 +147,14 @@
     const $inputField = $form.find('input');
 
     // error handling
-    if (!$inputField.val().trim()) return showAlert('Please enter a username', 'red');
+    if (!$inputField.val().trim()) return showAlert('Please enter a username', 'bad');
 
     // login user
     $.post('/users/login', $form.serialize())
       .then((user) => {
         $inputField.val('');
         renderBasedOnUser(user.name);
-        showAlert('Logged in!', 'green');
+        showAlert('Logged in!', 'success');
         loadTodos();
       });
   };
@@ -175,15 +175,15 @@
     event.preventDefault();
 
     // error handling. text field empty
-    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'red');
+    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'bad');
 
     // sends todo text backend
-    showAlert('Finding suitable category..', 'green');
+    showAlert('Finding suitable category..', 'warning');
     $.post('/todos', $(this).serialize())
       // get new todo object back
       .then((todo) => {
         $(this).find('input').val('');
-        showAlert('Match found! Added Todo to ' + todo.name, 'green');
+        showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
         loadTodos();
       });
   };
@@ -191,6 +191,7 @@
   const submitEdit = function(event) {
     event.preventDefault();
     const data = $(this).serialize();
+    console.log("data to submit edit func", data);
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
