@@ -152,16 +152,6 @@ const findCategory = (text) => {
 module.exports = { findCategory, getSubtitle };
 
 // = TESTING APIs  =
-findCategory("hello") //description
-  .then(getCategoryByName)
-  .then((cat) => {
-    console.log("cat ", cat);
-     getSubtitle(cat.name, "hello")
-      .then((subtitle) => {
-        console.log("cat name", cat.name);
-        console.log("subtitle", subtitle);
-      })
-  });
 
 
 
