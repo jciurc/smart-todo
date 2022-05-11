@@ -11,8 +11,20 @@ html {
   textarea, #alert-box {
     transition: none;
   }
-}
 
+  i {
+    font-size: 1.4rem;
+    &:after {
+      content: "";
+      position: absolute;
+      left: 55px;
+      top: 0;
+      width: 50px;
+      height: 50px;
+      background: #e83474;
+    }
+  }
+}
 
 body {
   text-align: center;

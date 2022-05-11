@@ -97,28 +97,46 @@ article.todo {
     opacity: 1;
   }
 
-  // categories dropdown
-  select {
-    resize: none;
-    height: 2.5em;
-    width: 6em;
-    overflow: hidden;
-    font-size: 0.8rem;
-    text-align: center;
-    color: aliceblue;
-    font-weight: 300;
-    cursor: pointer;
-    margin: 1em;
-    align-self: center;
-  }
-
-  // edit toggles
+  // edit form
   > form.edit {
-    display: none;
+    display: none; // hidden by default
+
+    textarea[name="text"]  {
+      width: 14em;
+      height: 4em;
+      overflow: hidden;
+    }
+
+    // categories dropdown
+    select[name="category_id"]  {
+      resize: none;
+      width: 6em;
+      height: 2.5em;
+      overflow: hidden;
+      font-size: 0.8rem;
+      text-align: center;
+      color: aliceblue;
+      font-weight: 300;
+      cursor: pointer;
+      margin: 1em;
+      align-self: center;
+      appearance: none;
+    }
+
+    textarea[name="subtitle"]  {
+      resize: none;
+      overflow: hidden;
+      width: 12em;
+      height: 3.2em;
+      font-size: 1rem;
+      text-align: center;
+      color: aliceblue;
+      font-weight: 300;
+      margin-bottom: 1em;
+    }
   }
 
   &.editing {
-
     min-width: 240px;
     margin: 20px auto;
 
@@ -142,15 +160,15 @@ article.todo {
   background-color: rgb(21 94 117);
 }
 
-#Books .todo header.card {
+#Books .todo > header.card {
   background-color: rgb(206, 95, 16);
 }
 
-#Food .todo header.card {
+#Food .todo > header.card {
   background-color: rgb(127 29 29);
 }
 
-#Products .todo header.card {
+#Products .todo > header.card {
   background-color: rgb(17 94 89);
 }
 

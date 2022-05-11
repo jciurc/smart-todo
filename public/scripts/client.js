@@ -78,11 +78,11 @@
     <header class="m-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="text" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
-    <select name="category_id" class="text-base rounded bg-slate-800 m-30">
+    <textarea name="text" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+    <select name="category_id" class="text-base rounded-full bg-slate-900 m-30">
       ${sorted.join('\n')}
     </select>
-      <textarea name="subtitle" class="text-base text-center self-center rounded bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.subtitle)}</textarea>
+      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.subtitle)}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
