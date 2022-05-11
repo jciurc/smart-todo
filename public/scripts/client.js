@@ -66,7 +66,7 @@
     const htmlString = `
 <article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
   <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
-    <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-solid fa-circle${todo.completed ? '-check' : ''}" id="flexCheckDefault" ></i>
+    <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-${todo.completed ? 'solid' : 'regular'} fa-circle-check " id="flexCheckDefault" ></i>
     <div>
       <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
       <p class="subtitle text-base text-center">${safeHtml(todo.subtitle)}</p>
