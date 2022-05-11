@@ -8,7 +8,7 @@
     $('#new-todo').on('submit', newTodo);
     $('.todo-container').on('click', 'article.todo i.fa-edit', editMode);
     $('.todo-container').on('submit', 'form.edit', submitEdit);
-    $('.todo-container').on('click', '.check-complete', completeTodo);
+    $('.todo-container').on('click', '.form-check-input', completeTodo);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
 
     // close editor
@@ -22,11 +22,27 @@
 
     // offset page rendering
     setTimeout(() => {
-      $('body > #delay').show();
-    }, 10);
+      $('body > .delay').show();
+    }, 100);
   });
 
   // == helpers ==
+  const typing = (text) => {
+
+
+    const sentence = "hello everybody";
+
+    for (let i = 0; i < sentence.length; i++) {
+      setTimeout(() => {
+        process.stdout.write(sentence[i]);
+        if (i === sentence.length - 1) {
+          process.stdout.write('\n');
+        }
+      }, i * 100);
+
+
+};
+
   const getGreeting = (hours) => {
     if (hours < 12) return 'Good morning';
     if (hours < 17) return 'Good afternoon';
@@ -35,8 +51,8 @@
 
   const showAlert = (message, style) => {
     const $alert = $('#alert-box');
-    $alert.removeClass("success warning bad").addClass(style);
-    $alert.find('.alert-text').text('').append(message);
+    $alert.removeClass("red green").addClass(style);
+    $alert.find('.alert-text').text(message);
     $alert.slideDown();
     setTimeout(() => {
       $alert.slideUp();
@@ -46,7 +62,7 @@
   const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('article').addClass('editing ring');
-    const $textarea = $todo.find("form").find('[name="text"]').focus();
+    const $textarea = $todo.find('form').find('[name="text"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -134,12 +150,12 @@
   };
 
   const renderBasedOnUser = (name) => {
-    const currentHours = new Date().getHours();
+    const currentTime = new Date().getHours();
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
       $('#splash').hide();
-      $('#new-todo').show().find('h1').text(`${getGreeting(currentHours)}, ${safeHtml(name)}!`);
+      $('#new-todo').show().find('h1').text(`${getGreeting(currentTime)}, ${safeHtml(name)}!`);
       return;
     }
     $('#login').show();
@@ -164,14 +180,14 @@
     const $inputField = $form.find('input');
 
     // error handling
-    if (!$inputField.val().trim()) return showAlert('Please enter a username', 'bad');
+    if (!$inputField.val().trim()) return showAlert('Please enter a username', 'red');
 
     // login user
     $.post('/users/login', $form.serialize())
       .then((user) => {
         $inputField.val('');
         renderBasedOnUser(user.name);
-        showAlert('Logged in!', 'success');
+        showAlert('Logged in!', 'green');
         loadTodos();
       });
   };
@@ -192,15 +208,15 @@
     event.preventDefault();
 
     // error handling. text field empty
-    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'bad');
+    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'red');
 
     // sends todo text backend
-    showAlert('Finding suitable category..', 'warning');
+    showAlert('Finding suitable category..', 'green');
     $.post('/todos', $(this).serialize())
       // get new todo object back
       .then((todo) => {
         $(this).find('input').val('');
-        showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
+        showAlert('Match found! Added Todo to ' + todo.name, 'green');
         loadTodos();
       });
   };
@@ -208,7 +224,6 @@
   const submitEdit = function(event) {
     event.preventDefault();
     const data = $(this).serialize();
-    console.log("data to submit edit func", data);
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {

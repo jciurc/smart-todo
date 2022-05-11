@@ -45,3 +45,53 @@ nav {
     }
   }
 }
+
+//alert classes
+.red{
+  background-color: rgb(239 68 68);
+  height:30px;
+  padding:5px;
+}
+
+.green{
+  background-color: rgb(22 163 74);
+  height:30px;
+  padding:5px;
+}
+
+#Movies .todo > header.card {
+  background-color:rgb(20, 83, 39);
+}
+
+#Music .todo > header.card {
+  background-color:rgb(21 94 117);
+}
+
+#Books .todo header {
+  background-color: rgb(206, 95, 16);
+}
+
+#Food .todo header {
+  background-color: rgb(127 29 29);
+}
+#Products .todo header {
+  background-color: rgb(17 94 89);
+}
+
+#Books .todo > header.card {
+  background-color: rgb(206, 95, 16);
+}
+
+#Food .todo > header.card {
+  background-color: rgb(127 29 29);
+}
+
+#Games .todo > header.card{
+  background-color: rgb(55 48 163);
+}
+
+#Unlabeled .todo > header.card{
+  background-color: rgb(6 95 70);
+}
+
+
