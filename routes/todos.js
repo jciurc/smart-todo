@@ -1,7 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo, setCompleted } = require('../queries');
-const { findCategory, getSubtitle } = require('../api');
+const {
+  getAllTodos,
+  deleteTodo,
+  insertNewTodo,
+  getCategoryByName,
+  editTodo,
+  setCompleted,
+} = require("../queries");
+const { findCategory, getSubtitle } = require("../api");
 
 // Render all todos
 router.get("/", (req, res) => {
@@ -11,44 +18,39 @@ router.get("/", (req, res) => {
       res.json(todos);
     })
     .catch((err) => {
-      console.log('error getting user\'s todos');
+      console.log("error getting user's todos");
       console.error(err);
     });
 });
 
 //New todo request
-router.post('/', (req, res) => {
+router.post("/", (req, res) => {
   const description = req.body.text;
   // get category info from external apis
-
-findCategory(description)
-  .then(getCategoryByName)
-  .then((cat) => {
-    console.log("cat ", cat);
-    getSubtitle(cat.name, "hello")
-      .then((subtitle) => {
-      console.log("cat name", cat.name);
-      console.log("subtitle", subtitle);
-      const user_id = req.cookies.user;
-      const category_id = cat.id;
-      console.log("promise response from get subtitle", cat);
-      // create new todo in database
-      return insertNewTodo({ user_id, description, subtitle, category_id });
-    })
-  })
-  .then((todo) => {
-    console.log("New todo added", todo);
-    // return new todo back to front end
-    res.json(todo || null);
-  })
-  .catch((err) => {
-    console.log("error adding new todo");
-    console.error(err);
-  });
+  findCategory(description)
+    //gets category object from database
+    .then(getCategoryByName)
+    .then((cat) => {
+      getSubtitle(cat.name, description)
+        .then((subtitle) => {
+          const user_id = req.cookies.user;
+          const category_id = cat.id;
+          // create new todo in database
+          return insertNewTodo({ user_id, description, subtitle, category_id });
+        })
+        .then((todo) => {
+          // return new todo back to front end
+          res.json(todo || null);
+        })
+        .catch((err) => {
+          console.log("error adding new todo");
+          console.error(err);
+        });
+    });
 });
 
 // Edit todo
-router.put('/:id', (req, res) => {
+router.put("/:id", (req, res) => {
   const id = req.params.id;
   const description = req.body.text;
   const category_id = req.body.category_id;
@@ -57,23 +59,25 @@ router.put('/:id', (req, res) => {
       res.json(data);
     })
     .catch((err) => {
-      console.log('error editing todo');
+      console.log("error editing todo");
       console.error(err);
     });
 });
 
-
 // Complete todo
-router.patch('/:id', (req, res) => {
+router.patch("/:id", (req, res) => {
   const id = req.params.id;
   const complete = req.body.complete;
   setCompleted({ id, complete })
     .then((todo) => {
-      console.log(todo.description, todo.completed ? 'todo done' : 'todo not done');
+      console.log(
+        todo.description,
+        todo.completed ? "todo done" : "todo not done"
+      );
       res.json(todo);
     })
     .catch((err) => {
-      console.log('error checking off todo');
+      console.log("error checking off todo");
       console.error(err);
     });
 });
@@ -86,7 +90,7 @@ router.delete("/:id", (req, res) => {
       res.send(true);
     })
     .catch((err) => {
-      console.log('error deleting todo');
+      console.log("error deleting todo");
       console.error(err);
     });
 });

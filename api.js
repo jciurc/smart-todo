@@ -1,5 +1,4 @@
 const axios = require("axios").default;
-const { getCategoryByName } = require("./queries");
 
 // = External API Calls =
 // Object that holds all our API methods so we can call them dynamically
@@ -18,6 +17,10 @@ const query = {
     });
   },
 
+  Unlabeled(text) {
+    return '😵‍💫?';
+  },
+
   Food(text) {
     const url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/autocomplete';
     const host = 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com';
@@ -28,22 +31,22 @@ const query = {
         console.log('Got food response');
         const { title } = data[0] || { title: text };
         return `Enjoy the ${title.slice(0, 50)} 😊🍦`;
-      })
-    },
+      });
+  },
 
 
-    Products(text) {
-      const url = 'https://amazon-price1.p.rapidapi.com/search';
-      const host = 'amazon-price1.p.rapidapi.com';
-      const params = { keywords: text, marketplace: 'ES' };
+  Products(text) {
+    const url = 'https://amazon-price1.p.rapidapi.com/search';
+    const host = 'amazon-price1.p.rapidapi.com';
+    const params = { keywords: text, marketplace: 'ES' };
 
-      return this.axiosGet(url, host, params)
+    return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got Amazon response');
 
         const { title } = data[0] || { title: 'No product info' };
         return title.slice(0, 50);
-      })
+      });
   },
 
   Music(text) {
@@ -57,7 +60,7 @@ const query = {
         if (!data.tracks) return `Track ${text.slice(0, 40)} by: unknown`;
         const { title, subtitle } = data.tracks.hits[0].track;
         return `Track ${title.slice(0, 40)} by: ${subtitle.slice(0, 20)}`;
-      })
+      });
   },
 
   Books(text) {
@@ -70,7 +73,8 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got book response');
-        const { name = text, authors = 'unknown' } = data[0] || { name: text, authors: ['unknown'] };
+        if (!data[0]) return `${text.slice(0, 40)} by: unknown`;
+        const { name = text, authors = ['unknown'] } = data[0];
         return `${name.slice(0, 40)} by: ${authors.join().slice(0, 20)}`;
       });
   },
@@ -82,7 +86,7 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Found movie response');
-        if (data.Error) return `${text} (unknown year)`
+        if (data.Error) return `${text} (unknown year)`;
         const { Title, Year } = data.Search[0] || { Title: text, Year: 'unknown year' };
         return `${Title.slice(0, 50)} (${Year})`;
       });
@@ -92,10 +96,8 @@ const query = {
 // Find category
 const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`;
-  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text
-    .toLowerCase()
-    .split(" ")
-    .join("+")}`;
+  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(" ").join("+")}`;
+
   // topics dictionary
   const topics = {
     Arts: "art-topics",
@@ -118,18 +120,19 @@ const uclassifyRequest = (subject, text) => {
       "Cooking",
       "Family",
     ];
-    const filtered = Object.entries(res.data).filter((item) =>
-      allowedTopics.includes(item[0])
-    );
+    console.log('unfiltered', res);
+    const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
     const sorted = filtered.sort((a, b) => b[1] - a[1]);
+    console.log('sorted results', sorted);
+    if (sorted[1] < 0.05) return 'Unlabeled';
     return topics[sorted[0][0]];
   });
 };
 
-const getSubtitle = (category, text) => {
+const getSubtitle = (category = 'Unlabeled', text = null) => {
   return query[category](text)
     .catch((err) => {
-      console.log('error getting subtitle', err.message);
+      console.log('error getting subtitle for ', category, text, err.message);
       return `no details`;
     });
 };
@@ -138,6 +141,8 @@ const getSubtitle = (category, text) => {
 const findCategory = (text) => {
   return uclassifyRequest("topics", text)
     .then((topic) => {
+      console.log('first topic', topic);
+      if (topic === 'Unlabeled') return 'Unlabeled';
       return uclassifyRequest(topic, text);
     })
     .then((category) => {
