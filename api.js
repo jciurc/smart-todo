@@ -98,16 +98,18 @@ const query = {
       url: `https://api.rawg.io/api/games?key=${process.env.RAWG_KEY}`,
       params: {search: text}
     };
-    axios.request(options).then(function(response) {
-      //console.log('Game:', response.data.results[0].name);
-      //console.log('Genre:', response.data.results[0].genres[0].name);
+    return axios.request(options)
+      .then(function(response) {
+        if (!response.data.results[0]) return `${text}`;
 
-      const name = response.data.results[0].name;
-      const genre = response.data.results[0].genres[0].name;
-      console.log(`name: ${name} genre: ${genre}`);
-    }).catch(function(error) {
-      console.error(error);
-    });
+        const name = response.data.results[0].name;
+        const genre = response.data.results[0].genres[0].name;
+        console.log(`name: ${name} genre: ${genre}`);
+        return `${name} ${genre}`;
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
   },
 };
 
@@ -122,6 +124,7 @@ const queryUclassify = (text) => {
     Arts: 'art-topics',
     Home: 'home-topics',
     Sports: 'home-topics',
+    Games: 'Games',
   };
   const subTopics = {
     Literature: 'Books',
@@ -129,7 +132,7 @@ const queryUclassify = (text) => {
     Movies_Television: 'Movies',
     Cooking: 'Food',
     Family: 'Products',
-    Games: 'Games',
+
   };
   const allowedTopics = Object.keys(broadTopics).concat(Object.keys(subTopics));
 
@@ -176,3 +179,5 @@ const getSubtitle = (category = 'Unlabeled', text = null) => {
 };
 
 module.exports = { findCategory, getSubtitle };
+
+
