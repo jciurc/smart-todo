@@ -1,3 +1,4 @@
+
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (1, 1,'Grown ups', 'subtitle');
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (1, 1,'Casablanca', 'subtitle');
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (1, 2,'Pizza', 'subtitle');
@@ -13,4 +14,3 @@ INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 3,'Pi
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 3,'Bread', 'subtitle');
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 1,'Monsters Inc', 'subtitle');
 INSERT INTO todos (user_id, category_id, description, subtitle) VALUES (2, 5,'curtains', 'subtitle');
-
