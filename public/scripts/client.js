@@ -70,7 +70,7 @@
     <input type="checkbox" ${todo.completed ? 'checked' : ''} class="form-check-input hover appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain cursor-pointer" id="flexCheckDefault" />
     <div>
     <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
-    <p class="subtitle">Subtitle Text</p>
+    <p class="subtitle">${safeHtml(todo.subtitle)}</p>
     </div>
     <i class="far fa-edit hover cursor-pointer"></i>
   </header>
