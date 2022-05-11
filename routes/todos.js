@@ -61,7 +61,9 @@ router.put("/:id", (req, res) => {
   const id = req.params.id;
   const description = req.body.text;
   const category_id = req.body.category_id;
-  editTodo({ id, description, category_id })
+  const subtitle = req.body.subtitle;
+  console.log("req.body", req.body);
+  editTodo({ id, description, category_id, subtitle })
     .then((data) => {
       res.json(data);
     })

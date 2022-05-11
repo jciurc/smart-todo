@@ -1,61 +1,28 @@
-// Global rules
+// Normalize styles
 html {
-  position: relative;
   box-sizing: border-box;
-  border-radius: 8px;
-  transition: 0.3s;
-  text-align: center;
-
   *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  position: relative;
+  margin: 0;
+  position: relative;
+
+  * {
     @extend html;
   }
-}
 
-// = Tailwind overrides =
-body {
-  .text-base {
-    font-size: calc(1rem + 0.05vw);
-  }
-}
-
-nav, textarea {
-  transition: none;
 }
 
 body {
   min-height: 100vh;
-  text-align: center;
   padding-bottom: 100px;
-  user-select: none;
-  // overflow: hidden;
 }
 
 nav {
-  width: 100vw;
-
-  .logo {
-    font-family: 'Gluten',cursive;
-    margin-left: 1em;
-    margin-top: 8px;
-    color: white;
-    font-weight: 400;
-    font-size: 3rem;
-
-    &::first-letter {
-      color:#09C;
-    }
-    &:nth-letter(even) {
-      color:rgb(170, 0, 204);
-    }
-    &::last-letter {
-      color:rgb(0, 204, 92);
-    }
-  }
-
-}
-
-h1.text-4xl {
-  margin-top: 6rem;
+  top: .6rem;
+  width: 98.5vw;
 }
 
 main {
@@ -64,3 +31,17 @@ main {
   width: 95vw;
 }
 
+header#main {
+  padding-top: 4em;
+
+  #splash {
+    margin-top: 6rem;
+  }
+
+  #alert-box {
+   position: absolute;
+   margin: 0 auto;
+   top: 15%;
+   right: 2%;
+ }
+}

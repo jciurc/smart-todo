@@ -1,3 +1,7 @@
+.welcome-message {
+  font-size: 2rem;
+}
+
 //Splash page animation
 $w: 96px;
 $h: 112px;
@@ -122,19 +126,4 @@ $speed: 1.5s;
     /* compose logo */
     transform: translate(0, 0);
   }
-}
-
-// Logo and splash styling
-body > nav > div {
-  display: flex;
-  justify-content: space-between;
-}
-
-#splash {
-  margin-top: 3rem;
-}
-
-.welcome-message {
-  font-size: 2rem;
-  padding-top: 20rem;
 }

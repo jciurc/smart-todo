@@ -1,106 +1,47 @@
-// = main todos section =
+// Global effects
+html {
+  border-radius: 8px;
+  transition: 0.3s;
+  text-align: center;
 
-
-#categories-container .category {
-  > header {
-    font-weight: 500;
-    padding-right: 2.5rem;
-
-    i.fa-solid {
-      padding-right:1rem;
-      font-size:1.5rem;
-    }
+  *, *:before, *:after {
+    @extend html;
   }
 
-  min-width: 280px;
-  max-width: 360px;
-  min-height: 460px;
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  // hide scrollbar but still allow scrolling
-  &::-webkit-scrollbar {
-    display: none;
+  textarea, #alert-box {
+    transition: none;
   }
 }
 
-// = main card styling =
-article.todo {
-  // fa icons
-  i.far, i.fa-solid {
-    position: absolute;
-    right: 4px;
-    color: coral;
+
+body {
+  text-align: center;
+  user-select: none;
+  // overflow: hidden; // Hide scrollbars
+
+  // Tailwind override
+  .text-base {
+    font-size: calc(1rem + 0.05vw);
   }
+}
 
-  header.card {
-    box-shadow: 0px 6px 3px 2px rgba(26, 24, 25, 0.2);
-    min-height: calc(60px + 0.3vw);
-    max-height: 100px;
-    cursor: pointer;
-
-    // todo checkbox
-    [type=checkbox] {
-      position: absolute;
-      left: 4px;
-    }
-
-    p.description {
-      padding: 4px 6px;
-      font-weight: 400;
-    }
-
-    p.subtitle {
-      font-weight: 500;
-      color: rgb(152, 180, 180);
-      font-size: 0.8em;
-    }
-
-
-    &.complete {
-      box-shadow: 0px 0px 8px 3px rgba(255, 60, 151, 0.6);
-      opacity: 0.5;
-      overflow: hidden;
-      background: rgba(116, 73, 159, 0.8);
-      background: radial-gradient(circle, #3f235a 0%, #1b0c43 100%);
-    }
-  }
-
-  // = edit mode styling =
-  // reveal buttons
-  .hover {
-    opacity: 0;
-  }
-  &:hover .hover {
-    opacity: 1;
-  }
-
-  // categories dropdown
-  select {
-    resize: none;
-    height: 40px;
-    overflow: hidden;
-    text-align: center;
-    color: aliceblue;
+nav {
+  .logo {
+    font-family: 'Gluten',cursive;
+    margin-left: 1em;
+    margin-top: 8px;
+    color: white;
     font-weight: 400;
-  }
+    font-size: 3rem;
 
-  // edit toggles
-  > form.edit {
-    display: none;
-  }
-
-  &.editing {
-
-    min-width: 240px;
-    margin: 20px;
-
-    > .card {
-      display: none;
+    &:first-letter {
+      color:#09C;
     }
-
-    > form.edit {
-      display: block;
+    &:nth-letter(even) {
+      color:rgb(170, 0, 204);
+    }
+    &:last-letter {
+      color:rgb(0, 204, 92);
     }
   }
 }

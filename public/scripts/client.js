@@ -40,15 +40,8 @@
         }
       }, i * 100);
 
-    }
 
-
-
-
-
-
-
-  };
+};
 
   const getGreeting = (hours) => {
     if (hours < 12) return 'Good morning';
