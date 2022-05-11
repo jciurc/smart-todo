@@ -1,4 +1,5 @@
-const axios = require('axios').default;
+const axios = require("axios").default;
+const { getCategoryByName } = require("./queries");
 
 // = External API Calls =
 // Object that holds all our API methods so we can call them dynamically
@@ -7,15 +8,14 @@ const query = {
     const options = {
       params,
       headers: {
-        'X-RapidAPI-Host': host,
-        'X-RapidAPI-Key': process.env.API_KEY,
-      }
+        "X-RapidAPI-Host": host,
+        "X-RapidAPI-Key": process.env.API_KEY,
+      },
     };
 
-    return axios.get(url, options)
-      .then((res) => {
-        return res.data;
-      });
+    return axios.get(url, options).then((res) => {
+      return res.data;
+    });
   },
 
   Food(text) {
@@ -47,8 +47,8 @@ const query = {
   },
 
   Music(text) {
-    const url = 'https://shazam.p.rapidapi.com/search';
-    const host = 'shazam.p.rapidapi.com';
+    const url = "https://shazam.p.rapidapi.com/search";
+    const host = "shazam.p.rapidapi.com";
     const params = { term: text, locale: "en-US", limit: "5" };
 
     return this.axiosGet(url, host, params)
@@ -61,8 +61,10 @@ const query = {
   },
 
   Books(text) {
-    const url = 'https://hapi-books.p.rapidapi.com/search/' + text.toLowerCase().split(" ").join("+");
-    const host = 'hapi-books.p.rapidapi.com';
+    const url =
+      "https://hapi-books.p.rapidapi.com/search/" +
+      text.toLowerCase().split(" ").join("+");
+    const host = "hapi-books.p.rapidapi.com";
     const params = {};
 
     return this.axiosGet(url, host, params)
@@ -75,8 +77,8 @@ const query = {
   },
 
   Movies(text) {
-    const url = 'https://movie-database-alternative.p.rapidapi.com/';
-    const host = 'movie-database-alternative.p.rapidapi.com';
+    const url = "https://movie-database-alternative.p.rapidapi.com/";
+    const host = "movie-database-alternative.p.rapidapi.com";
     const params = { s: text, r: "json", page: "1" };
     return this.axiosGet(url, host, params)
       .then((data) => {
@@ -91,26 +93,38 @@ const query = {
 // Find category
 const uclassifyRequest = (subject, text) => {
   const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`;
-  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(' ').join('+')}`;
+  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text
+    .toLowerCase()
+    .split(" ")
+    .join("+")}`;
   // topics dictionary
   const topics = {
-    Arts: 'art-topics',
-    Home: 'home-topics',
-    Sports: 'home-topics',
-    Literature: 'Books',
-    Music: 'Music',
-    Movies_Television: 'Movies',
-    Cooking: 'Food',
-    Family: 'Products',
+    Arts: "art-topics",
+    Home: "home-topics",
+    Sports: "home-topics",
+    Literature: "Books",
+    Music: "Music",
+    Movies_Television: "Movies",
+    Cooking: "Food",
+    Family: "Products",
   };
 
-  return axios.get(url + options)
-    .then((res) => {
-      const allowedTopics = ['Arts', 'Home', 'Literature', 'Music', 'Movies_Television', 'Cooking', 'Family'];
-      const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
-      const sorted = filtered.sort((a, b) => b[1] - a[1]);
-      return topics[sorted[0][0]];
-    });
+  return axios.get(url + options).then((res) => {
+    const allowedTopics = [
+      "Arts",
+      "Home",
+      "Literature",
+      "Music",
+      "Movies_Television",
+      "Cooking",
+      "Family",
+    ];
+    const filtered = Object.entries(res.data).filter((item) =>
+      allowedTopics.includes(item[0])
+    );
+    const sorted = filtered.sort((a, b) => b[1] - a[1]);
+    return topics[sorted[0][0]];
+  });
 };
 
 const getSubtitle = (category = 'Untitled', text = null) => {
@@ -121,10 +135,9 @@ const getSubtitle = (category = 'Untitled', text = null) => {
     });
 };
 
-
 // = main function =
 const findCategory = (text) => {
-  return uclassifyRequest('topics', text)
+  return uclassifyRequest("topics", text)
     .then((topic) => {
       return uclassifyRequest(topic, text);
     })
@@ -138,6 +151,20 @@ const findCategory = (text) => {
 };
 
 module.exports = { findCategory, getSubtitle };
+
+// = TESTING APIs  =
+findCategory("hello") //description
+  .then(getCategoryByName)
+  .then((cat) => {
+    console.log("cat ", cat);
+     getSubtitle(cat.name, "hello")
+      .then((subtitle) => {
+        console.log("cat name", cat.name);
+        console.log("subtitle", subtitle);
+      })
+  });
+
+
 
 // = Testing API =
 // findCategory('hello')
