@@ -25,7 +25,7 @@ const getAllCategories = () => {
 };
 
 const getCategoryByName = (name) => {
-  return db.query(`SELECT id FROM categories WHERE name = $1`, [name])
+  return db.query(`SELECT * FROM categories WHERE name = $1`, [name])
     .then((res) => {
       return res.rows[0];
     });
