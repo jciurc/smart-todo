@@ -1,12 +1,28 @@
-//alert classes
-.red {
-  background-color: rgb(239 68 68);
-  height:30px;
-  padding:5px;
-}
+#alert-box {
+  min-width: 18em;
+  max-width: 32vw;
+  padding: 1em;
 
-.green {
-  background-color: rgb(22 163 74);
-  height:30px;
-  padding:5px;
+  p.alert-text {
+    font-size: 1.2rem;
+    font-weight: 500;
+
+    .special {
+      font-weight: 600;
+      color: rgb(0, 53, 45);
+    }
+  }
+
+  // alert styles
+  &.success {
+    background-color: rgb(32, 148, 75);
+  }
+
+  &.warning {
+    background-color: rgb(185, 148, 46);
+  }
+
+  &.bad {
+    background-color: rgb(206, 65, 77);
+  }
 }

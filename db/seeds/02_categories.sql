@@ -1,8 +1,8 @@
 -- categories table seeds here
-INSERT INTO categories (name) VALUES ('Movies');
-INSERT INTO categories (name) VALUES ('Music');
-INSERT INTO categories (name) VALUES ('Food');
-INSERT INTO categories (name) VALUES ('Books');
-INSERT INTO categories (name) VALUES ('Products');
-INSERT INTO categories (name) VALUES ('Games');
-INSERT INTO categories (name) VALUES ('Unlabeled');
+INSERT INTO categories (id, name) VALUES (1, 'Movies');
+INSERT INTO categories (id, name) VALUES (2, 'Music');
+INSERT INTO categories (id, name) VALUES (3, 'Food');
+INSERT INTO categories (id, name) VALUES (4, 'Books');
+INSERT INTO categories (id, name) VALUES (5, 'Products');
+INSERT INTO categories (id, name) VALUES (6, 'Games');
+INSERT INTO categories (id, name) VALUES (7, 'Unlabeled');
