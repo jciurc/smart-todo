@@ -1,14 +1,21 @@
-// Global styling
-body, html {
-  margin: 0;
-}
-
-* {
+// Global rules
+html {
   position: relative;
   box-sizing: border-box;
   border-radius: 8px;
   transition: 0.3s;
   text-align: center;
+
+  *, *:before, *:after {
+    @extend html;
+  }
+}
+
+// = Tailwind overrides =
+body {
+  .text-base {
+    font-size: calc(1rem + 0.05vw);
+  }
 }
 
 nav, textarea {
@@ -25,6 +32,26 @@ body {
 
 nav {
   width: 100vw;
+
+  .logo {
+    font-family: 'Gluten',cursive;
+    margin-left: 1em;
+    margin-top: 8px;
+    color: white;
+    font-weight: 400;
+    font-size: 3rem;
+
+    &::first-letter {
+      color:#09C;
+    }
+    &:nth-letter(even) {
+      color:rgb(170, 0, 204);
+    }
+    &::last-letter {
+      color:rgb(0, 204, 92);
+    }
+  }
+
 }
 
 h1.text-4xl {

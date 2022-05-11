@@ -17,8 +17,8 @@ const query = {
     });
   },
 
-  Unlabeled(text) {
-    return '😵‍💫?';
+  Unlabeled() {
+    return Promise.resolve('😵‍💫');
   },
 
   Food(text) {
@@ -85,9 +85,8 @@ const query = {
     const params = { s: text, r: "json", page: "1" };
     return this.axiosGet(url, host, params)
       .then((data) => {
-        console.log('Found movie response');
         if (data.Error) return `${text} (unknown year)`;
-        const { Title, Year } = data.Search[0] || { Title: text, Year: 'unknown year' };
+        const { Title = text, Year = 'unknown year' } = data.Search[0];
         return `${Title.slice(0, 50)} (${Year})`;
       });
   },
@@ -113,46 +112,62 @@ const query = {
 };
 
 
-
 // Find category
-const uclassifyRequest = (subject, text) => {
-  const url = `https://api.uclassify.com/v1/uclassify/${subject}/classify`;
-  const options = `?readkey=${process.env.CLASSIFY_KEY}&text=${text.toLowerCase().split(" ").join("+")}`;
+const queryUclassify = (text) => {
+  const url = `https://api.uclassify.com/v1/uclassify/topics/classify?readkey=${process.env.CLASSIFY_KEY}`;
+  const options = `&text=${text.toLowerCase().split(" ").join("+")}`;
 
   // topics dictionary
-  const topics = {
-    Arts: "art-topics",
-    Home: "home-topics",
-    Sports: "home-topics",
-    Literature: "Books",
-    Music: "Music",
-    Movies_Television: "Movies",
-    Cooking: "Food",
-    Family: "Products",
-    Games: "Games",
+  const broadTopics = {
+    Arts: 'art-topics',
+    Home: 'home-topics',
+    Sports: 'home-topics',
   };
+  const subTopics = {
+    Literature: 'Books',
+    Music: 'Music',
+    Movies_Television: 'Movies',
+    Cooking: 'Food',
+    Family: 'Products',
+    Games: 'Games',
+  };
+  const allowedTopics = Object.keys(broadTopics).concat(Object.keys(subTopics));
 
-  return axios.get(url + options).then((res) => {
-    const allowedTopics = [
-      "Arts",
-      "Home",
-      "Literature",
-      "Music",
-      "Movies_Television",
-      "Cooking",
-      "Family",
-      "Games",
-    ];
-    console.log('unfiltered', res);
-    const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
-    const sorted = filtered.sort((a, b) => b[1] - a[1]);
-    console.log('sorted results', sorted);
-    if (sorted[1] < 0.05) return 'Unlabeled';
-    return topics[sorted[0][0]];
+  // first query for broader topic
+  return axios.get(url + options)
+    .then((res) => {
+      const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
+      const sorted = filtered.sort((a, b) => b[1] - a[1]);
+      if (sorted[0][1] < 0.01) return 'Unlabeled'; // poor match
+      return broadTopics[sorted[0][0]];
+    })
+    .then((topic) => {
+      // These categories don't need a second query
+      if (['Games', 'Unlabeled'].includes(topic)) return topic;
+
+      // Query again for sub topic
+      const url = `https://api.uclassify.com/v1/uclassify/${topic}/classify?readkey=${process.env.CLASSIFY_KEY}`;
+      return axios.get(url + options)
+        .then((res) => {
+          const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
+          const sorted = filtered.sort((a, b) => b[1] - a[1]);
+          return subTopics[sorted[0][0]];
+        });
+    });
+};
+
+
+// = main functions =
+const findCategory = (text) => {
+  return queryUclassify(text)
+  .catch((err) => {
+    console.log('error finding category', err.message);
+    return 'Unlabeled';
   });
 };
 
 const getSubtitle = (category = 'Unlabeled', text = null) => {
+  if (typeof query[category] === 'undefined') return 'no details';
   return query[category](text)
     .catch((err) => {
       console.log('error getting subtitle for ', category, text, err.message);
@@ -160,38 +175,4 @@ const getSubtitle = (category = 'Unlabeled', text = null) => {
     });
 };
 
-// = main function =
-const findCategory = (text) => {
-  return uclassifyRequest("topics", text)
-    .then((topic) => {
-      console.log('first topic', topic);
-      if (topic === 'Unlabeled') return 'Unlabeled';
-      return uclassifyRequest(topic, text);
-    })
-    .then((category) => {
-      return category;
-    })
-    .catch((err) => {
-      console.log('error finding category', err.message);
-      return 'Unlabeled';
-    });
-};
-
 module.exports = { findCategory, getSubtitle };
-
-// = TESTING APIs  =
-
-
-
-// //= Testing API =
-query.Games('final fantasy');
-// // findCategory('chess').then(getSubtitle)
-//   .then((response) => {
-//     console.log('found:', response);
-//   })
-//   .catch((error)=>{
-// console.log('got error');
-// console.error(error);
-//   });
-
-

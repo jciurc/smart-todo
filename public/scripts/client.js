@@ -22,9 +22,8 @@
 
     // offset page rendering
     setTimeout(() => {
-      $('delay').show();
+      $('body > .delay').show();
     }, 100);
-
   });
 
   // == helpers ==
@@ -96,7 +95,7 @@
     return $.get('/categories')
       .then((categories) => {
         return categories.map((item) => `<option value="${item.id}">${safeHtml(item.name)}</option>`);
-      })
+      });
   };
 
   const renderTodos = (todos) => {
@@ -150,12 +149,12 @@
 
     // login user
     $.post('/users/login', $form.serialize())
-    .then((user) => {
-      $inputField.val('');
-      renderBasedOnUser(user.name);
-      showAlert('Logged in!', 'green');
-      loadTodos();
-    });
+      .then((user) => {
+        $inputField.val('');
+        renderBasedOnUser(user.name);
+        showAlert('Logged in!', 'green');
+        loadTodos();
+      });
   };
 
   const loggedOut = () => {
@@ -179,12 +178,11 @@
     // sends todo text backend
     showAlert('Finding suitable category..', 'green');
     $.post('/todos', $(this).serialize())
-    // get new todo object back
-    .then((todo) => {
-      console.log("todo response", todo);
-      $(this).find('input').val('');
-      loadTodos();
-      showAlert('Match found! Added Todo to ' + todo.name, 'green');
+      // get new todo object back
+      .then((todo) => {
+        $(this).find('input').val('');
+        showAlert('Match found! Added Todo to ' + todo.name, 'green');
+        loadTodos();
       });
   };
 
@@ -195,10 +193,10 @@
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
         loadTodos();
-    })
+      });
   };
 
-  const completeTodo = function (event) {
+  const completeTodo = function(event) {
     event.stopPropagation();
     event.preventDefault();
     const $todo = $(this).closest("article");
@@ -207,14 +205,14 @@
     $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
       .then((todo) => {
         loadTodos();
-    });
+      });
   };
 
   const deleteTodo = function() {
     const $todo = $(this).closest('article');
     const id = $todo.attr('alt');
 
-    $.ajax({url: '/todos/' + id, type: 'DELETE'})
+    $.ajax({ url: '/todos/' + id, type: 'DELETE' })
       .then((res) => {
         loadTodos();
       });
