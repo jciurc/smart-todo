@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getAllTodos, deleteTodo, insertNewTodo, getCategoryByName, editTodo, setCompleted } = require('../queries');
-const { findCategory } = require('../api');
+const { findCategory, getSubtitle } = require('../api');
 
 router.get("/", (req, res) => {
   const userId = req.cookies.user;
@@ -19,11 +19,14 @@ router.post('/', (req, res) => {
   const description = req.body.text;
   // get category from external apis
   findCategory(description)
-    .then((category) => {
-      console.log(description, 'suggested category:', category);
-      return getCategoryByName(category)
-        .then((cat) => {
-          const user_id = req.cookies.user;
+  .then((category) => {
+    console.log(description, 'suggested category:', category);
+  getCategoryByName(category)
+  })
+  .then((category) => {
+  getSubtitle(subtitle)
+  .then(() => {})
+      const user_id = req.cookies.user;
           const category_id = cat.id;
 
           // create new todo in database
@@ -38,7 +41,7 @@ router.post('/', (req, res) => {
           console.log('error posting new todo');
           console.error(err);
         });
-    });
+
 });
 
 //Edit todo
