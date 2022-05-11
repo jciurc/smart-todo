@@ -91,23 +91,21 @@ const query = {
       });
   },
 
-  //gaming api
+  // rawg.io api
   Games(text) {
     const options = {
       method: 'GET',
       url: `https://api.rawg.io/api/games?key=${process.env.RAWG_KEY}`,
-      params: {search: text}
+      params: { search: text }
     };
-    axios.request(options).then(function(response) {
-      //console.log('Game:', response.data.results[0].name);
-      //console.log('Genre:', response.data.results[0].genres[0].name);
-
-      const name = response.data.results[0].name;
-      const genre = response.data.results[0].genres[0].name;
-      console.log(`name: ${name} genre: ${genre}`);
-    }).catch(function(error) {
-      console.error(error);
-    });
+    return axios.request(options)
+      .then((res) => {
+        if (!res.data.results[0]) return '';
+        const name = res.data.results[0].name;
+        const genre = res.data.results[0].genres[0].name;
+        console.log(`name: ${name} genre: ${genre}`);
+        return `${name} (${genre})`;
+      });
   },
 };
 
@@ -122,6 +120,7 @@ const queryUclassify = (text) => {
     Arts: 'art-topics',
     Home: 'home-topics',
     Sports: 'home-topics',
+    Games: 'Games',
   };
   const subTopics = {
     Literature: 'Books',
@@ -129,7 +128,6 @@ const queryUclassify = (text) => {
     Movies_Television: 'Movies',
     Cooking: 'Food',
     Family: 'Products',
-    Games: 'Games',
   };
   const allowedTopics = Object.keys(broadTopics).concat(Object.keys(subTopics));
 
@@ -137,9 +135,9 @@ const queryUclassify = (text) => {
   return axios.get(url + options)
     .then((res) => {
       const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
-      const sorted = filtered.sort((a, b) => b[1] - a[1]);
-      if (sorted[0][1] < 0.01) return 'Unlabeled'; // poor match
-      return broadTopics[sorted[0][0]];
+      const best = filtered.sort((a, b) => b[1] - a[1]);
+      if (best[0][1] < 0.01) return 'Unlabeled'; // poor match
+      return broadTopics[best[0][0]] || 'Unlabeled';
     })
     .then((topic) => {
       // These categories don't need a second query
@@ -150,8 +148,8 @@ const queryUclassify = (text) => {
       return axios.get(url + options)
         .then((res) => {
           const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
-          const sorted = filtered.sort((a, b) => b[1] - a[1]);
-          return subTopics[sorted[0][0]];
+          const best = filtered.sort((a, b) => b[1] - a[1]);
+          return subTopics[best[0][0]];
         });
     });
 };
@@ -160,10 +158,10 @@ const queryUclassify = (text) => {
 // = main functions =
 const findCategory = (text) => {
   return queryUclassify(text)
-  .catch((err) => {
-    console.log('error finding category', err.message);
-    return 'Unlabeled';
-  });
+    .catch((err) => {
+      console.log('error finding category', err.message);
+      return 'Unlabeled';
+    });
 };
 
 const getSubtitle = (category = 'Unlabeled', text = null) => {

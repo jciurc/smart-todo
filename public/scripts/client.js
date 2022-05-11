@@ -22,8 +22,8 @@
 
     // offset page rendering
     setTimeout(() => {
-      $('body > .delay').show();
-    }, 100);
+      $('body > #delay').show();
+    }, 10);
   });
 
   // == helpers ==
