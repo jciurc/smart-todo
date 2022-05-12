@@ -136,7 +136,8 @@ const queryUclassify = (text) => {
     .then((res) => {
       const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
       const best = filtered.sort((a, b) => b[1] - a[1]);
-      if (best[0][1] < 0.01) return 'Unlabeled'; // poor match
+      console.log('results', res.data);
+      if (filtered[0][1] == filtered[1][1] || best[0][1] < 0.03) return 'Unlabeled'; // poor match
       return broadTopics[best[0][0]] || 'Unlabeled';
     })
     .then((topic) => {

@@ -6,10 +6,11 @@
   p.alert-text {
     font-size: 1.2rem;
     font-weight: 500;
+    color: antiquewhite;
 
     .special {
       font-weight: 600;
-      color: rgb(0, 53, 45);
+      color: rgb(248, 179, 100);
     }
   }
 
@@ -19,7 +20,7 @@
   }
 
   &.warning {
-    background-color: rgb(185, 148, 46);
+    background-color: rgb(203, 149, 42);
   }
 
   &.bad {
