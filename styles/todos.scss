@@ -1,10 +1,11 @@
 // = main todos section =
 #categories-container .category {
-  >header {
+  // Category name
+  > header {
     font-weight: 500;
     padding-right: 2rem;
 
-    > i.fa-solid, > i.fa-regular {
+    > i.fa-solid, > i.fa-brands, > i.fa-regular {
       padding-right: 1rem;
       font-size: 1.5rem;
     }
@@ -76,9 +77,7 @@ article.todo {
       font-size: 0.85em;
       line-height: 1.2em;
       padding: 0.2em;
-
     }
-
 
     &.complete {
       box-shadow: 0px 0px 8px 3px rgba(232, 38, 128, 0.831);
@@ -129,7 +128,7 @@ article.todo {
       resize: none;
       overflow: hidden;
       width: 12em;
-      height: 3.2em;
+      height: 3.8em;
       font-size: 1rem;
       text-align: center;
       color: aliceblue;
@@ -141,6 +140,7 @@ article.todo {
   &.editing {
     min-width: 240px;
     margin: 20px auto;
+    border-radius: 2em;
 
     > .card {
       display: none;
@@ -154,30 +154,48 @@ article.todo {
   }
 }
 
-#Movies .todo > header.card {
-  background-color: rgb(20, 83, 39);
-}
 
-#Music .todo > header.card {
-  background-color: rgb(21 94 117);
-}
 
-#Books .todo > header.card {
-  background-color: rgb(206, 95, 16);
-}
+section#categories-container {
+  #Movies  {
+    .todo > header.card {
+      background-color: rgb(20, 83, 39);
+    }
+  }
 
-#Food .todo > header.card {
-  background-color: rgb(127 29 29);
-}
+  #Music {
+  .todo > header.card {
+    background-color: rgb(21 94 117);
+    }
+  }
 
-#Products .todo > header.card {
-  background-color: rgb(17 94 89);
-}
+  #Books {
+  .todo > header.card {
+    background-color: rgb(206, 95, 16);
+    }
+  }
 
-#Books .todo > header.card {
-  background-color: rgb(206, 95, 16);
-}
+  #Food {
+  .todo > header.card {
+    background-color: rgb(127 29 29);
+    }
+  }
 
-#Food .todo > header.card {
-  background-color: rgb(127 29 29);
+  #Products {
+  .todo > header.card {
+    background-color: rgb(17 94 89);
+    }
+  }
+
+  #Books {
+  .todo > header.card {
+    background-color: rgb(206, 95, 16);
+    }
+  }
+
+  #Food {
+  .todo > header.card {
+    background-color: rgb(127 29 29);
+    }
+  }
 }

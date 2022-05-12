@@ -21,13 +21,20 @@ body {
 }
 
 nav {
-  top: .6rem;
-  width: 98.5vw;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  padding-top: 0.6rem;
+  z-index: 1;
+
+  #nav-bar {
+    width: 98.5vw;
+  }
 }
 
 main {
   background-color: inherit;
-  margin: auto;
+  margin: 100px auto;
   width: 95vw;
 }
 
