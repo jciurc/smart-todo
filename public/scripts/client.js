@@ -1,8 +1,8 @@
 (() => {
   $(document).ready(() => {
     // user routes
-    $('nav').find('form').on('submit', loginSubmit);
-    $('#logout').on('click', loggedOut);
+    $('nav #login').on('submit', loginSubmit);
+    $('nav #logout button').on('click', loggedOut);
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
@@ -119,17 +119,20 @@
 
   const renderBasedOnUser = (name) => {
     const currentHours = new Date().getHours();
+    const $newTodoForm = $('#new-todo');
     if (name) {
       $('#login').hide();
       $('#logout').show().find('div').append(`<p class="align-text">${safeHtml(name)}</p>`);
       $('#splash').hide();
-      $('#new-todo').show().find('h1').text(`${getGreeting(currentHours)}, ${safeHtml(name)}!`);
+      $newTodoForm.show();
+      $newTodoForm.find('h1').text(`${getGreeting(currentHours)}, ${safeHtml(name)}!`);
+      $newTodoForm.find('input').focus()
       return;
     }
     $('#login').show();
     $('#splash').show();
     $('#logout').hide().find('div').text('');
-    $('#new-todo').hide().find('h1').text('');
+    $newTodoForm.hide().find('h1').text('');
   };
 
   // == event functions ==

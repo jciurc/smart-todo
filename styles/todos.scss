@@ -44,8 +44,8 @@ article.todo {
     cursor: pointer;
   }
 
-  // edit and close button
-  .card i.fa-edit, .edit i.fa-xmark {
+  // edit pencil icon
+  .card i.fa-edit {
     position: absolute;
     right: 4px;
     color: coral;
@@ -57,13 +57,15 @@ article.todo {
     left: 4px;
     font-size: 1.7rem;
 
-
+    // unchecked
     &.fa-regular {
-      color:#3fdcc497;
+      color: $confirm;
     }
 
+    //checked
     &.fa-solid {
       color:#00fff7;
+      color:$delete;
     }
   }
 
@@ -106,10 +108,29 @@ article.todo {
     opacity: 1;
   }
 
-  // edit form
+  // edit form styles
   > form.edit {
+    background-color: $todoDark;
+    border-radius: 30px;
     display: none; // hidden by default
 
+    // close button
+    i.fa-xmark {
+      position: absolute;
+      right: 4px;
+      color: coral;
+    }
+
+    // 'Update todo' header and icons
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 2.4em;
+      border-radius: 16px;
+    }
+
+    // new description form
     textarea[name="text"]  {
       width: 14em;
       height: 4em;
@@ -132,6 +153,7 @@ article.todo {
       appearance: none;
     }
 
+    // new subtitle form
     textarea[name="subtitle"]  {
       resize: none;
       overflow: hidden;
@@ -144,30 +166,28 @@ article.todo {
       margin-bottom: 1em;
     }
 
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 2.4em;
-      border-radius: 16px;
+    button.confirm-edit {
+      background-color: $confirm;
+    }
+    button.delete-button {
+      background-color: $delete;
     }
   }
 
+
+
+  // = edit mode active =
   &.editing {
     min-width: 240px;
     margin: 20px auto;
     border-radius: 2em;
 
-    > .card {
-      display: none;
-
-
+    > header.card {
+      display: none; // hides main todo header
     }
 
     > form.edit {
-      background-color: $todoDark;
-      border-radius: 30px;
-      display: flex;
+      display: flex; // unhides edit form
       flex-direction: column;
       align-items: stretch;
     }
