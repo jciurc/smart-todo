@@ -45,7 +45,8 @@ header#main {
   }
 
   #alert-box {
-   position: absolute;
+   position: fixed;
+   z-index: 3;
    margin: 0 auto;
    top: 15%;
    right: 2%;
