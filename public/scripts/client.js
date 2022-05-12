@@ -132,7 +132,6 @@
     $('#new-todo').hide().find('h1').text('');
   };
 
-
   // == event functions ==
   // = user events =
   const checkLogin = () => {
@@ -169,7 +168,6 @@
         }
       });
   };
-
 
   // = todo events =
   const newTodo = function(event) {
