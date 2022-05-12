@@ -23,7 +23,7 @@
     // offset page rendering
     setTimeout(() => {
       $('body > #delay').show();
-    }, 10);
+    }, 50);
   });
 
   // == helpers ==
@@ -174,11 +174,11 @@
   const newTodo = function(event) {
     event.preventDefault();
 
-    // error handling. text field empty
+    // error handling
     if (!$(this).find('input').val()) return showAlert('Text field is empty', 'bad');
 
     // sends todo text backend
-    showAlert('Finding suitable category..', 'warning');
+    showAlert('Finding suitable category . .', 'warning');
     $.post('/todos', $(this).serialize())
       // get new todo object back
       .then((todo) => {
@@ -190,8 +190,11 @@
 
   const submitEdit = function(event) {
     event.preventDefault();
+    console.log('where am i', $(this));
+    console.log('what are these', $(this).find('textarea'));
+    if (!$(this).find(textarea).val()) return showAlert('Change not made..', 'warning');
+    showAlert('Finding suitable category..', 'warning');
     const data = $(this).serialize();
-    console.log("data to submit edit func", data);
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((res) => {
