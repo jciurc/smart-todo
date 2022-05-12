@@ -143,6 +143,14 @@ article.todo {
       font-weight: 300;
       margin-bottom: 1em;
     }
+
+    header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 2.4em;
+      border-radius: 16px;
+    }
   }
 
   &.editing {
@@ -152,10 +160,12 @@ article.todo {
 
     > .card {
       display: none;
+
+
     }
 
     > form.edit {
-      background-color: $todoBG;
+      background-color: $todoDark;
       border-radius: 30px;
       display: flex;
       flex-direction: column;
@@ -163,7 +173,6 @@ article.todo {
     }
   }
 }
-
 
 section#categories-container {
   #Movies  {
