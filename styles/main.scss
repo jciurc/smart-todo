@@ -23,6 +23,10 @@ body {
   }
 }
 
+header.divider {border-bottom: 1px solid rgb(142 143 144 / 50%);
+    border-radius: 0;
+    padding-bottom: 20px;
+}
 nav {
   .logo {
     font-family: 'Gluten',cursive;
