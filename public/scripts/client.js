@@ -194,7 +194,8 @@
     const data = $(this).serialize();
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
-      .then((res) => {
+      .then((todo) => {
+        showAlert('Todo updated!', 'success');
         loadTodos();
       });
   };
