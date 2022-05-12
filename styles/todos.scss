@@ -225,9 +225,8 @@ section#categories-container {
   }
 }
 
-
 .shake_anim {
-  animation: shake 3s linear infinite;
+  animation: shake 3s linear;
 }
 
 @keyframes shake {

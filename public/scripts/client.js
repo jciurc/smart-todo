@@ -185,10 +185,11 @@
       .then((todo) => {
         $(this).find('input').val('');
         showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
-        $(todo).closest('.category').addClass('shake_anim');
-        console.log('what is this', $(this));
+        $('#categories-container').find(`#${todo.name}`).addClass('shake_anim');
         loadTodos();
-
+        setTimeout(() => {
+          $('#categories-container').find(`#${todo.name}`).removeClass('shake_anim');
+        }, 3000);
       });
   };
 
