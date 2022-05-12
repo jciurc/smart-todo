@@ -187,7 +187,8 @@
       .then((todo) => {
         $(this).find('input').val('');
         showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
-        $(this).find('.category').addClass('.shake_anim');
+        $(todo).closest('.category').addClass('shake_anim');
+        console.log('what is this', $(this));
         loadTodos();
 
       });
