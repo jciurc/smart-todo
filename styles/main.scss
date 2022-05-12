@@ -71,16 +71,30 @@ nav {
     color: white;
     font-weight: 400;
     font-size: 3rem;
+    padding: 0;
+    display: flex;
     cursor: pointer;
 
-    &:first-letter {
-      color:#09C;
+    .t {
+      color: #09C;
     }
-    &:nth-letter(even) {
-      color:rgb(170, 0, 204);
+
+    .a {
+      color: rgba(158, 97, 232, 0.993);
+
     }
-    &:last-letter {
-      color:rgb(0, 204, 92);
+
+    .s {
+      color: rgb(22 163 74);
+
+    }
+
+    .k {
+      color: #ef4444;
+    }
+
+    .r {
+      color: rgb(233, 118, 36);
     }
   }
 
