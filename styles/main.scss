@@ -13,7 +13,6 @@ html {
   }
 }
 
-
 body {
   text-align: center;
   user-select: none;
@@ -59,6 +58,9 @@ nav {
   padding:5px;
 }
 
+
+
+//todo cards
 #Movies .todo > header.card {
   background-color:rgb(20, 83, 39);
 }
@@ -95,3 +97,29 @@ nav {
 }
 
 
+//welcome animation
+.line-1{
+  border-radius:0;
+  position: relative;
+  top: 50%;
+  width: 24em;
+  margin: 0 auto;
+  border-right: 1px solid rgba(255,255,255,.75);
+  white-space: nowrap;
+  overflow: hidden;
+  transform: translateY(-50%);
+}
+
+.typing{
+animation: typing 6s steps(44) 1s 1 normal both,
+blinkTextCursor 700ms steps(34) 10 normal;
+border-right:1px solid transparent;
+}
+@keyframes typing{
+from{width: 0;}
+to{width: 15em;}
+}
+@keyframes blinkTextCursor{
+from{border-right-color: coral;}
+to{border-right-color: transparent;}
+}
