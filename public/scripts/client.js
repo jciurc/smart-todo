@@ -190,9 +190,6 @@
 
   const submitEdit = function(event) {
     event.preventDefault();
-    console.log('where am i', $(this));
-    console.log('what are these', $(this).find('textarea'));
-    if (!$(this).find(textarea).val()) return showAlert('Change not made..', 'warning');
     showAlert('Finding suitable category..', 'warning');
     const data = $(this).serialize();
     const id = $(this).closest('article').attr("alt");

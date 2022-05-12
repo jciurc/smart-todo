@@ -1,13 +1,22 @@
-// = main todos section =
+@import 'colors';
+
+// = CATEGORIES =
 #categories-container .category {
   // Category name
   > header {
     font-weight: 500;
     padding-right: 2rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 101%;
+    margin: 0 auto;
+    height: 3em;
+    padding-top: 0.8em;
 
     > i.fa-solid, > i.fa-brands, > i.fa-regular {
       padding-right: 1rem;
-      font-size: 1.5rem;
     }
   }
 
@@ -28,11 +37,10 @@ article.todo {
   min-width: 90%;
   margin: 2em auto;
 
-
   // hover icons
   i.fa-circle, i.fa-circle-check, i.fa-edit {
     padding: 0.1em;
-    top: 0.3em;
+    top: 0.2em;
     cursor: pointer;
   }
 
@@ -48,7 +56,7 @@ article.todo {
     position: absolute;
     left: 4px;
     font-size: 1.7rem;
-    top: 4%;
+
 
     &.fa-regular {
       color:#3fdcc497;
@@ -59,7 +67,7 @@ article.todo {
     }
   }
 
-
+ // todo main card
   header.card {
     box-shadow: 0px 6px 3px 2px rgba(26, 24, 25, 0.2);
     min-height: calc(80px + 0.3vw);
@@ -147,6 +155,8 @@ article.todo {
     }
 
     > form.edit {
+      background-color: $todoBG;
+      border-radius: 30px;
       display: flex;
       flex-direction: column;
       align-items: stretch;
@@ -155,47 +165,53 @@ article.todo {
 }
 
 
-
 section#categories-container {
   #Movies  {
+    background-color: $movies;
     .todo > header.card {
-      background-color: rgb(20, 83, 39);
+      background-color: $moviesCard;
     }
   }
 
   #Music {
+    background-color: $music;
   .todo > header.card {
-    background-color: rgb(21 94 117);
-    }
-  }
-
-  #Books {
-  .todo > header.card {
-    background-color: rgb(206, 95, 16);
+    background-color: $musicCard;
     }
   }
 
   #Food {
+    background-color: $food;
   .todo > header.card {
-    background-color: rgb(127 29 29);
+    background-color: $foodCard;
+    }
+  }
+
+  #Books {
+    background-color: $books;
+  .todo > header.card {
+    background-color: $booksCard;
     }
   }
 
   #Products {
+    background-color: $products;
   .todo > header.card {
-    background-color: rgb(17 94 89);
+    background-color: $productsCard;
     }
   }
 
-  #Books {
+  #Games {
+    background-color: $games;
   .todo > header.card {
-    background-color: rgb(206, 95, 16);
+    background-color: $gamesCard;
     }
   }
 
-  #Food {
+  #Unlabeled {
+    background-color: $unlabeled;
   .todo > header.card {
-    background-color: rgb(127 29 29);
+    background-color: $unlabeledCard;
     }
   }
 }

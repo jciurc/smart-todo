@@ -12,7 +12,6 @@ html {
   * {
     @extend html;
   }
-
 }
 
 body {
@@ -25,7 +24,7 @@ nav {
   width: 100vw;
   top: 0;
   padding-top: 0.6rem;
-  z-index: 1;
+  z-index: 10;
 
   #nav-bar {
     width: 98.5vw;
