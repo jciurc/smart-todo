@@ -28,9 +28,10 @@
 
   // == helpers ==
   const getGreeting = (hours) => {
+    if (hours < 3) return 'Get some rest';
     if (hours < 12) return 'Good morning';
     if (hours < 17) return 'Good afternoon';
-    return 'Good evening';
+    return 'Good work today';
   };
 
   const showAlert = (message, style) => {
@@ -147,7 +148,7 @@
     const $inputField = $form.find('input');
 
     // error handling
-    if (!$inputField.val().trim()) return showAlert('Please enter a username', 'bad');
+    if (!$inputField.val().trim()) return showAlert('Please enter a username', 'danger');
 
     // login user
     $.post('/users/login', $form.serialize())
@@ -175,7 +176,7 @@
     event.preventDefault();
 
     // error handling
-    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'bad');
+    if (!$(this).find('input').val()) return showAlert('Text field is empty', 'danger');
 
     // sends todo text backend
     showAlert('Finding suitable category . .', 'warning');
@@ -190,7 +191,6 @@
 
   const submitEdit = function(event) {
     event.preventDefault();
-    showAlert('Finding suitable category..', 'warning');
     const data = $(this).serialize();
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })

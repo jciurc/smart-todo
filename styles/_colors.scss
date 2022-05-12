@@ -8,27 +8,31 @@ $button3: #2b23f2;
 
 // alerts
 $success: #4fd55e;
-$todoBG: #3A5874;
-$todoDark: #25364f;
+$warning: rgb(203, 149, 42);
+$danger: rgb(206, 65, 77);
 
 // todos
+$todoBG: #35587b;
+$todoDark: #25364f;
+
+// categories
 $movies: #416b4e;
-$moviesCard: #3A5874;
+$moviesCard: $todoBG;
 
 $music: #3a4674;
-$musicCard: #3A5874;
+$musicCard: $todoBG;
 
 $food: #663b40;
-$foodCard: #3A5874;
+$foodCard: $todoBG;
 
 $books: #917845;
-$booksCard: #3A5874;
+$booksCard: $todoBG;
 
 $products: rgb(15 118 110);
-$productsCard: #3A5874;
+$productsCard: $todoBG;
 
 $games: #5c416b;
-$gamesCard: #3A5874;
+$gamesCard: $todoBG;
 
 $unlabeled: rgb(70, 98, 72);
-$unlabeledCard: #3A5874;
+$unlabeledCard: $todoBG;
