@@ -15,7 +15,7 @@ html {
 body {
   text-align: center;
   user-select: none;
-  // overflow: hidden; // Hide scrollbars
+  overflow-x: hidden; // Hide scrollbar
 
   // Tailwind override
   .text-base {
@@ -24,6 +24,7 @@ body {
 }
 
 nav {
+  border-radius: 0;
   .logo {
     font-family: 'Gluten',cursive;
     margin-left: 1em;
@@ -44,61 +45,11 @@ nav {
   }
 }
 
-//alert classes
-.red{
-  background-color: rgb(239 68 68);
-  height:30px;
-  padding:5px;
+h1 {
+  padding: 0.1em;
 }
 
-.green{
-  background-color: rgb(22 163 74);
-  height:30px;
-  padding:5px;
-}
-
-
-
-//todo cards
-#Movies .todo > header.card {
-  background-color:rgb(20, 83, 39);
-}
-
-#Music .todo > header.card {
-  background-color:rgb(21 94 117);
-}
-
-#Books .todo header {
-  background-color: rgb(206, 95, 16);
-}
-
-#Food .todo header {
-  background-color: rgb(127 29 29);
-}
-#Products .todo header {
-  background-color: rgb(17 94 89);
-}
-
-#Books .todo > header.card {
-  background-color: rgb(206, 95, 16);
-}
-
-#Food .todo > header.card {
-  background-color: rgb(127 29 29);
-}
-
-#Games .todo > header.card{
-  background-color: rgb(55 48 163);
-}
-
-#Unlabeled .todo > header.card{
-  background-color: rgb(6 95 70);
-}
-
-
-//welcome animation
-.line-1{
-  border-radius:0;
+.line-1 {
   position: relative;
   top: 50%;
   width: 24em;
@@ -110,7 +61,7 @@ nav {
 }
 
 .typing{
-animation: typing 6s steps(44) 1s 1 normal both,
+animation: typing 6s steps(44) 0.4s 1 normal both,
 blinkTextCursor 700ms steps(34) 10 normal;
 border-right:1px solid transparent;
 }
