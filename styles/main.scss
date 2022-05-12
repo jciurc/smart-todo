@@ -23,10 +23,6 @@ body {
   }
 }
 
-header.divider {border-bottom: 1px solid rgb(142 143 144 / 50%);
-    border-radius: 0;
-    padding-bottom: 20px;
-}
 nav {
   border-radius: 0;
   .logo {
@@ -54,6 +50,7 @@ h1 {
 }
 
 .line-1 {
+  border-radius: 0;
   position: relative;
   top: 50%;
   width: 24em;
