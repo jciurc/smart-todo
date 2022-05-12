@@ -108,6 +108,7 @@
         $section.children('.category').hide().find('.todo-container').empty();
         for (const todo of todos) {
           $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
+
         }
       });
   };
@@ -115,6 +116,7 @@
   const loadTodos = () => {
     $.get('/todos')
       .then(renderTodos);
+
   };
 
   const renderBasedOnUser = (name) => {
@@ -185,7 +187,9 @@
       .then((todo) => {
         $(this).find('input').val('');
         showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
+        $(this).find('.category').addClass('.shake_anim');
         loadTodos();
+
       });
   };
 

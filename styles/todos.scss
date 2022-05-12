@@ -224,3 +224,15 @@ section#categories-container {
     }
   }
 }
+
+
+.shake_anim {
+  animation: shake 3s linear infinite;
+}
+
+@keyframes shake {
+	5% { transform: translateY(-3px) }
+	10%, 20%, 30%, 40% { transform: translateY(-3px) rotate(3deg) }
+	15%, 25%, 35%, 45% { transform: translateY(-3px) rotate(-3deg) }
+	50%, 100% { transform: translateY(0px) }
+}
