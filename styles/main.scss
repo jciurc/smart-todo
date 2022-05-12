@@ -22,11 +22,11 @@ html {
     &:after {
       content: "";
       position: absolute;
-      left: -50%;
-      top: -80%;
+      left: -40%;
+      top: -50%;
       width: 50px;
       height: 50px;
-      // background: #e83474; // for testing
+      // background: #e8347350; // for testing
     }
   }
 }
@@ -68,32 +68,26 @@ nav {
     font-family: 'Gluten', cursive;
     margin-left: 1em;
     margin-top: 8px;
-    color: white;
+    color: white; // default color
     font-weight: 400;
     font-size: 3rem;
     padding: 0;
     display: flex;
     cursor: pointer;
 
-    .t {
+    #t {
       color: rgb(73, 187, 225);
     }
-
-    .a {
+    #a {
       color: rgba(151, 92, 223, 0.993);
-
     }
-
-    .s {
+    #s {
       color: rgb(70, 220, 125);
-
     }
-
-    .k {
+    #k {
       color: #e25858;
     }
-
-    .r {
+    #r {
       color: rgb(229, 144, 83);
     }
   }
@@ -101,7 +95,7 @@ nav {
     // Username
     form#logout div.mr-6 p {
       font-weight: 600;
-
+      cursor: pointer;
     }
 
     #logout > li > button, #login > li > button {
