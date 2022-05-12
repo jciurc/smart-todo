@@ -36,7 +36,7 @@
 
   const showAlert = (message, style) => {
     const $alert = $('#alert-box');
-    $alert.removeClass("success warning bad").addClass(style);
+    $alert.removeClass('success warning danger').addClass(style);
     $alert.find('.alert-text').text('').append(message);
     $alert.slideDown();
     setTimeout(() => {
@@ -47,7 +47,7 @@
   const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('article').addClass('editing ring');
-    const $textarea = $todo.find("form").find('[name="text"]').focus();
+    const $textarea = $todo.find('form').find('[name="text"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -134,7 +134,6 @@
     $('#new-todo').hide().find('h1').text('');
   };
 
-
   // == event functions ==
   // = user events =
   const checkLogin = () => {
@@ -172,7 +171,6 @@
       });
   };
 
-
   // = todo events =
   const newTodo = function(event) {
     event.preventDefault();
@@ -199,7 +197,8 @@
     const data = $(this).serialize();
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
-      .then((res) => {
+      .then((todo) => {
+        showAlert('Todo updated!', 'success');
         loadTodos();
       });
   };

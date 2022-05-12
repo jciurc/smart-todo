@@ -1,25 +1,33 @@
 // main
-$bg1: #17181e;
+$bg1: #22242f;
 $bg2: #111121;
-$header: #20212b;
+$headerBG: #20212b;
+
 $button1: #2b23f2;
 $button2: #20212b;
 $button3: #2b23f2;
 
+$textLight: rgb(237, 254, 255);
+$textDark: rgb(38, 51, 52);
+$textSpecial: rgb(13, 61, 79);
+
+
 // alerts
 $success: #4fd55e;
-$warning: rgb(203, 149, 42);
+$warning: rgb(212, 156, 44);
 $danger: rgb(206, 65, 77);
 
+
 // todos
-$todoBG: #35587b;
+$todoBG: #2e5173;
 $todoDark: #25364f;
+
 
 // categories
 $movies: #416b4e;
 $moviesCard: $todoBG;
 
-$music: #3a4674;
+$music: #36466c;
 $musicCard: $todoBG;
 
 $food: #663b40;
