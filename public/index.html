@@ -9,11 +9,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gluten&display=swap" rel="stylesheet">
+
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/jqueryui.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+
 
   <!-- Styles -->
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -30,33 +34,33 @@
 
 <!-- Main Content -->
 
-<body class="bg-gray-900	text-slate-300">
+<body class="text-slate-300">
   <div id="delay" hidden>
 
-    <nav class="bg-gray-900">
-      <div class="bg-slate-800 m-auto flex justify-between" id="nav-bar">
-        <p class="logo">taskr</p>
-        <ul>
-          <form id="login" hidden class="flex items-center">
-            <li class="mr-6">
-              <input
-                class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
-                type="text" name="text" placeholder="Username"><br>
-            </li>
-            <li class="mr-10">
-              <button type="submit"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Login</button>
-            </li>
-          </form>
-          <form id="logout" hidden class="flex align-middle items-center">
-            <div class="mr-6"></div>
-            <li class="mr-10">
-              <button type="button"
-                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">Logout</button>
-            </li>
-          </form>
-        </ul>
-      </div>
+    <nav class="mx-auto">
+        <div class="mx-auto flex justify-between" id="nav-bar">
+          <p class="logo">taskr</p>
+          <ul>
+            <form id="login" hidden class="flex items-center">
+              <li class="mr-6">
+                <input
+                  class="form-control px-4 py-2 text-m font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-5 mb-5"
+                  type="text" name="text" placeholder="Username"><br>
+              </li>
+              <li class="mr-10">
+                <button type="submit"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">login</button>
+              </li>
+            </form>
+            <form id="logout" hidden class="flex align-middle items-center">
+              <div class="mr-6"></div>
+              <li class="mr-10">
+                <button type="button"
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5 mb-5">logout</button>
+              </li>
+            </form>
+          </ul>
+        </div>
     </nav>
 
     <main>
@@ -81,53 +85,46 @@
             class="form-control px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded mt-10 mb-5"
             type="text" name="text" placeholder="New Todo"><br>
           <button type="submit"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">submit</button>
         </form>
       </header>
 
 
       <section id="categories-container" class="flex flex-wrap flex-1 justify-center mt-20 h-68">
 
-        <div id="Movies" hidden class="category flex-col w-1/4 h-80 shadow-lg bg-lime-800 m-5">
-
-          <header class="font-bold text-xl m-4 "><i class="fa-solid fa-clapperboard"></i>Movies</header>
-
-          <div class="todo-container px-2 py-4">
-            <br>
-          </div>
+        <div id="Movies" hidden class="category flex-col w-1/4 h-80 rounded-lg-lg shadow-lg m-5">
+          <header class="font-bold text-xl m-4 "><i class="fa-brands fa-bilibili"></i>TV & Film</header>
+          <div class="todo-container px-2 py-4"></div>
         </div>
 
-        <div id="Music" hidden class="category flex-col w-1/4 h-80 shadow-lg bg-sky-800 m-5">
-
+        <div id="Music" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-music"></i>Music</header>
 
           <div class="todo-container px-2 py-4"></div>
         </div>
 
+        <div id="Books" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+          <header class="font-bold text-xl m-4"><i class="fa-solid fa-book"></i>Books</header>
+          <div class="todo-container px-2 py-4"></div>
+        </div>
 
-        <div id="Food" hidden class="category flex-col w-1/4 h-80 shadow-lg bg-red-800 m-5 ">
+        <div id="Food" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-utensils"></i>Food</header>
           <div class="todo-container px-2 py-4"></div>
         </div>
 
-        <div id="Books" hidden class="category flex-col w-1/4 h-80 shadow-lg bg-orange-800 m-5">
-          <header class="font-bold text-xl m-4"><i class="fa-solid fa-book"></i>Books</header>
-
-          <div class="todo-container px-2 py-4"></div>
-        </div>
-
-        <div id="Products" hidden class="category flex-col w-1/4 rounded h-80 shadow-lg bg-teal-700 m-5">
+        <div id="Products" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-tag"></i>Products</header>
           <div class="todo-container px-2 py-4"></div>
         </div>
 
-        <div id="Games" hidden class="category flex-col w-1/4 rounded h-80 shadow-lg bg-indigo-500		 m-5">
-          <header class="font-bold text-xl m-4"><i class="fa-solid fa-gamepad"></i></i>Games</header>
+        <div id="Games" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+          <header class="font-bold text-xl m-4"><i class="fa-solid fa-gamepad"></i>Games</header>
           <div class="todo-container px-2 py-4"></div>
         </div>
 
-        <div id="Unlabeled" hidden class="category flex-col w-1/4 rounded h-80 shadow-lg bg-emerald-700 m-5">
-          <header class="font-bold text-xl m-4"><i class="fa-solid fa-clipboard-question"></i>Unlabeled</header>
+        <div id="Unlabeled" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+          <header class="font-bold text-xl m-4"><i class="fa-solid fa-file-pen"></i>Unlabeled</header>
           <div class="todo-container px-2 py-4"></div>
         </div>
 

@@ -1,3 +1,5 @@
+@import 'colors';
+
 #alert-box {
   min-width: 18em;
   max-width: 32vw;
@@ -16,14 +18,14 @@
 
   // alert styles
   &.success {
-    background-color: rgb(32, 148, 75);
+    background-color: $success;
   }
 
   &.warning {
-    background-color: rgb(203, 149, 42);
+    background-color: $warning;
   }
 
-  &.bad {
-    background-color: rgb(206, 65, 77);
+  &.danger {
+    background-color: $danger;
   }
 }

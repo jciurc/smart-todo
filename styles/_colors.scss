@@ -1,28 +1,38 @@
+// main
+$bg1: #17181e;
+$bg2: #111121;
+$header: #20212b;
+$button1: #2b23f2;
+$button2: #20212b;
+$button3: #2b23f2;
 
-// #Movies .todo > header.card {
-//   background-color: rgb(20, 83, 39);
-// }
+// alerts
+$success: #4fd55e;
+$warning: rgb(203, 149, 42);
+$danger: rgb(206, 65, 77);
 
-// #Music .todo > header.card {
-//   background-color: rgb(21 94 117);
-// }
+// todos
+$todoBG: #35587b;
+$todoDark: #25364f;
 
-// #Books .todo > header.card {
-//   background-color: rgb(206, 95, 16);
-// }
+// categories
+$movies: #416b4e;
+$moviesCard: $todoBG;
 
-// #Food .todo > header.card {
-//   background-color: rgb(127 29 29);
-// }
+$music: #3a4674;
+$musicCard: $todoBG;
 
-// #Products .todo > header.card {
-//   background-color: rgb(17 94 89);
-// }
+$food: #663b40;
+$foodCard: $todoBG;
 
-// #Books .todo > header.card {
-//   background-color: rgb(206, 95, 16);
-// }
+$books: #917845;
+$booksCard: $todoBG;
 
-// #Food .todo > header.card {
-//   background-color: rgb(127 29 29);
-// }
+$products: rgb(15 118 110);
+$productsCard: $todoBG;
+
+$games: #5c416b;
+$gamesCard: $todoBG;
+
+$unlabeled: rgb(70, 98, 72);
+$unlabeledCard: $todoBG;

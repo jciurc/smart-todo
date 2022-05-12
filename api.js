@@ -100,10 +100,10 @@ const query = {
     };
     return axios.request(options)
       .then((res) => {
-        if (!res.data.results[0]) return '';
+        console.log('Got game response', res.data);
+        if (!res.data.results[0]) return `${text.slice(0, 50)}, what a classic! 🎮`;
         const name = res.data.results[0].name;
         const genre = res.data.results[0].genres[0].name;
-        console.log(`name: ${name} genre: ${genre}`);
         return `${name} (${genre})`;
       });
   },
@@ -119,8 +119,10 @@ const queryUclassify = (text) => {
   const broadTopics = {
     Arts: 'art-topics',
     Home: 'home-topics',
-    Sports: 'home-topics',
+    Sports: 'sport-topics',
     Games: 'Games',
+    Computers: 'Products',
+    Business: 'Products',
   };
   const subTopics = {
     Literature: 'Books',
@@ -128,6 +130,8 @@ const queryUclassify = (text) => {
     Movies_Television: 'Movies',
     Cooking: 'Food',
     Family: 'Products',
+    Motorsports: 'Games',
+    Cycling: 'Products',
   };
   const allowedTopics = Object.keys(broadTopics).concat(Object.keys(subTopics));
 
@@ -136,13 +140,12 @@ const queryUclassify = (text) => {
     .then((res) => {
       const filtered = Object.entries(res.data).filter((item) => allowedTopics.includes(item[0]));
       const best = filtered.sort((a, b) => b[1] - a[1]);
-      console.log('results', res.data);
       if (filtered[0][1] == filtered[1][1] || best[0][1] < 0.03) return 'Unlabeled'; // poor match
       return broadTopics[best[0][0]] || 'Unlabeled';
     })
     .then((topic) => {
       // These categories don't need a second query
-      if (['Games', 'Unlabeled'].includes(topic)) return topic;
+      if (['Games', 'Unlabeled', 'Products'].includes(topic)) return topic;
 
       // Query again for sub topic
       const url = `https://api.uclassify.com/v1/uclassify/${topic}/classify?readkey=${process.env.CLASSIFY_KEY}`;
@@ -167,7 +170,9 @@ const findCategory = (text) => {
 
 const getSubtitle = (category = 'Unlabeled', text = null) => {
   if (typeof query[category] === 'undefined') return 'no details';
-  return query[category](text)
+  // Convert first character to upper case
+  const title = text.slice(0, 1).toUpperCase() + text.slice(1);
+  return query[category](title)
     .catch((err) => {
       console.log('error getting subtitle for ', category, text, err.message);
       return `no details`;
@@ -175,5 +180,3 @@ const getSubtitle = (category = 'Unlabeled', text = null) => {
 };
 
 module.exports = { findCategory, getSubtitle };
-
-
