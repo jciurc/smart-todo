@@ -57,7 +57,7 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got Shazam response');
-        if (!data.tracks) return `Track ${text.slice(0, 40)} by: unknown`;
+        if (!data.tracks) return `Listen to: Track ${text.slice(0, 40)} by: unknown`;
         const { title, subtitle } = data.tracks.hits[0].track;
         return `Track ${title.slice(0, 40)} by: ${subtitle.slice(0, 20)}`;
       });

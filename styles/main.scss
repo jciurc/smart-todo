@@ -50,7 +50,7 @@ body {
   }
 
   header {
-    background: $header;
+    background: $headerBG;
   }
 }
 
@@ -61,7 +61,7 @@ nav {
   border-radius: 0;
 
   > #nav-bar {
-    background-color: $header;
+    background-color: $headerBG;
   }
 
   .logo {
