@@ -28,7 +28,6 @@
   - Note: you will lose all newly created (test) data each time this is run, since the schema files will tend to `DROP` the tables and recreate them.
 
 ## Dependencies
-
 - Node 10.x or above
 - NPM 5.x or above
 - axios 0.2x
@@ -40,5 +39,8 @@
 - sass 1.x
 - cookie-parser 1.x
 
-  ## Dev Dependencies
+## Dev Dependencies
 - nodemon 2.x
+
+## Other Resources
+- Splash Page: [Compose Load Animation](https://codepen.io/imathis/pen/ZYEWrw)
