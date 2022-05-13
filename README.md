@@ -74,9 +74,18 @@
 ## Dev Dependencies
 - nodemon 2.x
 
-## Other Resources
+## Resources / Remarks
 - Splash Page: [Codepen.io](https://codepen.io/imathis/pen/ZYEWrw)
 - Typing Effect: [CSS-Tricks.com](https://css-tricks.com/snippets/css/typewriter-effect/)
-- Sorting Library: [jQuery Sortable](https://johnny.github.io/jquery-sortable/js/jquery-sortable.js) 
+- Sorting Library: [jQuery Sortable](https://johnny.github.io/jquery-sortable/js/jquery-sortable.js)  
+  
 - Contributors: [@symphony](https://github.com/symphony), [@MitchScho](https://github.com/MitchScho), [@KellyAtmore](https://github.com/KellyAtmore)
 - Forked from: [@Lighthouse-labs/node-skeleton](https://github.com/lighthouse-labs/node-skeleton)
+- Future plans: 
+   - Save Todos list order in Database
+   - Improve dragging functionality (fix card being hidden by container)
+   - More Categories/APIs
+   - Include more metadata in Todo (ie. hyperlink to product, thumbnail image)
+   - Sortable Categories
+   - Better labeling algorithm
+   - Secure user profiles
