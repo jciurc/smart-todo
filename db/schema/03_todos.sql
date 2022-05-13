@@ -7,5 +7,5 @@ CREATE TABLE todos (
   category_id INTEGER REFERENCES categories(id) ON DELETE CASCADE,
   description VARCHAR(255) NOT NULL,
   subtitle VARCHAR(255) NOT NULL,
-  completed BOOLEAN NOT NULL DEFAULT FALSE
+  completed BOOLEAN NOT NULL DEFAULT false
 );
