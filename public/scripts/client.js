@@ -23,7 +23,7 @@
     // offset page rendering
     setTimeout(() => {
       $('body > #delay').show();
-    }, 50);
+    }, 100);
   });
 
   // == helpers ==
