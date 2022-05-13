@@ -81,18 +81,18 @@ li.todo {
     max-height: 120px;
     max-width: 340px;
 
-    // card description and subtitle container
+    // card title and description container
     > div {
       word-wrap: break-word;
       max-width: 98%;
 
-      p.description {
+      p.title {
         padding: 0.4em 0.6em;
         font-weight: 500;
 
       }
 
-      p.subtitle {
+      p.description {
         font-weight: 400;
         color: rgb(149, 240, 240);
         font-size: 0.85em;
@@ -142,8 +142,8 @@ li.todo {
       border-radius: 16px;
     }
 
-    // new description form
-    textarea[name="description"] {
+    // new title form
+    textarea[name="title"] {
       width: 14em;
       height: 4em;
       overflow: hidden;
@@ -165,8 +165,8 @@ li.todo {
       appearance: none;
     }
 
-    // new subtitle form
-    textarea[name="subtitle"] {
+    // new description form
+    textarea[name="description"] {
       resize: none;
       overflow: hidden;
       width: 12em;

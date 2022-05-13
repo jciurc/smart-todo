@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { findCategory, getSubtitle } = require("../api");
+const { findCategory, getDescription } = require("../api");
 const {
   getAllTodos,
   deleteTodo,
@@ -27,22 +27,22 @@ router.get("/", (req, res) => {
 
 //New todo request
 router.post("/", (req, res) => {
-  const {description} = req.body;
+  const {title} = req.body;
   // get category name from external apis
-  findCategory(description)
+  findCategory(title)
 
     //gets category object from database
     .then(getCategoryByName)
     .then((cat) => {
 
       // nested so we still have access to cat object
-      getSubtitle(cat.name, description)
-        .then((subtitle) => {
+      getDescription(cat.category, title)
+        .then((description) => {
           const user_id = req.cookies.user;
           const category_id = cat.id;
 
           // create new todo in database
-          return insertNewTodo({ user_id, description, subtitle, category_id });
+          return insertNewTodo({ user_id, title, description, category_id });
         })
         .then((todo) => {
           // return new todo back to front end

@@ -57,7 +57,7 @@
   const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('li.todo').addClass('editing ring');
-    const $textarea = $todo.find('form').find('[name="description"]').focus();
+    const $textarea = $todo.find('form').find('[name="title"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -79,8 +79,8 @@
   <article class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
     <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-${todo.completed ? 'solid' : 'regular'} fa-circle-check " id="flexCheckDefault" ></i>
     <div>
-      <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
-      <p class="subtitle text-base text-center">${safeHtml(todo.subtitle)}</p>
+      <p class="title text-base text-center self-center p-2">${safeHtml(todo.title)}</p>
+      <p class="description text-base text-center">${safeHtml(todo.description)}</p>
     </div>
     <i class="far fa-edit hover cursor-pointer"></i>
   </article>
@@ -89,11 +89,11 @@
     <header class="m-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="description" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.description.slice(0, 80))}</textarea>
+    <textarea name="title" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.title.slice(0, 80))}</textarea>
     <select name="category_id" class="text-base rounded-full bg-slate-900 m-30">
       ${sorted.join('\n')}
     </select>
-      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.subtitle.slice(0, 80))}</textarea>
+      <textarea name="description" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.description.slice(0, 80))}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
@@ -106,7 +106,7 @@
   const buildCategories = () => {
     return $.get('/categories')
       .then((categories) => {
-        return categories.map((item) => `<option value="${item.id}">${safeHtml(item.name)}</option>`);
+        return categories.map((item) => `<option value="${item.id}">${safeHtml(item.category)}</option>`);
       });
   };
 
@@ -116,7 +116,7 @@
         const $section = $('main').find('#categories-container');
         $section.children('.category').hide().find('.todo-container').empty();
         for (const todo of todos) {
-          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
+          $section.find(`#${todo.category}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
 
         }
       });
@@ -201,8 +201,8 @@
       // get new todo object back
       .then((todo) => {
         $(this).find('input').val('');
-        showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
-        shakeElement($('#categories-container').find(`article#${todo.name}`));
+        showAlert(`Match found!<br><br>Added <span class="special">${todo.title}</span> to<br><span class="special">${todo.category}</span>`, 'success');
+        shakeElement($('#categories-container').find(`article#${todo.category}`));
         loadTodos();
       });
     };

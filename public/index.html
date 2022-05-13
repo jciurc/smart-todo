@@ -48,6 +48,8 @@
           </div>
         </div>
         <ul>
+
+          <!-- User Login Form -->
           <form id="login" hidden class="flex items-center">
             <li class="mr-6">
               <input
@@ -59,6 +61,7 @@
             </li>
           </form>
 
+          <!-- User Logout Form -->
           <form id="logout" hidden class="flex align-middle items-center">
             <div class="mr-6"></div>
             <li class="mr-10">
@@ -71,10 +74,13 @@
 
     <main>
       <header id="main">
+
+        <!-- Alert box - fixed position -->
         <div id="alert-box">
           <p class="text-base alert-text"></p>
         </div>
 
+        <!-- Splash intro -->
         <div id="splash" class="text-base">
           <h1 class="welcome-message text-4xl font-semibold">Welcome to Your Smart Todo App</span>
             <div class='tetrominos'>
@@ -86,17 +92,20 @@
             <h5><sub class="m-auto">(animation from <a href="https://codepen.io/imathis/pen/ZYEWrw">codepen.io/imathis)</a></sub></h5>
         </div>
 
+
+        <!-- New Todo Section -->
         <form hidden id="new-todo">
           <h1 class="text-4xl font-semibold line-1 typing">🌝</h1>
           <input
             class="form-control px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded my-5"
-            type="text" name="description" placeholder="New Todo" maxlength="70"><br>
+            type="text" name="title" placeholder="New Todo" maxlength="70"><br>
           <button type="submit"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">submit</button>
         </form>
       </header>
 
 
+      <!-- Todo and Categories Main Section -->
       <section id="categories-container" class="flex flex-1 flex-wrap justify-center mt-10 h-68">
 
         <article id="Movies" hidden class="category flex-col w-1/4 h-80 rounded-lg-lg shadow-lg m-5">
