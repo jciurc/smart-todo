@@ -1,5 +1,8 @@
 (() => {
-  $(document).ready(() => {
+  $(function() {
+    // global events
+    $('main').on('reload', loadTodos);
+
     // user routes
     $('nav #login').on('submit', loginSubmit);
     $('nav #logout button').on('click', loggedOut);
@@ -120,9 +123,13 @@
   };
 
   const loadTodos = () => {
+    setTimeout(() => {
+      // clear url slug
+      window.history.pushState({}, null, '?hi-labbers');
+    }, 10)
+
     $.get('/todos')
       .then(renderTodos);
-
   };
 
   const renderBasedOnUser = (name) => {
