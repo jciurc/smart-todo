@@ -27,7 +27,8 @@
         'mousedown': function(e) {
           // - custom code -
           // disable document drag when over these elements
-          const $notAllowed = $('article.card:hover, textarea:hover, article.card > form.edit header:hover');
+          const $notAllowed = $('article.card:hover, textarea:hover, form.edit:hover');
+          console.log('allowed', !$notAllowed.length !== 0);
           if ($notAllowed.length !== 0) return;
           // - end custom code -
 
