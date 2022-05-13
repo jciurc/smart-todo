@@ -21,8 +21,8 @@ body.dragging, body.dragging * {
 .dragged {
   position: absolute !important;
   top: 0;
-  opacity: 0.8;
   z-index: 2000;
+  opacity: 0.8;
   transform: translate(-8em, -4em);
 
   &:before {

@@ -3,7 +3,7 @@
     // jQuery Sortable Options and Initializer
     var oldContainer;
     $("ol.todo-container").sortable({
-      distance: 20, delay: 50,
+      distance: 2, delay: 50,
       group: 'nested',
 
       afterMove: function(placeholder, container) {

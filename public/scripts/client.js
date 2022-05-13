@@ -23,7 +23,7 @@
     checkLogin();
     loadTodos();
 
-    // offset page rendering
+    // offset unstyled flash
     setTimeout(() => {
       $('body > #delay').show();
     }, 100);
