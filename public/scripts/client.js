@@ -232,6 +232,7 @@
 
     $.ajax({ url: '/todos/' + id, type: 'DELETE' })
       .then((res) => {
+        showAlert('Todo deleted!', 'warning');
         loadTodos();
       });
   };
