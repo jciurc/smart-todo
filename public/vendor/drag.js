@@ -25,7 +25,12 @@
           clicked && updateScrollPos(e, this);
         },
         'mousedown': function(e) {
-          if ($('article.card:hover').length !== 0 || $('textarea:hover').length !== 0) return; // disable document drag when over these elements
+          // - custom code -
+          // disable document drag when over these elements
+          const $notAllowed = $('article.card:hover, textarea:hover, article.card > form.edit header:hover');
+          if ($notAllowed.length !== 0) return;
+          // - end custom code -
+
           clicked = true;
           clickY = e.pageY;
           clickX = e.pageX;
