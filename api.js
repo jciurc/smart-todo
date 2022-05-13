@@ -30,7 +30,7 @@ const query = {
       .then((data) => {
         console.log('Got food response');
         const { title } = data[0] || { title: text };
-        return `Enjoy the: ${title.slice(0, 50)} 😊🍦`;
+        return `Enjoy the: ${title.slice(0, 80)} 😊🍦`;
       });
   },
 
@@ -45,7 +45,7 @@ const query = {
         console.log('Got Amazon response');
 
         const { title } = data[0] || { title: 'No product info' };
-        return 'Buy: ' + title.slice(0, 50);
+        return 'Buy: ' + title.slice(0, 80);
       });
   },
 
@@ -59,7 +59,7 @@ const query = {
         console.log('Got Shazam response');
         if (!data.tracks) return `Listen to: ${text.slice(0, 40)} by unknown`;
         const { title, subtitle } = data.tracks.hits[0].track;
-        return `Listen to: ${title.slice(0, 40)} by ${subtitle.slice(0, 20)}`;
+        return `Listen to: ${title.slice(0, 50)} by ${subtitle.slice(0, 30)}`;
       });
   },
 
@@ -75,7 +75,7 @@ const query = {
         console.log('Got book response');
         if (!data[0]) return `Read: ${text.slice(0, 40)} by unknown`;
         const { name = text, authors = ['unknown'] } = data[0];
-        return `Read: ${name.slice(0, 40)} by ${authors.join().slice(0, 20)}`;
+        return `Read: ${name.slice(0, 50)} by ${authors.join().slice(0, 30)}`;
       });
   },
 
@@ -87,7 +87,7 @@ const query = {
       .then((data) => {
         if (data.Error) return `Watch: ${text} (unknown year)`;
         const { Title = text, Year = 'unknown year' } = data.Search[0];
-        return `Watch: ${Title.slice(0, 50)} (${Year})`;
+        return `Watch: ${Title.slice(0, 80)} (${Year})`;
       });
   },
 
@@ -101,7 +101,7 @@ const query = {
     return axios.request(options)
       .then((res) => {
         console.log('Got game response', res.data);
-        if (!res.data.results[0]) return `Play: ${text.slice(0, 50)}, what a classic! 🎮`;
+        if (!res.data.results[0]) return `Play: ${text.slice(0, 80)}, what a classic! 🎮`;
         const name = res.data.results[0].name;
         const genre = res.data.results[0].genres[0].name;
         return `Play: ${name} (${genre})`;

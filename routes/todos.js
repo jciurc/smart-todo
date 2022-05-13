@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 
 //New todo request
 router.post("/", (req, res) => {
-  const description = req.body.text;
+  const {description} = req.body;
   // get category name from external apis
   findCategory(description)
 
@@ -59,10 +59,7 @@ router.post("/", (req, res) => {
 // Edit todo
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  const description = req.body.text;
-  const category_id = req.body.category_id;
-  const subtitle = req.body.subtitle;
-  console.log("req.body", req.body);
+  const { description, category_id, subtitle } = req.body;
   editTodo({ id, description, category_id, subtitle })
     .then((data) => {
       res.json(data);

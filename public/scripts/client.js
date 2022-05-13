@@ -44,10 +44,17 @@
     }, 6000);
   };
 
+  const shakeElement = ($ele) => {
+    $ele.addClass('shake_anim');
+    setTimeout(() => {
+      $ele.removeClass('shake_anim');
+    }, 3000);
+  };
+
   const editMode = function() {
     $('.editing').removeClass('editing ring');
     const $todo = $(this).closest('article').addClass('editing ring');
-    const $textarea = $todo.find('form').find('[name="text"]').focus();
+    const $textarea = $todo.find('form').find('[name="description"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -79,11 +86,11 @@
     <header class="m-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="text" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="70">${safeHtml(todo.description.slice(0, 70))}</textarea>
+    <textarea name="description" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.description.slice(0, 80))}</textarea>
     <select name="category_id" class="text-base rounded-full bg-slate-900 m-30">
       ${sorted.join('\n')}
     </select>
-      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="60">${safeHtml(todo.subtitle.slice(0, 60))}</textarea>
+      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.subtitle.slice(0, 80))}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
@@ -107,6 +114,7 @@
         $section.children('.category').hide().find('.todo-container').empty();
         for (const todo of todos) {
           $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
+
         }
       });
   };
@@ -114,6 +122,7 @@
   const loadTodos = () => {
     $.get('/todos')
       .then(renderTodos);
+
   };
 
   const renderBasedOnUser = (name) => {
@@ -186,9 +195,11 @@
       .then((todo) => {
         $(this).find('input').val('');
         showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
+        shakeElement($('#categories-container').find(`#${todo.name}`));
         loadTodos();
       });
-  };
+    };
+
 
   const submitEdit = function(event) {
     event.preventDefault();
@@ -196,7 +207,9 @@
     const id = $(this).closest('article').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((todo) => {
+        console.log('updated todo', todo);
         showAlert('Todo updated!', 'success');
+        shakeElement($('#categories-container').find(`#${todo.name}`));
         loadTodos();
       });
   };
