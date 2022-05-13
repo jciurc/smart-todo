@@ -16,7 +16,7 @@
   - Check the db folder to see what gets created and seeded in the SDB
 7. Run the server: `npm run local`
   - Note: nodemon is used, so you should not have to restart your server
-8. Visit `http://localhost:8080/`
+8. Visit `http://localhost:3000/`
 
 ## Warnings & Tips
 
@@ -43,4 +43,5 @@
 - nodemon 2.x
 
 ## Other Resources
-- Splash Page: [Compose Load Animation](https://codepen.io/imathis/pen/ZYEWrw)
+- Splash Page: [Codepen.io](https://codepen.io/imathis/pen/ZYEWrw)
+- Typing Effect: [CSS-Tricks.com](https://css-tricks.com/snippets/css/typewriter-effect/)
