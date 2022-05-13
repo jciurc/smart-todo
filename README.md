@@ -23,7 +23,7 @@
 
 <img alt="Screenshot of Smart Todo's Todo Edit Mode" src="docs/todo3.png?raw=true" name="Edit Mode" width="1000"></img>
 
-### Responsive Design
+### Mobile View
 
 <img alt="Screenshot of Smart Todo's Mobile View" src="docs/todo4.png?raw=true" name="Mobile View" width="600"></img>
 
