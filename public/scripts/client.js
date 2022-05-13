@@ -1,12 +1,15 @@
 (() => {
-  $(document).ready(() => {
+  $(function() {
+    // global events
+    $('main').on('reload', loadTodos);
+
     // user routes
     $('nav #login').on('submit', loginSubmit);
     $('nav #logout button').on('click', loggedOut);
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article.todo i.fa-edit', editMode);
+    $('.todo-container').on('click', 'li.todo i.fa-edit', editMode);
     $('.todo-container').on('submit', 'form.edit', submitEdit);
     $('.todo-container').on('click', '.check-complete', completeTodo);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
@@ -20,7 +23,7 @@
     checkLogin();
     loadTodos();
 
-    // offset page rendering
+    // offset unstyled flash
     setTimeout(() => {
       $('body > #delay').show();
     }, 100);
@@ -53,8 +56,8 @@
 
   const editMode = function() {
     $('.editing').removeClass('editing ring');
-    const $todo = $(this).closest('article').addClass('editing ring');
-    const $textarea = $todo.find('form').find('[name="description"]').focus();
+    const $todo = $(this).closest('li.todo').addClass('editing ring');
+    const $textarea = $todo.find('form').find('[name="title"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
   };
@@ -72,38 +75,38 @@
     sorted.unshift(current);
 
     const htmlString = `
-<article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
-  <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
+<li class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
+  <article class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
     <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-${todo.completed ? 'solid' : 'regular'} fa-circle-check " id="flexCheckDefault" ></i>
     <div>
-      <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
-      <p class="subtitle text-base text-center">${safeHtml(todo.subtitle)}</p>
+      <p class="title text-base text-center self-center p-2">${safeHtml(todo.title)}</p>
+      <p class="description text-base text-center">${safeHtml(todo.description)}</p>
     </div>
     <i class="far fa-edit hover cursor-pointer"></i>
-  </header>
+  </article>
 
   <form class="edit">
     <header class="m-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="description" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.description.slice(0, 80))}</textarea>
+    <textarea name="title" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.title.slice(0, 80))}</textarea>
     <select name="category_id" class="text-base rounded-full bg-slate-900 m-30">
       ${sorted.join('\n')}
     </select>
-      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.subtitle.slice(0, 80))}</textarea>
+      <textarea name="description" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="80">${safeHtml(todo.description.slice(0, 80))}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
     </footer>
   </form>
-</article>
+</li>
   `;
     return htmlString;
   };
   const buildCategories = () => {
     return $.get('/categories')
       .then((categories) => {
-        return categories.map((item) => `<option value="${item.id}">${safeHtml(item.name)}</option>`);
+        return categories.map((item) => `<option value="${item.id}">${safeHtml(item.category)}</option>`);
       });
   };
 
@@ -113,16 +116,20 @@
         const $section = $('main').find('#categories-container');
         $section.children('.category').hide().find('.todo-container').empty();
         for (const todo of todos) {
-          $section.find(`#${todo.name}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
+          $section.find(`#${todo.category}`).show().find('.todo-container').prepend(buildTodoCard(todo, categories)).fadeIn(999);
 
         }
       });
   };
 
   const loadTodos = () => {
+    setTimeout(() => {
+      // clear url slug
+      window.history.pushState({}, null, '?hi-labbers');
+    }, 10)
+
     $.get('/todos')
       .then(renderTodos);
-
   };
 
   const renderBasedOnUser = (name) => {
@@ -194,8 +201,8 @@
       // get new todo object back
       .then((todo) => {
         $(this).find('input').val('');
-        showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
-        shakeElement($('#categories-container').find(`#${todo.name}`));
+        showAlert(`Match found!<br><br>Added <span class="special">${todo.title}</span> to<br><span class="special">${todo.category}</span>`, 'success');
+        shakeElement($('#categories-container').find(`article#${todo.category}`));
         loadTodos();
       });
     };
@@ -204,12 +211,11 @@
   const submitEdit = function(event) {
     event.preventDefault();
     const data = $(this).serialize();
-    const id = $(this).closest('article').attr("alt");
+    const id = $(this).closest('li.todo').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((todo) => {
         console.log('updated todo', todo);
         showAlert('Todo updated!', 'success');
-        shakeElement($('#categories-container').find(`#${todo.name}`));
         loadTodos();
       });
   };
@@ -217,7 +223,7 @@
   const completeTodo = function(event) {
     event.stopPropagation();
     event.preventDefault();
-    const $todo = $(this).closest("article");
+    const $todo = $(this).closest('li.todo');
     const data = 'complete=' + !($todo.attr('completed') === 'true');
     const id = $todo.attr('alt');
     $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
@@ -227,7 +233,7 @@
   };
 
   const deleteTodo = function() {
-    const $todo = $(this).closest('article');
+    const $todo = $(this).closest('li.todo');
     const id = $todo.attr('alt');
 
     $.ajax({ url: '/todos/' + id, type: 'DELETE' })

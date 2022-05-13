@@ -29,6 +29,7 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got food response');
+
         const { title } = data[0] || { title: text };
         return `Enjoy the: ${title.slice(0, 80)} 😊🍦`;
       });
@@ -57,6 +58,7 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got Shazam response');
+
         if (!data.tracks) return `Listen to: ${text.slice(0, 40)} by unknown`;
         const { title, subtitle } = data.tracks.hits[0].track;
         return `Listen to: ${title.slice(0, 50)} by ${subtitle.slice(0, 30)}`;
@@ -86,8 +88,8 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         if (data.Error) return `Watch: ${text} (unknown year)`;
-        const { Title = text, Year = 'unknown year' } = data.Search[0];
-        return `Watch: ${Title.slice(0, 80)} (${Year})`;
+        const { name = text, Year = 'unknown year' } = data.Search[0];
+        return `Watch: ${name.slice(0, 80)} (${Year})`;
       });
   },
 
@@ -168,15 +170,15 @@ const findCategory = (text) => {
     });
 };
 
-const getSubtitle = (category = 'Unlabeled', text = null) => {
+const getDescription = (category = 'Unlabeled', text = null) => {
   if (typeof query[category] === 'undefined') return 'no details';
   // Convert first character to upper case
   const title = text.slice(0, 1).toUpperCase() + text.slice(1);
   return query[category](title)
     .catch((err) => {
-      console.log('error getting subtitle for ', category, text, err.message);
+      console.log('error getting description for ', category, text, err.message);
       return `no details`;
     });
 };
 
-module.exports = { findCategory, getSubtitle };
+module.exports = { findCategory, getDescription };

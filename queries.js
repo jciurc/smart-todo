@@ -24,8 +24,8 @@ const getAllCategories = () => {
     });
 };
 
-const getCategoryByName = (name) => {
-  return db.query(`SELECT * FROM categories WHERE name = $1`, [name])
+const getCategoryByName = (category) => {
+  return db.query(`SELECT * FROM categories WHERE category = $1`, [category])
     .then((res) => {
       return res.rows[0];
     });
@@ -36,7 +36,7 @@ const getCategoryByName = (name) => {
 // == todos ==
 const getAllTodos = (id = null) => {
   const queryString = `
-  SELECT todos.*, name FROM todos
+  SELECT todos.*, category FROM todos
   JOIN categories ON categories.id = category_id
   WHERE user_id = $1
   ORDER BY id;
@@ -52,19 +52,19 @@ const editTodo = (todo) => {
   let queryString = `UPDATE todos
   SET category_id = $1 `;
 
+  if (todo.title) {
+    values.push(todo.title);
+    queryString += `, title = $${values.length} `;
+  }
   if (todo.description) {
     values.push(todo.description);
     queryString += `, description = $${values.length} `;
-  }
-  if (todo.subtitle) {
-    values.push(todo.subtitle);
-    queryString += `, subtitle = $${values.length} `;
   }
 
   values.push(todo.id);
   queryString +=
     `WHERE id = $${values.length}
-    RETURNING *, (SELECT name FROM categories WHERE id = $1);
+    RETURNING *, (SELECT category FROM categories WHERE id = $1);
   `;
   return db.query(queryString, values)
     .then((res) => {
@@ -86,11 +86,11 @@ const setCompleted = (options) => {
 };
 
 const insertNewTodo = (todo) => {
-  const values = [todo.user_id, todo.description, todo.subtitle, todo.category_id];
+  const values = [todo.user_id, todo.title, todo.description, todo.category_id];
   const queryString = `
-  INSERT INTO todos (user_id, description, subtitle, category_id)
+  INSERT INTO todos (user_id, title, description, category_id)
   VALUES ($1, $2, $3, $4)
-  RETURNING *, (SELECT name FROM categories WHERE id = $4);
+  RETURNING *, (SELECT category FROM categories WHERE id = $4);
 `;
 
   return db.query(queryString, values)
