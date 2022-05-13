@@ -29,8 +29,9 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got food response');
-        const { name } = data[0] || { name: text };
-        return `Enjoy the: ${name.slice(0, 80)} 😊🍦`;
+
+        const { title } = data[0] || { title: text };
+        return `Enjoy the: ${title.slice(0, 80)} 😊🍦`;
       });
   },
 
@@ -44,8 +45,8 @@ const query = {
       .then((data) => {
         console.log('Got Amazon response');
 
-        const { name } = data[0] || { name: 'No product info' };
-        return 'Buy: ' + name.slice(0, 80);
+        const { title } = data[0] || { title: 'No product info' };
+        return 'Buy: ' + title.slice(0, 80);
       });
   },
 
@@ -57,6 +58,7 @@ const query = {
     return this.axiosGet(url, host, params)
       .then((data) => {
         console.log('Got Shazam response');
+
         if (!data.tracks) return `Listen to: ${text.slice(0, 40)} by unknown`;
         const { title, subtitle } = data.tracks.hits[0].track;
         return `Listen to: ${title.slice(0, 50)} by ${subtitle.slice(0, 30)}`;
