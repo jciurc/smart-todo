@@ -59,8 +59,8 @@ router.post("/", (req, res) => {
 // Edit todo
 router.put("/:id", (req, res) => {
   const id = req.params.id;
-  const { description, category_id, subtitle } = req.body;
-  editTodo({ id, description, category_id, subtitle })
+  const { title, category_id, description } = req.body;
+  editTodo({ id, title, category_id, description })
     .then((data) => {
       res.json(data);
     })
