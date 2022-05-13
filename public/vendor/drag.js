@@ -33,6 +33,6 @@
         }
       });
     };
-    // $.dragScroll(); // enable or disable here
+    $.dragScroll(); // enable or disable here
   });
 })();
