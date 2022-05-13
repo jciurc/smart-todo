@@ -76,17 +76,24 @@ article.todo {
     max-height: 120px;
     cursor: grab;
 
-    p.description {
-      padding: 0.4em 0.6em;
-      font-weight: 500;
-    }
+    // card description and subtitle container
+    > div {
+      word-wrap: break-word;
+      max-width: 98%;
 
-    p.subtitle {
-      font-weight: 400;
-      color: rgb(149, 240, 240);
-      font-size: 0.85em;
-      line-height: 1.2em;
-      padding: 0.2em;
+      p.description {
+        padding: 0.4em 0.6em;
+        font-weight: 500;
+
+      }
+
+      p.subtitle {
+        font-weight: 400;
+        color: rgb(149, 240, 240);
+        font-size: 0.85em;
+        line-height: 1.2em;
+        padding: 0.2em;
+      }
     }
 
     &.complete {

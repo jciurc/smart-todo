@@ -79,11 +79,11 @@
     <header class="m-2">
       <label for="text" class="text-center"">Update Todo</label><i class="fa-solid fa-xmark cursor-pointer m-1"></i>
     </header>
-    <textarea name="text" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.description)}</textarea>
+    <textarea name="text" class="text-base text-center self-center rounded-xl bg-slate-800 my-2 mx-auto p-2" maxlength="70">${safeHtml(todo.description.slice(0, 70))}</textarea>
     <select name="category_id" class="text-base rounded-full bg-slate-900 m-30">
       ${sorted.join('\n')}
     </select>
-      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2">${safeHtml(todo.subtitle)}</textarea>
+      <textarea name="subtitle" class="text-base text-center self-center rounded-full bg-slate-800 my-2 mx-auto p-2" maxlength="60">${safeHtml(todo.subtitle.slice(0, 60))}</textarea>
     <footer class="flex justify-around pb-4">
       <button type="submit" class="confirm-edit bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Confirm</button>
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
@@ -93,7 +93,6 @@
   `;
     return htmlString;
   };
-
   const buildCategories = () => {
     return $.get('/categories')
       .then((categories) => {
@@ -134,6 +133,7 @@
     $('#logout').hide().find('div').text('');
     $newTodoForm.hide().find('h1').text('');
   };
+
 
   // == event functions ==
   // = user events =

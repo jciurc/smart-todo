@@ -2,8 +2,9 @@
 
 #alert-box {
   min-width: 18em;
-  max-width: 32vw;
+  max-width: 34vw;
   padding: 1em;
+  word-wrap: break-word;
 
   p.alert-text {
     font-size: 1.2rem;
