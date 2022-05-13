@@ -1,6 +1,6 @@
 (() => {
   $(() => {
-    // jQuery Sortable Initializer
+    // jQuery Sortable Options and Initializer
     var oldContainer;
     $("ol.todo-container").sortable({
       distance: 20, delay: 50,
@@ -26,7 +26,7 @@
           type: "PUT",
         };
         $.ajax(params).then((todo) => {
-            $('main').trigger('reload');
+            // $('main').trigger('reload'); // reload todos
           });
       }
     });

@@ -2,6 +2,8 @@
   $(() => {
     // Allows drag scrolling on entire document
     $.dragScroll = function(options) {
+
+
       const settings = $.extend({
         scrollVertical: true,
         scrollHorizontal: true,
@@ -23,6 +25,7 @@
           clicked && updateScrollPos(e, this);
         },
         'mousedown': function(e) {
+          if ($('article.card:hover').length !== 0) return; // check for jquery sortable conflict
           clicked = true;
           clickY = e.pageY;
           clickX = e.pageX;
@@ -33,6 +36,6 @@
         }
       });
     };
-    // $.dragScroll(); // enable or disable here
+    $.dragScroll(); // enable or disable here
   });
 })();

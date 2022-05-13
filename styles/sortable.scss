@@ -37,12 +37,12 @@ body.dragging, body.dragging * {
 
 ol {
   li {
-    header {
+    header:hover {
       cursor: grab;
     }
 
     &.todo {
-      div, header {
+      div:hover, header:hover {
         cursor: grab;
       }
     }

@@ -9,6 +9,7 @@
 - Auto categorize notes via public API queries
 - Update and Delete Todos
 - Mobile and Desktop View
+- Drag and Drop Sorting (*experimental*)
 
 
 ### Homepage 
