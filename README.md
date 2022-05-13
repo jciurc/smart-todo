@@ -79,5 +79,6 @@
 ## Other Resources
 - Splash Page: [Codepen.io](https://codepen.io/imathis/pen/ZYEWrw)
 - Typing Effect: [CSS-Tricks.com](https://css-tricks.com/snippets/css/typewriter-effect/)
+- Sorting Library: [jQuery Sortable](https://johnny.github.io/jquery-sortable/js/jquery-sortable.js) 
 - Contributors: [@symphony](https://github.com/symphony), [@MitchScho](https://github.com/MitchScho), [@KellyAtmore](https://github.com/KellyAtmore)
 - Forked from: [@Lighthouse-labs/node-skeleton](https://github.com/lighthouse-labs/node-skeleton)

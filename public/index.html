@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Gluten&display=swap" rel="stylesheet">
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/vendor/jqueryui.js"></script>
+  <script type="text/javascript" src="/vendor/jquery-sortable.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 
 
@@ -23,10 +23,11 @@
   <link rel="stylesheet" href="/styles/splash.css" type="text/css" />
   <link rel="stylesheet" href="/styles/alerts.css" type="text/css" />
   <link rel="stylesheet" href="/styles/todos.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/sortable.css" type="text/css" />
 
   <!-- Scripts -->
   <script type="text/javascript" src="/scripts/client.js"></script>
-  <script type="text/javascript" src="/scripts/draggable.js"></script>
+  <script type="text/javascript" src="/scripts/sortable.js"></script>
 </head>
 
 
@@ -98,41 +99,40 @@
 
       <section id="categories-container" class="flex flex-1 flex-wrap justify-center mt-10 h-68">
 
-        <div id="Movies" hidden class="category flex-col w-1/4 h-80 rounded-lg-lg shadow-lg m-5">
+        <article id="Movies" hidden class="category flex-col w-1/4 h-80 rounded-lg-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4 "><i class="fa-brands fa-bilibili"></i>TV & Film</header>
-          <div class="todo-container px-2 py-4"></div>
-        </div>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
-        <div id="Music" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+        <article id="Music" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-music"></i>Music</header>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
-          <div class="todo-container px-2 py-4"></div>
-        </div>
-
-        <div id="Books" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+        <article id="Books" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-book"></i>Books</header>
-          <div class="todo-container px-2 py-4"></div>
-        </div>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
-        <div id="Food" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+        <article id="Food" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-utensils"></i>Food</header>
-          <div class="todo-container px-2 py-4"></div>
-        </div>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
-        <div id="Products" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+        <article id="Products" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-tag"></i>Products</header>
-          <div class="todo-container px-2 py-4"></div>
-        </div>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
-        <div id="Games" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+        <article id="Games" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-gamepad"></i>Games</header>
-          <div class="todo-container px-2 py-4"></div>
-        </div>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
-        <div id="Unlabeled" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
+        <article id="Unlabeled" hidden class="category flex-col w-1/4 h-80 rounded-lg shadow-lg m-5">
           <header class="font-bold text-xl m-4"><i class="fa-solid fa-file-pen"></i>Unlabeled</header>
-          <div class="todo-container px-2 py-4"></div>
-        </div>
+          <ol class="todo-container px-2 py-4"></ol>
+        </article>
 
       </section>
     </main>

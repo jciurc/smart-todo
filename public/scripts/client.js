@@ -6,7 +6,7 @@
 
     // todo routes
     $('#new-todo').on('submit', newTodo);
-    $('.todo-container').on('click', 'article.todo i.fa-edit', editMode);
+    $('.todo-container').on('click', 'li.todo i.fa-edit', editMode);
     $('.todo-container').on('submit', 'form.edit', submitEdit);
     $('.todo-container').on('click', '.check-complete', completeTodo);
     $('.todo-container').on('click', '.delete-button', deleteTodo);
@@ -53,7 +53,7 @@
 
   const editMode = function() {
     $('.editing').removeClass('editing ring');
-    const $todo = $(this).closest('article').addClass('editing ring');
+    const $todo = $(this).closest('li.todo').addClass('editing ring');
     const $textarea = $todo.find('form').find('[name="description"]').focus();
     const text = $textarea.val();
     $textarea.val('').val(text);
@@ -72,15 +72,15 @@
     sorted.unshift(current);
 
     const htmlString = `
-<article class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
-  <header class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
+<li class="todo rounded flex-col flex-nowrap justify-center my-2 ring-blue-300" completed="${todo.completed}" alt="${todo.id}">
+  <article class="card flex justify-center items-center ${todo.completed ? 'complete' : ''} rounded bg-slate-700 m-3 p-2">
     <i type="button" ${todo.completed ? 'checked' : ''} class="check-complete hover cursor-pointer fa-${todo.completed ? 'solid' : 'regular'} fa-circle-check " id="flexCheckDefault" ></i>
     <div>
       <p class="description text-base text-center self-center p-2">${safeHtml(todo.description)}</p>
       <p class="subtitle text-base text-center">${safeHtml(todo.subtitle)}</p>
     </div>
     <i class="far fa-edit hover cursor-pointer"></i>
-  </header>
+  </article>
 
   <form class="edit">
     <header class="m-2">
@@ -96,7 +96,7 @@
       <button type="button" class="delete-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
     </footer>
   </form>
-</article>
+</li>
   `;
     return htmlString;
   };
@@ -195,7 +195,7 @@
       .then((todo) => {
         $(this).find('input').val('');
         showAlert(`Match found!<br><br>Added <span class="special">${todo.description}</span> to<br><span class="special">${todo.name}</span>`, 'success');
-        shakeElement($('#categories-container').find(`#${todo.name}`));
+        shakeElement($('#categories-container').find(`article#${todo.name}`));
         loadTodos();
       });
     };
@@ -204,12 +204,11 @@
   const submitEdit = function(event) {
     event.preventDefault();
     const data = $(this).serialize();
-    const id = $(this).closest('article').attr("alt");
+    const id = $(this).closest('li.todo').attr("alt");
     $.ajax({ url: "/todos/" + id, data, type: "PUT" })
       .then((todo) => {
         console.log('updated todo', todo);
         showAlert('Todo updated!', 'success');
-        shakeElement($('#categories-container').find(`#${todo.name}`));
         loadTodos();
       });
   };
@@ -217,7 +216,7 @@
   const completeTodo = function(event) {
     event.stopPropagation();
     event.preventDefault();
-    const $todo = $(this).closest("article");
+    const $todo = $(this).closest('li.todo');
     const data = 'complete=' + !($todo.attr('completed') === 'true');
     const id = $todo.attr('alt');
     $.ajax({ url: "/todos/" + id, data, type: "PATCH" })
@@ -227,7 +226,7 @@
   };
 
   const deleteTodo = function() {
-    const $todo = $(this).closest('article');
+    const $todo = $(this).closest('li.todo');
     const id = $todo.attr('alt');
 
     $.ajax({ url: '/todos/' + id, type: 'DELETE' })

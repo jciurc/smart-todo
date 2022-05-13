@@ -133,6 +133,8 @@ h1 {
   transform: translateY(-50%);
 }
 
+
+// animation effects
 .typing{
 animation: typing 6s steps(44) 0.4s 1 normal both,
 blinkTextCursor 700ms steps(34) 10 normal;
@@ -145,4 +147,15 @@ to{width: 15em;}
 @keyframes blinkTextCursor{
 from{border-right-color: coral;}
 to{border-right-color: transparent;}
+}
+
+
+.shake_anim {
+  animation: shake 3s linear;
+}
+@keyframes shake {
+	5% { transform: translateY(-3px) }
+	15%, 25%, 35%, 45% { transform: translateY(-2px) rotate(-2deg) }
+	10%, 20%, 30%, 40% { transform: translateY(-2px) rotate(2deg) }
+	50%, 100% { transform: translateY(0px) }
 }

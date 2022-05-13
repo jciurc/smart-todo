@@ -2,8 +2,9 @@
 
 // = CATEGORIES =
 #categories-container .category {
+
   // Category name
-  > header {
+  >header {
     font-weight: 500;
     padding-right: 2rem;
     border-top-left-radius: 4px;
@@ -15,7 +16,9 @@
     height: 3em;
     padding-top: 0.8em;
 
-    > i.fa-solid, > i.fa-brands, > i.fa-regular {
+    >i.fa-solid,
+    >i.fa-brands,
+    >i.fa-regular {
       padding-right: 1rem;
     }
   }
@@ -33,12 +36,14 @@
 }
 
 // = main card styling =
-article.todo {
+li.todo {
   min-width: 90%;
   margin: 2em auto;
 
   // hover icons
-  i.fa-circle, i.fa-circle-check, i.fa-edit {
+  i.fa-circle,
+  i.fa-circle-check,
+  i.fa-edit {
     padding: 0.1em;
     top: 0.2em;
     cursor: pointer;
@@ -64,17 +69,17 @@ article.todo {
 
     //checked
     &.fa-solid {
-      color:#00fff7;
-      color:$delete;
+      color: #00fff7;
+      color: $delete;
     }
   }
 
- // todo main card
-  header.card {
+  // todo main card
+  article.card {
     box-shadow: 0px 6px 3px 2px rgba(26, 24, 25, 0.2);
     min-height: calc(80px + 0.3vw);
     max-height: 120px;
-    cursor: grab;
+    max-width: 340px;
 
     // card description and subtitle container
     > div {
@@ -116,7 +121,7 @@ article.todo {
   }
 
   // edit form styles
-  > form.edit {
+  >form.edit {
     background-color: $todoDark;
     border-radius: 30px;
     display: none; // hidden by default
@@ -138,14 +143,14 @@ article.todo {
     }
 
     // new description form
-    textarea[name="description"]  {
+    textarea[name="description"] {
       width: 14em;
       height: 4em;
       overflow: hidden;
     }
 
     // categories dropdown
-    select[name="category_id"]  {
+    select[name="category_id"] {
       resize: none;
       width: 6em;
       height: 2.5em;
@@ -161,7 +166,7 @@ article.todo {
     }
 
     // new subtitle form
-    textarea[name="subtitle"]  {
+    textarea[name="subtitle"] {
       resize: none;
       overflow: hidden;
       width: 12em;
@@ -176,6 +181,7 @@ article.todo {
     button.confirm-edit {
       background-color: $confirm;
     }
+
     button.delete-button {
       background-color: $delete;
     }
@@ -189,11 +195,11 @@ article.todo {
     margin: 20px auto;
     border-radius: 2em;
 
-    > header.card {
-      display: none; // hides main todo header
+    >article.card {
+      display: none; // hides main todo card
     }
 
-    > form.edit {
+    >form.edit {
       display: flex; // unhides edit form
       flex-direction: column;
       align-items: stretch;
@@ -201,64 +207,60 @@ article.todo {
   }
 }
 
-section#categories-container {
-  #Movies  {
+#categories-container {
+  #Movies {
     background-color: $movies;
-    .todo > header.card {
+
+    li.todo > article.card {
       background-color: $moviesCard;
     }
   }
 
   #Music {
     background-color: $music;
-  .todo > header.card {
-    background-color: $musicCard;
+
+    li.todo > article.card {
+      background-color: $musicCard;
     }
   }
 
   #Food {
     background-color: $food;
-  .todo > header.card {
-    background-color: $foodCard;
+
+    li.todo > article.card {
+      background-color: $foodCard;
     }
   }
 
   #Books {
     background-color: $books;
-  .todo > header.card {
-    background-color: $booksCard;
+
+    li.todo > article.card {
+      background-color: $booksCard;
     }
   }
 
   #Products {
     background-color: $products;
-  .todo > header.card {
-    background-color: $productsCard;
+
+    li.todo > article.card {
+      background-color: $productsCard;
     }
   }
 
   #Games {
     background-color: $games;
-  .todo > header.card {
-    background-color: $gamesCard;
+
+    li.todo > article.card {
+      background-color: $gamesCard;
     }
   }
 
   #Unlabeled {
     background-color: $unlabeled;
-  .todo > header.card {
-    background-color: $unlabeledCard;
+
+    li.todo > article.card {
+      background-color: $unlabeledCard;
     }
   }
-}
-
-.shake_anim {
-  animation: shake 3s linear;
-}
-
-@keyframes shake {
-	5% { transform: translateY(-3px) }
-	15%, 25%, 35%, 45% { transform: translateY(-2px) rotate(-2deg) }
-	10%, 20%, 30%, 40% { transform: translateY(-2px) rotate(2deg) }
-	50%, 100% { transform: translateY(0px) }
 }
